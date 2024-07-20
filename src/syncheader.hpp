@@ -6,6 +6,8 @@
 
 #ifdef SHOW_LOCK
 #include <stdio.h>
+
+
 #define LOCK(mu)                                                               \
   {                                                                            \
     printf("try lock at %s::%d\n", __FILE__, __LINE__);                        \

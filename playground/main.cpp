@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <errno.h>
 #include <malloc.h>
 #include <signal.h>
@@ -23,13 +24,17 @@ static void handler(int sig, siginfo_t *si, void *unused) {
     int flag = (ctx->uc_mcontext.gregs[REG_ERR] & 2);
     printf("Got SIGSEGV with status %d at address: 0x%lx\n", flag, (long)si->si_addr);
     
-     mprotect((void *)FLOOR((intptr_t)si->si_addr), PAGE_SIZE, PROT_READ | PROT_WRITE);
+    mprotect((void *)FLOOR((intptr_t)si->si_addr), PAGE_SIZE, PROT_READ | PROT_WRITE);
 }
 
 int main(int argc, char *argv[]) {
     char *p;
     int pagesize;
     struct sigaction sa;
+
+    char * heap_mem = (char *)malloc(PAGE_SIZE * 10);
+
+    printf("Start of heap mem:        0x%lx\n page size: %d\n", (long)heap_mem, pagesize);
 
     sa.sa_flags = SA_SIGINFO;
     sigemptyset(&sa.sa_mask);
