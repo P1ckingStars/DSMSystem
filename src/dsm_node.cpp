@@ -9,7 +9,7 @@
 #include <fcntl.h>
 #include <iostream>
 #include <pthread.h>
-#include <sstream>
+#include "debug.hpp"
 #include <strings.h>
 #include <sys/mman.h>
 #include <sys/ucontext.h>
@@ -42,11 +42,11 @@ static dsm_node * dsm_singleton;
 static void handler(int sig, siginfo_t *si, void *unused) {
     ucontext_t * ctx = (ucontext_t *)unused;
     bool is_write = (ctx->uc_mcontext.gregs[REG_ERR] & 2);
-    printf("Got SIGSEGV at address: 0x%lx\n", (long)si->si_addr);
-    if (is_write && dsm_singleton->grant_write((char *)si->si_addr)) {
-        mprotect((void *)FLOOR((intptr_t)si->si_addr), PAGE_SIZE, PROT_READ | PROT_WRITE);
-    } else if (!is_write && dsm_singleton->grant_read((char *)si->si_addr)) {
-        mprotect((void *)FLOOR((intptr_t)si->si_addr), PAGE_SIZE, PROT_READ);
+    //DEBUG_STMT(printf("Got SIGSEGV at address: 0x%lx\n", (long)si->si_addr));
+    if (is_write) {
+        dsm_singleton->grant_write((char *)si->si_addr);
+    } else {
+        dsm_singleton->grant_read((char *)si->si_addr);
     }
 }
 
@@ -56,46 +56,76 @@ void dsm::dsm_init() {
     sigemptyset(&sa.sa_mask);
     sa.sa_sigaction = handler;
     if (sigaction(SIGSEGV, &sa, NULL) == -1) {
-        printf("can't customize SEGV handler\n");
+        //DEBUG_STMT(printf("can't customize SEGV handler\n"));
         exit(-1);
     }
 }
 
+char * dsm::dsm_init_master(node_addr self, size_t size) {
+    dsm_init();
+    int swap_fd = memfd_create(".swap", 0);
+    ftruncate(swap_fd, size);
+    char * mem_region = (char *)mmap(0, size, PROT_READ | PROT_WRITE, MAP_SHARED, swap_fd, 0);
+    //DEBUG_STMT(printf("addr of mem_region: 0x%lx\n", ((intptr_t)mem_region)));
+    dsm_node * node;
+    //DEBUG_STMT(printf("create master\n"));
+    //DEBUG_STMT(printf("make new node\n"));
+    node = new dsm_node(self, mem_region, size, true, swap_fd);
+    //DEBUG_STMT(printf("finish make new node\n"));
+    return mem_region;
+}
+char * dsm::dsm_init_node(node_addr self, node_addr dst, size_t size) {
+    dsm_init();
+    int swap_fd = memfd_create(".swap", 0);
+    ftruncate(swap_fd, size);
+    char * mem_region = (char *)mmap(0, size, PROT_READ | PROT_WRITE, MAP_SHARED, swap_fd, 0);
+    //DEBUG_STMT(printf("addr of mem_region: 0x%lx\n", ((intptr_t)mem_region)));
+    dsm_node * node;
+    //DEBUG_STMT(printf("create process\n"));
+    //DEBUG_STMT(printf("make new node\n"));
+    node = new dsm_node(self, mem_region, size, false, swap_fd);
+    //DEBUG_STMT(printf("finish make new node\n"));
+    node_addr dst_addr;
+    //DEBUG_STMT(printf("try connect\n"));
+    node->connect(dst);
+    return mem_region;
+}
+
 void dsm_node::request_hand_shake(node_addr my_addr, node_addr dst_addr) {
-    cout << "HANDSHAKE REQ TO " << dst_addr.ip << ":" << dst_addr.port << endl;
+    //DEBUG_STMT(printf("HANDSHAKE REQ TO %s:%d\n", dst_addr.ip.c_str(), dst_addr.port));
     rpc::client cli(dst_addr.ip, dst_addr.port);
     cli.call(RPC_HAND_SHAKE, m_addr);
 }
 
 void dsm_node::respond_hand_shake(node_addr src_addr) {
-    cout << "Received hand shake from " << src_addr.ip << ":" << src_addr.port << endl;
+    //DEBUG_STMT(printf("Received hand shake from %s:%d\n", src_addr.ip.c_str(), src_addr.port));
     this->conn.push_back(src_addr);
 }
 
 vector<node_addr> dsm_node::request_join(node_addr dst_addr) {
-    cout << "JOIN REQ TO " << dst_addr.ip << ":" << dst_addr.port << endl;
+    //DEBUG_STMT(printf("JOIN REQ TO %s:%d\n", dst_addr.ip.c_str(), dst_addr.port));
     try {
         rpc::client cli(dst_addr.ip, dst_addr.port);
         return cli.call(RPC_JOIN).as<vector<node_addr>>();
     } catch (rpc::rpc_error err) {
-        cout << err.what() << endl;
+        //DEBUG_STMT(printf("%s\n", err.what()));
         return vector<node_addr>();
     }
 }
 vector<node_addr> dsm_node::respond_join() {
-    cout << "received join" << endl;
+    //DEBUG_STMT(printf("received join\n"));
     return this->conn;
 }
 
 page dsm_node::request_write(node_addr dst_addr, uint64_t pagenum) {
-    cout << "WRITE REQ TO " << dst_addr.ip << ":" << dst_addr.port << endl;
+    //DEBUG_STMT(printf("WRITE REQ TO %s:%d\n", dst_addr.ip.c_str(), dst_addr.port));
     rpc::client cli(dst_addr.ip, dst_addr.port);
     return cli.call(RPC_WRITE, pagenum).as<page>();
     
 }
 
 page dsm_node::response_write(uint64_t relative_page_id) {
-    cout << "recieved write req " << std::hex << relative_page_id << endl;
+    //DEBUG_STMT(printf("recieved write req %lx\n", relative_page_id));
     page res;
     res.clear();
     LOCK(this->mu)
@@ -104,7 +134,7 @@ page dsm_node::response_write(uint64_t relative_page_id) {
         if (OWNERSHIP(this->page_info[relative_page_id])) {
             res.resize(PAGE_SIZE);
             memcpy(&res[0], relative_page_id_to_addr(relative_page_id), PAGE_SIZE);
-            cout << "setup result page" << endl;
+            //DEBUG_STMT(printf("setup result page\n"));
         }
 #ifdef RELEASE_CONSISTANCY
         this->page_info[relative_page_id] = DSM_PROT_READ;
@@ -119,7 +149,7 @@ page dsm_node::response_write(uint64_t relative_page_id) {
 }
 
 page dsm_node::request_read(node_addr dst_addr, uint64_t pagenum) {
-    cout << "READ REQ TO " << dst_addr.ip << ":" << dst_addr.port << endl;
+    //DEBUG_STMT(printf("READ REQ TO %s:%d\n", dst_addr.ip.c_str(), dst_addr.port));
     rpc::client cli(dst_addr.ip, dst_addr.port);
     return cli.call(RPC_READ, pagenum).as<page>();
 }
@@ -127,11 +157,11 @@ page dsm_node::request_read(node_addr dst_addr, uint64_t pagenum) {
 page dsm_node::response_read(uint64_t relative_page_id) {
     page res;
     res.clear();
-    cout << "recieved read req " << std::hex << relative_page_id << endl;
+    //DEBUG_STMT(printf("recieved read req %lx\n", relative_page_id));
     LOCK(this->mu)
     if (this->page_info.size() > relative_page_id
         && OWNERSHIP(this->page_info[relative_page_id])) {
-        cout << "master respond" << endl;
+        //DEBUG_STMT(printf("master respond\n"));
         res.resize(PAGE_SIZE);
         memcpy(&res[0], relative_page_id_to_addr(relative_page_id), PAGE_SIZE);
 #ifndef RELEASE_CONSISTANCY
@@ -146,7 +176,7 @@ page dsm_node::response_read(uint64_t relative_page_id) {
 void dsm_node::connect(node_addr dst_addr) {
     this->conn = request_join(dst_addr);
     this->conn.push_back(dst_addr);
-    cout << "connect " << dst_addr.ip << ":" << dst_addr.port << endl;
+    //DEBUG_STMT(printf("connect %s:%d\n", dst_addr.ip.c_str(), dst_addr.port));
     struct thread_arg {
         dsm_node * self;
         int idx;
@@ -187,7 +217,7 @@ struct thread_arg {
 
 
 bool dsm_node::grant_prot(page_id_t relative_page_id, int prot) {
-    cout << "requesting protection " << endl;
+    //DEBUG_STMT(printf("requesting protection \n"));
     page res;
     pthread_t * threads                 = (pthread_t *)malloc(sizeof(pthread_t) * this->conn.size());
     thread_arg_content * arg_content    = new thread_arg_content();
@@ -198,13 +228,13 @@ bool dsm_node::grant_prot(page_id_t relative_page_id, int prot) {
 
     pthread_mutex_init(&arg_content->mu, NULL);
     pthread_cond_init(&arg_content->cond, NULL);
-    cout << "sending rpc..." << endl;
+    //DEBUG_STMT(printf("sending rpc..."));
     for (int i = 0; i < this->conn.size(); i++) {
         args[i].content                 = arg_content;
         args[i].idx                     = i;
         args[i].relative_page_id        = relative_page_id;
         args[i].prot                    = prot;
-        cout << "relative_page_id " << std::hex << args[i].relative_page_id << endl;
+        //DEBUG_STMT(printf("relative_page_id %x\n", args[i].relative_page_id));
         pthread_create(&threads[i], NULL, [](void * input) -> void * {
             thread_arg * arg            = (thread_arg *)input;
             dsm_node * self             = arg->content->self;
@@ -212,7 +242,7 @@ bool dsm_node::grant_prot(page_id_t relative_page_id, int prot) {
                 self->request_read(self->conn[arg->idx], arg->relative_page_id) :
                 self->request_write(self->conn[arg->idx], arg->relative_page_id);
             LOCK(arg->content->mu)
-            cout << "received page with size" << res.size() << endl;
+            //DEBUG_STMT(printf("received page with size %ld\n", res.size()));
             if (res.size() == PAGE_SIZE) {
                 arg->content->data      = res;
             }
@@ -243,7 +273,7 @@ bool dsm_node::grant_prot(page_id_t relative_page_id, int prot) {
         munmap(buf, PAGE_SIZE);
         succeed = true;
     }
-    cout << "got rpc response " << succeed << endl;
+    //DEBUG_STMT(printf("got rpc response %d\n", succeed));
     delete threads;
     delete arg_content;
     delete[] args;
@@ -254,7 +284,10 @@ bool dsm_node::grant_write(char * addr) {
     page_id_t relative_page_id = relative_page_id_from_addr(addr);
     bool res = this->grant_prot(relative_page_id, DSM_PROT_WRITE);
     if (res) {
+        LOCK(this->mu)
         this->page_info[relative_page_id] = DSM_PROT_WRITE;
+        mprotect((void *)FLOOR((intptr_t)addr), PAGE_SIZE, PROT_READ | PROT_WRITE);
+        UNLOCK(this->mu)
     }
     return res;
 }
@@ -263,7 +296,10 @@ bool dsm_node::grant_read(char * addr) {
     page_id_t relative_page_id = relative_page_id_from_addr(addr);
     bool res = this->grant_prot(relative_page_id, DSM_PROT_READ);
     if (res) {
+        LOCK(this->mu)
         this->page_info[relative_page_id] = DSM_PROT_READ;
+        mprotect((void *)FLOOR((intptr_t)addr), PAGE_SIZE, PROT_READ);
+        UNLOCK(this->mu)
     }
     return res;
 }
@@ -271,29 +307,25 @@ bool dsm_node::grant_read(char * addr) {
 dsm_node::dsm_node(node_addr m_addr, void * _base, size_t _len, bool is_master, int swapfd) {
     
     this->swap_file_fd = swapfd;
-    cout << "is master " << is_master << endl;
-    char buf[PAGE_SIZE];
+    //DEBUG_STMT(printf("is master %d\n", is_master));
     int pages = VPADDR2VPID(_len);
     page_info.resize(pages);
     for (int i = 0; i < pages; i++) {
-        ASSERT_POSIX_STATUS(write(swap_file_fd, buf, PAGE_SIZE));
         this->page_info[i] = is_master ? DSM_PROT_WRITE : DSM_PROT_INVALID;
     }
     this->base = (char *)_base;
-    cout << "check mmap equal " << std::hex << MAP_FAILED << " " << std::hex << (intptr_t)this->base << " " << std::hex << (intptr_t)_base << endl;
+    //DEBUG_STMT(printf("check mmap equal %lx\n", (intptr_t)this->base));
     ASSERT_PERROR(this->base);
     if (!is_master) {
         mprotect(_base, _len, PROT_NONE);
     }
 
-    cout << "setup mem" << endl;
+    //DEBUG_STMT(printf("setup mem\n"));
     this->m_addr = m_addr;
     if (pthread_mutex_init(&this->mu, NULL)) {
         exit(-1);
     }
-    cout << "setup mutex" << endl;
     serv = new rpc::server(m_addr.port);
-    cout << "setup server" << endl;
     serv->bind(RPC_HAND_SHAKE, [this](node_addr src_addr) -> void {
         return this->respond_hand_shake(src_addr);
     });
@@ -312,7 +344,7 @@ dsm_node::dsm_node(node_addr m_addr, void * _base, size_t _len, bool is_master, 
         serv->run();
         return nullptr;
     }, serv);
-    cout << "run server" << endl;
+    //DEBUG_STMT(printf("run server\n"));
 }
 
 

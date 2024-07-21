@@ -7,63 +7,35 @@
 #include <strings.h>
 #include <sys/mman.h>
 #include <unistd.h>
+#include "debug.hpp"
 
 using namespace dsm;
 
-void test() {
-    int x = 0;
-    printf("addr of x: 0x%lx\n", ((intptr_t)&x) >> 12);
-}
+int dsm_main(char * mem_region, size_t length, int argc, char * argv[]);
+
 
 int main(int argc, char * argv[]) {
-    dsm_init();
-    int a = 0;
-    int swap_fd = memfd_create(".swap", 0);
-    ftruncate(swap_fd, PAGE_SIZE * 10);
-    char * mem_region = (char *)mmap(0, PAGE_SIZE * 10, PROT_READ | PROT_WRITE, MAP_SHARED, swap_fd, 0);
-    printf("addr of a: 0x%lx\n", ((intptr_t)&a));
-    printf("addr of mem_region: 0x%lx\n", ((intptr_t)mem_region));
-    dsm_node * node;
-    bool is_master = false;
-    printf("argc: %d\n", argc);
-    if (argc == 3) {
-        printf("create master\n");
-        is_master = true;
-        node_addr addr;
-        addr.ip = string(argv[1]);
-        addr.port = stoi(argv[2]);
-        printf("make new node\n");
-        node = new dsm_node(addr, mem_region, PAGE_SIZE * 10, is_master, swap_fd);
-        printf("finish make new node\n");
-    } else if (argc == 5) {
-        printf("create process\n");
-        node_addr addr;
-        addr.ip = string(argv[1]);
-        addr.port = stoi(argv[2]);
-        printf("make new node\n");
-        node = new dsm_node(addr, mem_region, PAGE_SIZE * 10, is_master, swap_fd);
-        printf("finish make new node\n");
-        node_addr dst_addr;
-        dst_addr.ip = string(argv[3]);
-        dst_addr.port = stoi(argv[4]);
-        printf("try connect\n");
-        node->connect(dst_addr);
-    } else {
-        printf("parsing ERROR\n");
-    }
-    printf("start testing...\n");
+    char * mem_region;
+    bool is_master = atoi(argv[1]) == 0;
+    int pages = atoi(argv[2]);
     if (is_master) {
-        mem_region[0] = 1;
-        while (mem_region[1] == 0) {
-            mem_region[0] = 1;
-        }
+        printf("create master\n");
+        node_addr addr;
+        addr.ip = string(argv[3]);
+        addr.port = stoi(argv[4]);
+        mem_region = dsm_init_master(addr, PAGE_SIZE * pages);
+        is_master = true;
     } else {
-        mem_region[1] = 1;
-        while (mem_region[0] == 0) {
-            mem_region[1] = 1;
-        }
+        node_addr addr;
+        addr.ip = string(argv[3]);
+        addr.port = stoi(argv[4]);
+        node_addr dst_addr;
+        dst_addr.ip = string(argv[5]);
+        dst_addr.port = stoi(argv[6]);
+        mem_region = dsm_init_node(addr, dst_addr, PAGE_SIZE * pages);
     }
-    printf("complete!!!\n");
+    printf("start running...\n");
+    int res = dsm_main(mem_region, PAGE_SIZE * pages, argc, argv);
     while(1);
     return 0;
 }

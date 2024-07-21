@@ -44,13 +44,16 @@ typedef uint64_t page_id_t;
 namespace dsm {
 // init seg tree
 // setup handler
-void dsm_init();
 
 struct node_addr {
     string ip;
     short port;
     MSGPACK_DEFINE_ARRAY(ip, port);
 };
+
+void dsm_init();
+char * dsm_init_master(node_addr self, size_t size);
+char * dsm_init_node(node_addr self, node_addr dst, size_t size);
 
 typedef vector<char> page;
 
