@@ -20,21 +20,22 @@ int main(int argc, char * argv[]) {
     int pages = atoi(argv[2]);
     if (is_master) {
         printf("create master\n");
-        node_addr addr;
+        NodeAddr addr;
         addr.ip = string(argv[3]);
         addr.port = stoi(argv[4]);
         mem_region = dsm_init_master(addr, PAGE_SIZE * pages);
         is_master = true;
     } else {
-        node_addr addr;
+        NodeAddr addr;
         addr.ip = string(argv[3]);
         addr.port = stoi(argv[4]);
-        node_addr dst_addr;
+        NodeAddr dst_addr;
         dst_addr.ip = string(argv[5]);
         dst_addr.port = stoi(argv[6]);
         mem_region = dsm_init_node(addr, dst_addr, PAGE_SIZE * pages);
     }
-    printf("start running...\n");
+
+    printf("start running with %d pages...\n", pages);
     int res = dsm_main(mem_region, PAGE_SIZE * pages, argc, argv);
     while(1);
     return 0;

@@ -5,6 +5,7 @@
 
 #include "../config/config.hpp"
 
+#define SHOW_LOCK
 #ifdef SHOW_LOCK
 
 #define LOCK(mu)                                                               \

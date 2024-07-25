@@ -45,15 +45,15 @@ namespace dsm {
 // init seg tree
 // setup handler
 
-struct node_addr {
+struct NodeAddr {
     string ip;
     short port;
     MSGPACK_DEFINE_ARRAY(ip, port);
 };
 
 void dsm_init();
-char * dsm_init_master(node_addr self, size_t size);
-char * dsm_init_node(node_addr self, node_addr dst, size_t size);
+char * dsm_init_master(NodeAddr self, size_t size);
+char * dsm_init_node(NodeAddr self, NodeAddr dst, size_t size);
 
 typedef vector<char> page;
 
@@ -72,13 +72,13 @@ public:
     void set(int x) { mask[SIZE2BYTE(x)] |= MASK_OFFSET(x % 8); }
 };
 
-class dsm_node {
+class DSMNode {
     char *base;
     int swap_file_fd;
     pthread_mutex_t mu;
-    node_addr m_addr;
+    NodeAddr m_addr;
     pthread_t tid;
-    vector<node_addr> conn;
+    vector<NodeAddr> conn;
     vector<char> page_info;
     char *relative_page_id_to_addr(page_id_t page_id) {
         return this->base + VPID2VPADDR(page_id);
@@ -91,29 +91,31 @@ class dsm_node {
     }
     void wait_recv();
     void add(int i, int k);
-    void request_hand_shake(node_addr my_addr, node_addr dst_addr);
-    void respond_hand_shake(node_addr src_addr);
-    vector<node_addr> request_join(node_addr dst_addr);
-    vector<node_addr> respond_join();
-    page request_write(node_addr dst_addr, uint64_t pagenum);
+    void request_hand_shake(NodeAddr my_addr, NodeAddr dst_addr);
+    void respond_hand_shake(NodeAddr src_addr);
+    vector<NodeAddr> request_join(NodeAddr dst_addr);
+    vector<NodeAddr> respond_join();
+    page request_write(NodeAddr dst_addr, uint64_t pagenum);
     page response_write(uint64_t pagenum);
-    page request_read(node_addr dst_addr, uint64_t pagenum);
+    page request_read(NodeAddr dst_addr, uint64_t pagenum);
     page response_read(uint64_t pagenum);
     bool grant_prot(page_id_t relative_page_id, int prot);
     rpc::server *serv;
 
 public:
-    dsm_node(node_addr m_addr, void *base, size_t len, 
+    DSMNode(NodeAddr m_addr, void *base, size_t len, 
              bool is_master, int swapfd);
-    ~dsm_node() {
+    ~DSMNode() {
         if (!!tid)
             pthread_cancel(tid);
         if (!!serv)
             delete serv;
     }
-    void connect(node_addr dst_addr);
+    void sync();
+    void connect(NodeAddr dst_addr);
     bool grant_write(char *addr);
     bool grant_read(char *addr);
+    bool is_in_range(char *addr);
 };
 
 } // namespace dsm
