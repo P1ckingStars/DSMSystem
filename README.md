@@ -12,7 +12,7 @@ make
 ```
 You now have all the object files you need to compile with your code
 ## To use
-You don't need to include ANYTHING to simply run it (but you will need to include my headers to use mutex locks! However, you don't write main as you usually do for most of C++ program, instead write (see `examples/template.cpp`):
+You don't need to include ANYTHING to simply run it (you will need to include my headers to use mutex locks). However, you don't write main as you usually do for most of C++ program, instead write (see `examples/template.cpp`):
 ```
 int dsm_main(char * mem_region, size_t length, int argc, char * argv[]) {
   // your code
