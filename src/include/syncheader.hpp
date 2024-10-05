@@ -3,7 +3,7 @@
 
 #include <pthread.h>
 
-#include "../config/config.hpp"
+#include "config.hpp"
 
 #define SHOW_LOCK
 #ifdef SHOW_LOCK

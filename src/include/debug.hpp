@@ -2,7 +2,7 @@
 #define DEBUG_HPP
 
 
-#include "../config/config.hpp"
+#include "config.hpp"
 
 #define DEBUG
 #ifdef DEBUG 

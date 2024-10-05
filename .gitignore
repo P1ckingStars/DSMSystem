@@ -1,5 +1,3 @@
-./build/*.out
-./build/*.o
-./build/dsmapp
+./build
 ./simulate/node1/dsmapp
 ./simulate/node2/dsmapp

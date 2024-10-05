@@ -2,7 +2,7 @@
 #include <cstdint>
 #include <cstdlib>
 #include <stdio.h>
-#include "../src/simple_mutex.hpp"
+#include "simple_mutex.hpp"
 
 int dsm_main(char * mem_region, size_t length, int argc, char * argv[]) {
     bool is_master = atoi(argv[1]) == 0;
