@@ -7,8 +7,11 @@ requirement:
 Now you can go to build folder and run make:
 ```
 git clone https://github.com/AW186/DSMSystem.git
-cd DNSSystem/build
-make
+cd DSMSystem
+mkdir build
+cd build
+cmake ../
+cmake --build .
 ```
 You now have all the object files you need to compile with your code
 ## To use
