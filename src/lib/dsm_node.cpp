@@ -261,7 +261,7 @@ bool DSMNode::grant_prot(page_id_t relative_page_id, int prot) {
         DEBUG_STMT(printf("relative_page_id %x\n", args[i].relative_page_id));
         pthread_create(&threads[i], NULL, [](void * input) -> void * {
             thread_arg * arg            = (thread_arg *)input;
-            DSMNode * self             = arg->content->self;
+            DSMNode * self              = arg->content->self;
             auto res                    = arg->prot == DSM_PROT_READ ?
                 self->request_read(self->conn[arg->idx], arg->relative_page_id) :
                 self->request_write(self->conn[arg->idx], arg->relative_page_id);
