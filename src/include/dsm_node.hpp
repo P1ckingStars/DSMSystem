@@ -51,6 +51,35 @@ struct NodeAddr {
     MSGPACK_DEFINE_ARRAY(ip, port);
 };
 
+#define IPC_NONE        0
+#define IPC_PAGE_COPY   1
+#define IPC_MPROTECT    2
+#define IPC_COMPLETE    3
+
+class dsm_kernel_ipc_region {
+    char page[PAGE_SIZE];
+    pthread_mutex_t mu;
+    pthread_cond_t complete;
+    pthread_cond_t request;
+    pthread_cond_t busy;
+    int event_id;
+    union {
+        struct {
+            char const * src;
+        } page_copy;
+
+        struct {
+            void * addr;
+            size_t len;
+            int prot;
+        } mprotect;
+    } event;
+public:
+    void run_ipc_server();
+    void page_copy(char * dst, const char * src);
+    void mprotect(void * addr, size_t len, int prot);
+};
+
 void dsm_init();
 char * dsm_init_master(NodeAddr self, size_t size);
 char * dsm_init_node(NodeAddr self, NodeAddr dst, size_t size);
@@ -73,8 +102,10 @@ public:
 };
 
 class DSMNode {
+    dsm_kernel_ipc_region * ipc_region;
     char *base;
     int swap_file_fd;
+    int uffd;
     pthread_mutex_t mu;
     NodeAddr m_addr;
     pthread_t tid;

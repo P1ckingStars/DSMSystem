@@ -13,6 +13,7 @@ using namespace dsm;
 
 extern char __etext;
 
+
 int dsm_main(char * mem_region, size_t length, int argc, char * argv[]);
 
 int main(int argc, char * argv[]) {
