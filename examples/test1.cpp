@@ -5,6 +5,7 @@
 #include "simple_mutex.hpp"
 
 int dsm_main(char * mem_region, size_t length, int argc, char * argv[]) {
+    printf("start dsm main!!!\n");
     bool is_master = atoi(argv[1]) == 0;
     if (is_master) {
         mem_region[0] = 1;

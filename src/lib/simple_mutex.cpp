@@ -1,25 +1,13 @@
 
 #include "simple_mutex.hpp"
+#include "test_and_set.hpp"
 #include <cstdint>
 #include <cwctype>
 #include <sched.h>
 
   
 void * simple_mutex_sync_obj_; 
-static inline uint
-xchgl(volatile uint *addr, uint newval)
-{   
-  uint result;
-  asm volatile("lock; xchgl %0, %1" :
-               "+m" (*addr), "=a" (result) :
-               "1" (newval) :
-               "cc");
-  return result;
-}
-inline bool test_and_set(SimpleMutex * mu) {
-    uint test = 1;
-    return xchgl(mu, test);
-}
+
 
 void SimpleMutexSyncImpl::lock_impl(SimpleMutex * mu) {
     while (test_and_set(mu)) {

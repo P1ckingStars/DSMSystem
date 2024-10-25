@@ -1,0 +1,120 @@
+[4mSHMAT[24m(3P)               POSIX Programmer's Manual              [4mSHMAT[24m(3P)
+
+[1mPROLOG[0m
+       This  manual  page is part of the POSIX Programmer's Manual.  The
+       Linux implementation of this interface may  differ  (consult  the
+       corresponding  Linux  manual page for details of Linux behavior),
+       or the interface may not be implemented on Linux.
+
+[1mNAME[0m
+       shmat — XSI shared memory attach operation
+
+[1mSYNOPSIS[0m
+       #include <sys/shm.h>
+
+       void *shmat(int [4mshmid[24m, const void *[4mshmaddr[24m, int [4mshmflg[24m);
+
+[1mDESCRIPTION[0m
+       The [4mshmat[24m() function operates on XSI shared memory (see the  Base
+       Definitions  volume of POSIX.1‐2017, [4mSection[24m [4m3.346[24m, [4mShared[24m [4mMemory[0m
+       [4mObject[24m).  It is unspecified whether this  function  interoperates
+       with  the  realtime interprocess communication facilities defined
+       in [4mSection[24m [4m2.8[24m, [4mRealtime[24m.
+
+       The [4mshmat[24m() function attaches the shared memory  segment  associ‐
+       ated  with the shared memory identifier specified by [4mshmid[24m to the
+       address space of the calling process. The segment is attached  at
+       the address specified by one of the following criteria:
+
+        *  If  [4mshmaddr[24m is a null pointer, the segment is attached at the
+           first available address as selected by the system.
+
+        *  If [4mshmaddr[24m is not a null pointer  and  ([4mshmflg[24m  &SHM_RND)  is
+           non-zero,  the  segment  is  attached at the address given by
+           ([4mshmaddr[24m -(([4muintptr_t[24m)[4mshmaddr[24m %SHMLBA)). The character [1m'%' [22mis
+           the C-language remainder operator.
+
+        *  If [4mshmaddr[24m is not a null pointer and ([4mshmflg[24m &SHM_RND) is  0,
+           the segment is attached at the address given by [4mshmaddr[24m.
+
+        *  The  segment  is attached for reading if ([4mshmflg[24m &SHM_RDONLY)
+           is non-zero and the calling process has read permission; oth‐
+           erwise, if it is 0 and the calling process has read and write
+           permission, the segment is attached for reading and writing.
+
+[1mRETURN VALUE[0m
+       Upon successful completion, [4mshmat[24m() shall increment the value  of
+       [4mshm_nattch[24m  in the data structure associated with the shared mem‐
+       ory ID of the attached shared memory segment and return the  seg‐
+       ment's start address.  Also, the [4mshm_atime[24m timestamp shall be set
+       to  the  current time, as described in [4mSection[24m [4m2.7.1[24m, [4mIPC[24m [4mGeneral[0m
+       [4mDescription[24m.
+
+       Otherwise, the shared  memory  segment  shall  not  be  attached,
+       [4mshmat[24m()  shall return ([1mvoid *[22m)-1, and [4merrno[24m shall be set to indi‐
+       cate the error.
+
+[1mERRORS[0m
+       The [4mshmat[24m() function shall fail if:
+
+       [1mEACCES [22mOperation permission is denied to the calling process; see
+              [4mSection[24m [4m2.7[24m, [4mXSI[24m [4mInterprocess[24m [4mCommunication[24m.
+
+       [1mEINVAL [22mThe value of [4mshmid[24m is not a valid  shared  memory  identi‐
+              fier,  the [4mshmaddr[24m is not a null pointer, and the value of
+              ([4mshmaddr[24m -(([4muintptr_t[24m)[4mshmaddr[24m %SHMLBA)) is an illegal  ad‐
+              dress for attaching shared memory; or the [4mshmaddr[24m is not a
+              null  pointer,  ([4mshmflg[24m  &SHM_RND)  is 0, and the value of
+              [4mshmaddr[24m is an illegal address for attaching shared memory.
+
+       [1mEMFILE [22mThe number of shared memory segments attached to the call‐
+              ing process would exceed the system-imposed limit.
+
+       [1mENOMEM [22mThe available data space is not large enough  to  accommo‐
+              date the shared memory segment.
+
+       [4mThe[24m [4mfollowing[24m [4msections[24m [4mare[24m [4minformative.[0m
+
+[1mEXAMPLES[0m
+       None.
+
+[1mAPPLICATION USAGE[0m
+       The  POSIX  Realtime Extension defines alternative interfaces for
+       interprocess communication. Application developers  who  need  to
+       use  IPC  should  design their applications so that modules using
+       the IPC routines described in [4mSection[24m [4m2.7[24m, [4mXSI[24m [4mInterprocess[24m  [4mCom‐[0m
+       [4mmunication[24m  can  be easily modified to use the alternative inter‐
+       faces.
+
+[1mRATIONALE[0m
+       None.
+
+[1mFUTURE DIRECTIONS[0m
+       None.
+
+[1mSEE ALSO[0m
+       [4mSection[24m [4m2.7[24m, [4mXSI[24m [4mInterprocess[24m [4mCommunication[24m, [4mSection[24m  [4m2.8[24m,  [4mReal‐[0m
+       [4mtime[24m,   [4mexec[24m,   [4mexit[24m(),   [4mfork[24m(),  [4mshmctl[24m(),  [4mshmdt[24m(),  [4mshmget[24m(),
+       [4mshm_open[24m(), [4mshm_unlink[24m()
+
+       The Base  Definitions  volume  of  POSIX.1‐2017,  [4mSection[24m  [4m3.346[24m,
+       [4mShared[24m [4mMemory[24m [4mObject[24m, [1m<sys_shm.h>[0m
+
+[1mCOPYRIGHT[0m
+       Portions  of this text are reprinted and reproduced in electronic
+       form from IEEE Std 1003.1-2017, Standard for Information Technol‐
+       ogy -- Portable Operating  System  Interface  (POSIX),  The  Open
+       Group  Base  Specifications  Issue 7, 2018 Edition, Copyright (C)
+       2018 by the Institute of Electrical  and  Electronics  Engineers,
+       Inc  and The Open Group.  In the event of any discrepancy between
+       this version and the original IEEE and The Open  Group  Standard,
+       the original IEEE and The Open Group Standard is the referee doc‐
+       ument.   The   original   Standard  can  be  obtained  online  at
+       http://www.opengroup.org/unix/online.html .
+
+       Any typographical or formatting errors that appear in  this  page
+       are  most likely to have been introduced during the conversion of
+       the source files to man page format. To report such  errors,  see
+       https://www.kernel.org/doc/man-pages/reporting_bugs.html .
+
+IEEE/The Open Group               2017                         [4mSHMAT[24m(3P)

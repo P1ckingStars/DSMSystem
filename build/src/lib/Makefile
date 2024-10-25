@@ -154,6 +154,30 @@ dsm_node.cpp.s:
 	cd /home/arthur/Documents/repos/dsm_system/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.s
 .PHONY : dsm_node.cpp.s
 
+fault.o: fault.cpp.o
+.PHONY : fault.o
+
+# target to build an object file
+fault.cpp.o:
+	cd /home/arthur/Documents/repos/dsm_system/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/fault.cpp.o
+.PHONY : fault.cpp.o
+
+fault.i: fault.cpp.i
+.PHONY : fault.i
+
+# target to preprocess a source file
+fault.cpp.i:
+	cd /home/arthur/Documents/repos/dsm_system/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/fault.cpp.i
+.PHONY : fault.cpp.i
+
+fault.s: fault.cpp.s
+.PHONY : fault.s
+
+# target to generate assembly for a file
+fault.cpp.s:
+	cd /home/arthur/Documents/repos/dsm_system/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/fault.cpp.s
+.PHONY : fault.cpp.s
+
 main.o: main.cpp.o
 .PHONY : main.o
 
@@ -214,6 +238,9 @@ help:
 	@echo "... dsm_node.o"
 	@echo "... dsm_node.i"
 	@echo "... dsm_node.s"
+	@echo "... fault.o"
+	@echo "... fault.i"
+	@echo "... fault.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

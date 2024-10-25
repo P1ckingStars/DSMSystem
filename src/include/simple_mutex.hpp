@@ -2,8 +2,9 @@
 #define SIMPLE_MUTEX_HPP
 
 #include "sync_interface.hpp"
+#include "test_and_set.hpp"
 
-typedef uint SimpleMutex;
+typedef int SimpleMutex;
 
 class SimpleNotDefinedCondvar {
     char x;

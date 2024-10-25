@@ -10,6 +10,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # configure a header file to pass some of the CMake settings
 # to the source code
+add_compile_options(-g)
 
 add_subdirectory(src/lib)
 

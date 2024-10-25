@@ -1,5 +1,6 @@
 #include "dsm_node.hpp"
 #include "debug.hpp"
+#include "fault.hpp"
 #include "rpc/client.h"
 #include "rpc/rpc_error.h"
 #include "simple_mutex.hpp"
@@ -17,15 +18,16 @@
 #include <poll.h>
 #include <pthread.h>
 #include <sched.h>
-#include <signal.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <strings.h>
 #include <sys/ioctl.h>
+#include <sys/ipc.h>
 #include <sys/mman.h>
 #include <sys/prctl.h>
+#include <sys/shm.h>
 #include <sys/stat.h>
 #include <sys/syscall.h>
 #include <sys/types.h>
@@ -53,7 +55,11 @@ using namespace dsm;
 
 #define FLOOR(addr) ((addr) / PAGE_SIZE * PAGE_SIZE)
 
-static DSMNode *dsm_singleton;
+namespace dsm {
+
+DSMNode *dsm_singleton;
+
+}
 
 inline void resolve_by_copy(int uffd, intptr_t dst, intptr_t src, int prot) {
   struct uffdio_copy copy;
@@ -65,63 +71,63 @@ inline void resolve_by_copy(int uffd, intptr_t dst, intptr_t src, int prot) {
     perror("ioctl/copy");
     exit(1);
   }
+  printf("resolved page fault");
 }
-
-void *page_fault_service(void *args);
-void *page_manage_service(void *args);
-
-int faultfd_init(void *mem_addr, size_t length);
 
 char *dsm::dsm_init_master(NodeAddr self, size_t size) {
   int swap_fd = memfd_create(".swap", 0);
   ftruncate(swap_fd, size);
   char *mem_region =
       (char *)mmap(0, size, PROT_READ | PROT_WRITE, MAP_SHARED, swap_fd, 0);
-  int ipc_fd = memfd_create(".ipc", 0);
-  ftruncate(ipc_fd, PAGE_SIZE * 2);
-  char *ipc_region = (char *)mmap(0, PAGE_SIZE * 2, PROT_READ | PROT_WRITE,
-                                  MAP_SHARED, swap_fd, 0);
+  int proj_id = rand();
+  key_t ipc_key = ftok("./ipc", proj_id);
+  int shmid = shmget(ipc_key, PAGE_SIZE * 2, 0666 | IPC_CREAT);
+  void *ipc_region = shmat(shmid, nullptr, 0);
+  dsm_kernel_ipc_region::dsm_region_init((dsm_kernel_ipc_region *)ipc_region);
   DEBUG_STMT(printf("addr of mem_region: 0x%lx\n", ((intptr_t)mem_region)));
   int uffd = faultfd_init(mem_region, size);
   if (fork() == 0) {
     DSMNode *node;
     DEBUG_STMT(printf("create master\n"));
     DEBUG_STMT(printf("make new node\n"));
-    node = new DSMNode(self, mem_region, size, true, swap_fd);
+    node = new DSMNode(self, mem_region, size, true, swap_fd, ipc_region);
     DSMSync::create(node);
     DEBUG_STMT(printf("finish make new node\n"));
-    page_fault_service(ipc_region);
+    page_fault_service(&uffd);
   } else {
     pthread_t t;
+    DEBUG_STMT(printf("start page manage service\n"));
     pthread_create(&t, NULL, page_manage_service, ipc_region);
   }
   return mem_region;
 }
-char *dsm::dsm_init_node(NodeAddr self, NodeAddr dst, size_t size) {
-  dsm_init();
+char *dsm::dsm_init_node(NodeAddr self, NodeAddr dst, size_t size,
+                         int node_id) {
   int swap_fd = memfd_create(".swap", 0);
   ftruncate(swap_fd, size);
   char *mem_region =
       (char *)mmap(0, size, PROT_READ | PROT_WRITE, MAP_SHARED, swap_fd, 0);
-  int ipc_fd = memfd_create(".ipc", 0);
-  ftruncate(ipc_fd, PAGE_SIZE * 2);
-  char *ipc_region = (char *)mmap(0, PAGE_SIZE * 2, PROT_READ | PROT_WRITE,
-                                  MAP_SHARED, swap_fd, 0);
+  int proj_id = rand();
+  key_t ipc_key = ftok("./ipc", proj_id + node_id);
+  int shmid = shmget(ipc_key, PAGE_SIZE * 2, 0666 | IPC_CREAT);
+  void *ipc_region = shmat(shmid, nullptr, 0);
+  dsm_kernel_ipc_region::dsm_region_init((dsm_kernel_ipc_region *)ipc_region);
   DEBUG_STMT(printf("addr of mem_region: 0x%lx\n", ((intptr_t)mem_region)));
   int uffd = faultfd_init(mem_region, size);
   if (fork() == 0) {
     DSMNode *node;
     DEBUG_STMT(printf("create process\n"));
     DEBUG_STMT(printf("make new node\n"));
-    node = new DSMNode(self, mem_region, size, false, swap_fd);
+    node = new DSMNode(self, mem_region, size, false, swap_fd, ipc_region);
     DSMSync::create(node);
     DEBUG_STMT(printf("finish make new node\n"));
     NodeAddr dst_addr;
     DEBUG_STMT(printf("try connect\n"));
     node->connect(dst);
-    page_fault_service(ipc_region);
+    page_fault_service(&uffd);
   } else {
     pthread_t t;
+    DEBUG_STMT(printf("start page manage service\n"));
     pthread_create(&t, NULL, page_manage_service, ipc_region);
   }
   return mem_region;
@@ -177,22 +183,21 @@ page DSMNode::response_write(uint64_t relative_page_id) {
       READABLE(this->page_info[relative_page_id])) {
 
 #ifndef RELEASE_CONSISTANCY
-    mprotect((void *)VPID2VPADDR(pagenum), PAGE_SIZE, PROT_NONE);
+    this->ipc_region->mprotect_req((void *)VPID2VPADDR(pagenum), PAGE_SIZE,
+                                   PROT_NONE);
 #endif
     if (OWNERSHIP(this->page_info[relative_page_id])) {
 #ifdef RELEASE_CONSISTANCY
       this->page_info[relative_page_id] = DSM_PROT_READ;
-      mprotect(relative_page_id_to_addr(relative_page_id), PAGE_SIZE,
-               PROT_READ);
+      this->ipc_region->mprotect_req(relative_page_id_to_addr(relative_page_id),
+                                     PAGE_SIZE, PROT_READ);
 #else
       this->page_info[relative_page_id] = 0;
 #endif
       this_thread::sleep_for(std::chrono::milliseconds(random() % 100));
       res.resize(PAGE_SIZE);
-      void *buf = mmap(nullptr, PAGE_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED,
-                       this->swap_file_fd, VPID2VPADDR(relative_page_id));
-      memcpy(&res[0], buf, PAGE_SIZE);
-      munmap(buf, PAGE_SIZE);
+      this->ipc_region->page_copy_req(
+          &res[0], relative_page_id_to_addr(relative_page_id));
       DEBUG_STMT(printf("setup result page\n"));
     }
   }
@@ -219,7 +224,7 @@ page DSMNode::response_read(uint64_t relative_page_id) {
     this->page_info[relative_page_id] = DSM_PROT_OWNED;
 #endif
     res.resize(PAGE_SIZE);
-    memcpy(&res[0], relative_page_id_to_addr(relative_page_id), PAGE_SIZE);
+    this->ipc_region->page_copy_req(&res[0], relative_page_id_to_addr(relative_page_id));
     DEBUG_STMT(printf("master respond done\n"));
   }
   UNLOCK(this->mu)
@@ -347,7 +352,8 @@ bool DSMNode::grant_write(char *addr) {
   if (res) {
     LOCK(this->mu)
     this->page_info[relative_page_id] = DSM_PROT_WRITE;
-    mprotect((void *)FLOOR((intptr_t)addr), PAGE_SIZE, PROT_READ | PROT_WRITE);
+    this->ipc_region->mprotect_req((void *)FLOOR((intptr_t)addr), PAGE_SIZE,
+                                   PROT_READ | PROT_WRITE);
     UNLOCK(this->mu)
   }
   return res;
@@ -361,7 +367,8 @@ bool DSMNode::grant_read(char *addr) {
   if (res) {
     LOCK(this->mu)
     this->page_info[relative_page_id] = DSM_PROT_READ;
-    mprotect((void *)FLOOR((intptr_t)addr), PAGE_SIZE, PROT_READ);
+    this->ipc_region->mprotect_req((void *)FLOOR((intptr_t)addr), PAGE_SIZE,
+                                   PROT_READ);
     UNLOCK(this->mu)
   }
   return res;
@@ -371,13 +378,14 @@ void DSMNode::sync() {
   for (int i = 0; i < this->page_info.size(); i++) {
     if (OWNERSHIP(this->page_info[i]))
       continue;
-    mprotect(relative_page_id_to_addr(i), PAGE_SIZE, PROT_NONE);
+    this->ipc_region->mprotect_req(relative_page_id_to_addr(i), PAGE_SIZE,
+                                   PROT_NONE);
   }
 }
 
 DSMNode::DSMNode(NodeAddr m_addr, void *_base, size_t _len, bool is_master,
-                 int swapfd) {
-
+                 int swapfd, void *ipc_region) {
+  this->ipc_region = (dsm_kernel_ipc_region *)ipc_region;
   this->swap_file_fd = swapfd;
   DEBUG_STMT(printf("is master %d\n", is_master));
   int pages = VPADDR2VPID(_len);
@@ -389,7 +397,7 @@ DSMNode::DSMNode(NodeAddr m_addr, void *_base, size_t _len, bool is_master,
   DEBUG_STMT(printf("check mmap equal %lx\n", (intptr_t)this->base));
   ASSERT_PERROR(this->base);
   if (!is_master) {
-    mprotect(_base, _len, PROT_NONE);
+    this->ipc_region->mprotect_req(_base, _len, PROT_NONE);
   }
 
   DEBUG_STMT(printf("setup mem\n"));
@@ -421,181 +429,82 @@ DSMNode::DSMNode(NodeAddr m_addr, void *_base, size_t _len, bool is_master,
   DEBUG_STMT(printf("run server\n"));
 }
 
-int faultfd_init(void *mem_addr, size_t length) {
-  int uffd;
-  void *region;
-
-  // open the userfault fd
-  uffd = syscall(__NR_userfaultfd, O_CLOEXEC | O_NONBLOCK);
-  if (uffd == -1) {
-    perror("syscall/userfaultfd");
-    exit(1);
+#define YIELD_LOCK(mu)                                                         \
+  {                                                                            \
+    UNLOCK(mu);                                                                \
+    sched_yield();                                                             \
+    LOCK(mu);                                                                  \
   }
-
-  // enable for api version and check features
-  struct uffdio_api uffdio_api;
-  uffdio_api.api = UFFD_API;
-  uffdio_api.features = 0;
-  if (ioctl(uffd, UFFDIO_API, &uffdio_api) == -1) {
-    perror("ioctl/uffdio_api");
-    exit(1);
-  }
-
-  if (uffdio_api.api != UFFD_API) {
-    fprintf(stderr, "unsupported userfaultfd api\n");
-    exit(1);
-  }
-
-  // allocate a memory region to be managed by userfaultfd
-  region = mmap(NULL, length, PROT_READ | PROT_WRITE,
-                MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-  if (region == MAP_FAILED) {
-    perror("mmap");
-    exit(1);
-  }
-
-  // register the pages in the region for missing callbacks
-  struct uffdio_register uffdio_register;
-  uffdio_register.range.start = (unsigned long)region;
-  uffdio_register.range.len = length;
-  uffdio_register.mode = UFFDIO_REGISTER_MODE_MISSING;
-  if (ioctl(uffd, UFFDIO_REGISTER, &uffdio_register) == -1) {
-    perror("ioctl/uffdio_register");
-    exit(1);
-  }
-
-  if ((uffdio_register.ioctls & UFFD_API_RANGE_IOCTLS) !=
-      UFFD_API_RANGE_IOCTLS) {
-    fprintf(stderr, "unexpected userfaultfd ioctl set\n");
-    // exit(1);
-  }
-  return uffd;
-}
-
-void *page_fault_service(void *args) {
-  prctl(PR_SET_PDEATHSIG, 9);
-  int uffd = *(int *)args;
-  char buf[PAGE_SIZE];
-
-  for (;;) {
-    struct uffd_msg msg;
-
-    struct pollfd pollfd[1];
-    pollfd[0].fd = uffd;
-    pollfd[0].events = POLLIN;
-    printf("page fault\n");
-
-    // wait for a userfaultfd event to occur
-    int pollres = poll(pollfd, 1, 2000);
-
-    switch (pollres) {
-    case -1:
-      perror("poll/userfaultfd");
-      continue;
-    case 0:
-      continue;
-    case 1:
-      break;
-    default:
-      fprintf(stderr, "unexpected poll result\n");
-      exit(1);
-    }
-
-    if (pollfd[0].revents & POLLERR) {
-      fprintf(stderr, "pollerr\n");
-      exit(1);
-    }
-
-    if (!pollfd[0].revents & POLLIN) {
-      continue;
-    }
-    int readres = read(uffd, &msg, sizeof(msg));
-    if (readres == -1) {
-      if (errno == EAGAIN)
-        continue;
-      perror("read/userfaultfd");
-      exit(1);
-    }
-
-    if (readres != sizeof(msg)) {
-      fprintf(stderr, "invalid msg size\n");
-      exit(1);
-    }
-
-    // handle the page fault by copying a page worth of bytes
-    if (msg.event & UFFD_EVENT_PAGEFAULT) {
-
-      bool write_fault = msg.arg.pagefault.flags & UFFD_PAGEFAULT_FLAG_WP;
-      char *addr = (char *)msg.arg.pagefault.address;
-      bool err = write_fault ? dsm_singleton->grant_write(addr)
-                             : dsm_singleton->grant_read(addr);
-      if (err) {
-        printf("unknown error when resolving page fault\n");
-        exit(-1);
-      }
-    }
-  }
-  return NULL;
-}
-
-void *page_manage_service(void *args) {
-  dsm_kernel_ipc_region *ipc = (dsm_kernel_ipc_region *)args;
-  ipc->run_ipc_server();
-  return nullptr;
-}
 
 void dsm_kernel_ipc_region::run_ipc_server() {
-    pthread_mutex_lock(&this->mu);
-    while(1) {
-        if (this->event_id == IPC_NONE) pthread_cond_wait(&this->request, &this->mu);
-        switch (this->event_id) {
-            case IPC_PAGE_COPY:
-                memcpy(this->page, this->event.page_copy.src, PAGE_SIZE);
-                this->event_id = IPC_COMPLETE;
-                break;
-            case IPC_MPROTECT:
-                mprotect(this->event.mprotect.addr, this->event.mprotect.len, this->event.mprotect.prot);
-                this->event_id = IPC_COMPLETE;
-                break;
-            default:
-                break;
-        }
+  while (1) {
+    while (this->event_id == IPC_NONE) {
+      sched_yield();
     }
-    pthread_mutex_unlock(&this->mu);
+    DEBUG_STMT(printf("request received\n"));
+    switch (this->event_id) {
+    case IPC_PAGE_COPY:
+      memcpy(this->page, this->event.page_copy.src, PAGE_SIZE);
+      this->event_id = IPC_COMPLETE;
+      DEBUG_STMT(printf("done copy request\n"));
+      break;
+    case IPC_MPROTECT:
+      DEBUG_STMT(printf("try mprotect request %lx, %lx, %d\n",
+                        (intptr_t)this->event.mprotect.addr,
+                        this->event.mprotect.len, this->event.mprotect.prot));
+      mprotect(this->event.mprotect.addr, this->event.mprotect.len,
+               this->event.mprotect.prot);
+      DEBUG_STMT(printf("done mprotect request\n"));
+      this->event_id = IPC_COMPLETE;
+      DEBUG_STMT(printf("done mprotect request\n"));
+      break;
+    default:
+      break;
+    }
+    DEBUG_STMT(printf("request finished\n"));
+  }
 }
 
-void dsm_kernel_ipc_region::page_copy(char *dst, const char *src) {
-    pthread_mutex_lock(&this->mu);
-    while(this->event_id != IPC_NONE) {
-        pthread_cond_wait(&this->busy, &this->mu);
-    }
-    this->event_id = IPC_PAGE_COPY;
-    this->event.page_copy.src = src;
-    pthread_cond_wait(&this->complete, &this->mu);
-    memcpy(dst, this->page, PAGE_SIZE);
-    this->event_id = IPC_NONE;
-    pthread_mutex_unlock(&this->mu);
+#define SPIN_LOCK(mu)                                                          \
+  {                                                                            \
+    while (test_and_set(&mu))                                                  \
+      ;                                                                        \
+  }
+#define SPIN_UNLOCK(mu)                                                        \
+  { mu = 0; }
+
+void dsm_kernel_ipc_region::page_copy_req(char *dst, const char *src) {
+  SPIN_LOCK(this->mu);
+  DEBUG_STMT(printf("try send copy request\n"));
+  while (this->event_id != IPC_NONE) {
+    sched_yield();
+  }
+  this->event.page_copy.src = src;
+  this->event_id = IPC_PAGE_COPY;
+  SPIN_UNLOCK(this->mu);
+  DEBUG_STMT(printf("request sent\n"));
+  while (this->event_id != IPC_COMPLETE) {
+    sched_yield();
+  }
+  memcpy(dst, this->page, PAGE_SIZE);
+  this->event_id = IPC_NONE;
 }
 
-void dsm_kernel_ipc_region::mprotect(char *addr, size_t len, int prot) {
-    pthread_mutex_lock(&this->mu);
-    while(this->event_id != IPC_NONE) {
-        pthread_cond_wait(&this->busy, &this->mu);
-    }
-    this->event_id = IPC_MPROTECT;
-    this->event.mprotect.addr = addr;
-    this->event.mprotect.len = len;
-    this->event.mprotect.prot = prot;
-    pthread_cond_wait(&this->complete, &this->mu);
-    this->event_id = IPC_NONE;
-    pthread_mutex_unlock(&this->mu);
+void dsm_kernel_ipc_region::mprotect_req(void *addr, size_t len, int prot) {
+  SPIN_LOCK(this->mu);
+  DEBUG_STMT(printf("try send mprotect request\n"));
+  while (this->event_id != IPC_NONE) {
+    sched_yield();
+  }
+  this->event.mprotect.addr = addr;
+  this->event.mprotect.len = len;
+  this->event.mprotect.prot = prot;
+  this->event_id = IPC_MPROTECT;
+  SPIN_UNLOCK(this->mu);
+  DEBUG_STMT(printf("request sent\n"));
+  while (this->event_id != IPC_COMPLETE) {
+    sched_yield();
+  }
+  DEBUG_STMT(printf("request done\n"));
+  this->event_id = IPC_NONE;
 }
-
-
-
-
-
-
-
-
-

@@ -9,6 +9,7 @@ CMakeFiles/test1.dir/examples/test1.cpp.o
  /home/arthur/Documents/repos/dsm_system/src/include/simple_mutex.hpp
  /home/arthur/Documents/repos/dsm_system/src/include/singleton.hpp
  /home/arthur/Documents/repos/dsm_system/src/include/sync_interface.hpp
+ /home/arthur/Documents/repos/dsm_system/src/include/test_and_set.hpp
  /usr/include/alloca.h
  /usr/include/arpa/inet.h
  /usr/include/asm-generic/bitsperlong.h

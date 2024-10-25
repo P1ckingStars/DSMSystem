@@ -8,6 +8,7 @@ CMakeFiles/test1.dir/examples/test1.cpp.o: /home/arthur/Documents/repos/dsm_syst
   /home/arthur/Documents/repos/dsm_system/src/include/simple_mutex.hpp \
   /home/arthur/Documents/repos/dsm_system/src/include/singleton.hpp \
   /home/arthur/Documents/repos/dsm_system/src/include/sync_interface.hpp \
+  /home/arthur/Documents/repos/dsm_system/src/include/test_and_set.hpp \
   /usr/include/alloca.h \
   /usr/include/arpa/inet.h \
   /usr/include/asm-generic/bitsperlong.h \
@@ -1195,6 +1196,8 @@ CMakeFiles/test1.dir/examples/test1.cpp.o: /home/arthur/Documents/repos/dsm_syst
 
 /usr/include/rpc/msgpack/preprocessor/facilities/is_1.hpp:
 
+/usr/include/rpc/msgpack/preprocessor/facilities/intercept.hpp:
+
 /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/messages_members.h:
 
 /usr/include/rpc/config.h:
@@ -1469,6 +1472,8 @@ CMakeFiles/test1.dir/examples/test1.cpp.o: /home/arthur/Documents/repos/dsm_syst
 
 /usr/include/c++/14.2.1/bits/stl_list.h:
 
+/usr/include/bits/uintn-identity.h:
+
 /usr/include/c++/14.2.1/bits/atomic_base.h:
 
 /usr/include/bits/endian.h:
@@ -1583,6 +1588,16 @@ CMakeFiles/test1.dir/examples/test1.cpp.o: /home/arthur/Documents/repos/dsm_syst
 
 /usr/include/rpc/msgpack/predef/hardware/simd/arm/versions.h:
 
+/usr/include/bits/types/struct_iovec.h:
+
+/usr/include/c++/14.2.1/bits/shared_ptr_base.h:
+
+/usr/include/rpc/msgpack/object.hpp:
+
+/usr/include/rpc/msgpack/v1/adaptor/bool.hpp:
+
+/usr/include/rpc/msgpack/predef/detail/_cassert.h:
+
 /usr/include/sys/single_threaded.h:
 
 /usr/include/asm-generic/errno.h:
@@ -1593,9 +1608,13 @@ CMakeFiles/test1.dir/examples/test1.cpp.o: /home/arthur/Documents/repos/dsm_syst
 
 /usr/include/c++/14.2.1/limits:
 
-/usr/include/c++/14.2.1/debug/debug.h:
+/usr/include/rpc/msgpack/preprocessor/seq/for_each.hpp:
 
-/usr/include/c++/14.2.1/bits/allocator.h:
+/usr/include/c++/14.2.1/bits/unordered_map.h:
+
+/usr/include/c++/14.2.1/algorithm:
+
+/usr/include/c++/14.2.1/bits/postypes.h:
 
 /usr/include/rpc/msgpack/preprocessor/repetition/enum.hpp:
 
@@ -1612,14 +1631,6 @@ CMakeFiles/test1.dir/examples/test1.cpp.o: /home/arthur/Documents/repos/dsm_syst
 /usr/include/bits/thread-shared-types.h:
 
 /usr/include/rpc/msgpack/predef.h:
-
-/usr/include/c++/14.2.1/bits/postypes.h:
-
-/usr/include/rpc/msgpack/preprocessor/seq/for_each.hpp:
-
-/usr/include/c++/14.2.1/bits/unordered_map.h:
-
-/usr/include/c++/14.2.1/algorithm:
 
 /usr/include/rpc/msgpack/preprocessor/repetition/enum_params_with_defaults.hpp:
 
@@ -1661,12 +1672,6 @@ CMakeFiles/test1.dir/examples/test1.cpp.o: /home/arthur/Documents/repos/dsm_syst
 
 /usr/include/c++/14.2.1/bits/stl_vector.h:
 
-/usr/include/bits/types.h:
-
-/usr/include/rpc/msgpack/preprocessor/tuple/push_back.hpp:
-
-/usr/include/rpc/msgpack/predef/compiler/microtec.h:
-
 /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/ctype_inline.h:
 
 /usr/include/rpc/msgpack/predef/compiler/clang.h:
@@ -1705,6 +1710,10 @@ CMakeFiles/test1.dir/examples/test1.cpp.o: /home/arthur/Documents/repos/dsm_syst
 
 /usr/include/rpc/msgpack/predef/compiler/digitalmars.h:
 
+/usr/include/c++/14.2.1/debug/debug.h:
+
+/usr/include/c++/14.2.1/bits/allocator.h:
+
 /usr/include/c++/14.2.1/bits/align.h:
 
 /usr/include/rpc/msgpack/cpp_config.hpp:
@@ -1720,16 +1729,6 @@ CMakeFiles/test1.dir/examples/test1.cpp.o: /home/arthur/Documents/repos/dsm_syst
 /usr/include/bits/time64.h:
 
 /usr/include/rpc/msgpack/predef/detail/_exception.h:
-
-/usr/include/sys/types.h:
-
-/usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/os_defines.h:
-
-/usr/include/rpc/msgpack/v2/null_visitor.hpp:
-
-/usr/include/bits/types/struct_osockaddr.h:
-
-/usr/include/rpc/msgpack/predef/platform/mingw.h:
 
 /usr/include/bits/sockaddr.h:
 
@@ -1755,17 +1754,11 @@ CMakeFiles/test1.dir/examples/test1.cpp.o: /home/arthur/Documents/repos/dsm_syst
 
 /usr/include/bits/errno.h:
 
-/usr/include/bits/uintn-identity.h:
+/usr/include/bits/types.h:
 
-/usr/include/bits/types/struct_iovec.h:
+/usr/include/rpc/msgpack/preprocessor/tuple/push_back.hpp:
 
-/usr/include/c++/14.2.1/bits/shared_ptr_base.h:
-
-/usr/include/rpc/msgpack/object.hpp:
-
-/usr/include/rpc/msgpack/v1/adaptor/bool.hpp:
-
-/usr/include/rpc/msgpack/predef/detail/_cassert.h:
+/usr/include/rpc/msgpack/predef/compiler/microtec.h:
 
 /usr/include/rpc/msgpack/preprocessor/tuple/push_front.hpp:
 
@@ -1915,6 +1908,16 @@ CMakeFiles/test1.dir/examples/test1.cpp.o: /home/arthur/Documents/repos/dsm_syst
 
 /usr/include/rpc/msgpack/preprocessor/array/size.hpp:
 
+/home/arthur/Documents/repos/dsm_system/src/include/test_and_set.hpp:
+
+/usr/include/bits/atomic_wide_counter.h:
+
+/usr/include/rpc/msgpack/predef/compiler/ibm.h:
+
+/usr/include/bits/types/cookie_io_functions_t.h:
+
+/usr/include/rpc/msgpack/predef/os/haiku.h:
+
 /usr/include/rpc/msgpack/preprocessor/list/fold_left.hpp:
 
 /usr/include/c++/14.2.1/bits/allocated_ptr.h:
@@ -1953,13 +1956,21 @@ CMakeFiles/test1.dir/examples/test1.cpp.o: /home/arthur/Documents/repos/dsm_syst
 
 /usr/include/c++/14.2.1/bits/codecvt.h:
 
-/usr/include/rpc/msgpack/preprocessor/facilities/intercept.hpp:
-
 /usr/include/bits/floatn.h:
 
 /usr/include/asm-generic/posix_types.h:
 
 /usr/include/c++/14.2.1/atomic:
+
+/usr/include/sys/types.h:
+
+/usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/os_defines.h:
+
+/usr/include/rpc/msgpack/v2/null_visitor.hpp:
+
+/usr/include/bits/types/struct_osockaddr.h:
+
+/usr/include/rpc/msgpack/predef/platform/mingw.h:
 
 /usr/include/rpc/msgpack/v2/iterator_decl.hpp:
 
@@ -2270,14 +2281,6 @@ CMakeFiles/test1.dir/examples/test1.cpp.o: /home/arthur/Documents/repos/dsm_syst
 /usr/include/rpc/msgpack/preprocessor/list/for_each.hpp:
 
 /usr/include/rpc/msgpack/predef/compiler/hp_acc.h:
-
-/usr/include/bits/atomic_wide_counter.h:
-
-/usr/include/rpc/msgpack/predef/compiler/ibm.h:
-
-/usr/include/bits/types/cookie_io_functions_t.h:
-
-/usr/include/rpc/msgpack/predef/os/haiku.h:
 
 /usr/include/rpc/msgpack/predef/compiler/intel.h:
 

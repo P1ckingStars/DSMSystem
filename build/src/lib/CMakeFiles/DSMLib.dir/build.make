@@ -111,11 +111,26 @@ src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/DSMLib.dir/dsm_node.cpp.s"
 	cd /home/arthur/Documents/repos/dsm_system/build/src/lib && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arthur/Documents/repos/dsm_system/src/lib/dsm_node.cpp -o CMakeFiles/DSMLib.dir/dsm_node.cpp.s
 
+src/lib/CMakeFiles/DSMLib.dir/fault.cpp.o: src/lib/CMakeFiles/DSMLib.dir/flags.make
+src/lib/CMakeFiles/DSMLib.dir/fault.cpp.o: /home/arthur/Documents/repos/dsm_system/src/lib/fault.cpp
+src/lib/CMakeFiles/DSMLib.dir/fault.cpp.o: src/lib/CMakeFiles/DSMLib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/arthur/Documents/repos/dsm_system/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object src/lib/CMakeFiles/DSMLib.dir/fault.cpp.o"
+	cd /home/arthur/Documents/repos/dsm_system/build/src/lib && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/lib/CMakeFiles/DSMLib.dir/fault.cpp.o -MF CMakeFiles/DSMLib.dir/fault.cpp.o.d -o CMakeFiles/DSMLib.dir/fault.cpp.o -c /home/arthur/Documents/repos/dsm_system/src/lib/fault.cpp
+
+src/lib/CMakeFiles/DSMLib.dir/fault.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/DSMLib.dir/fault.cpp.i"
+	cd /home/arthur/Documents/repos/dsm_system/build/src/lib && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/arthur/Documents/repos/dsm_system/src/lib/fault.cpp > CMakeFiles/DSMLib.dir/fault.cpp.i
+
+src/lib/CMakeFiles/DSMLib.dir/fault.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/DSMLib.dir/fault.cpp.s"
+	cd /home/arthur/Documents/repos/dsm_system/build/src/lib && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arthur/Documents/repos/dsm_system/src/lib/fault.cpp -o CMakeFiles/DSMLib.dir/fault.cpp.s
+
 # Object files for target DSMLib
 DSMLib_OBJECTS = \
 "CMakeFiles/DSMLib.dir/simple_mutex.cpp.o" \
 "CMakeFiles/DSMLib.dir/main.cpp.o" \
-"CMakeFiles/DSMLib.dir/dsm_node.cpp.o"
+"CMakeFiles/DSMLib.dir/dsm_node.cpp.o" \
+"CMakeFiles/DSMLib.dir/fault.cpp.o"
 
 # External object files for target DSMLib
 DSMLib_EXTERNAL_OBJECTS =
@@ -123,9 +138,10 @@ DSMLib_EXTERNAL_OBJECTS =
 src/lib/libDSMLib.a: src/lib/CMakeFiles/DSMLib.dir/simple_mutex.cpp.o
 src/lib/libDSMLib.a: src/lib/CMakeFiles/DSMLib.dir/main.cpp.o
 src/lib/libDSMLib.a: src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.o
+src/lib/libDSMLib.a: src/lib/CMakeFiles/DSMLib.dir/fault.cpp.o
 src/lib/libDSMLib.a: src/lib/CMakeFiles/DSMLib.dir/build.make
 src/lib/libDSMLib.a: src/lib/CMakeFiles/DSMLib.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/arthur/Documents/repos/dsm_system/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX static library libDSMLib.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/arthur/Documents/repos/dsm_system/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX static library libDSMLib.a"
 	cd /home/arthur/Documents/repos/dsm_system/build/src/lib && $(CMAKE_COMMAND) -P CMakeFiles/DSMLib.dir/cmake_clean_target.cmake
 	cd /home/arthur/Documents/repos/dsm_system/build/src/lib && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/DSMLib.dir/link.txt --verbose=$(VERBOSE)
 

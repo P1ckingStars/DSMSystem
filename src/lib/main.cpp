@@ -17,8 +17,10 @@ extern char __etext;
 int dsm_main(char * mem_region, size_t length, int argc, char * argv[]);
 
 int main(int argc, char * argv[]) {
+    srand(time(0));
     char * mem_region;
     bool is_master = atoi(argv[1]) == 0;
+    int node_id = atoi(argv[1]);
     int pages = atoi(argv[2]);
     if (is_master) {
         printf("create master\n");
@@ -34,7 +36,7 @@ int main(int argc, char * argv[]) {
         NodeAddr dst_addr;
         dst_addr.ip = string(argv[5]);
         dst_addr.port = stoi(argv[6]);
-        mem_region = dsm_init_node(addr, dst_addr, PAGE_SIZE * pages);
+        mem_region = dsm_init_node(addr, dst_addr, PAGE_SIZE * pages, node_id);
     }
 
     printf("start running with %d pages...\n", pages);

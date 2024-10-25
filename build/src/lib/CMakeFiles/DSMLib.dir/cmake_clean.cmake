@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/DSMLib.dir/dsm_node.cpp.o"
   "CMakeFiles/DSMLib.dir/dsm_node.cpp.o.d"
+  "CMakeFiles/DSMLib.dir/fault.cpp.o"
+  "CMakeFiles/DSMLib.dir/fault.cpp.o.d"
   "CMakeFiles/DSMLib.dir/main.cpp.o"
   "CMakeFiles/DSMLib.dir/main.cpp.o.d"
   "CMakeFiles/DSMLib.dir/simple_mutex.cpp.o"

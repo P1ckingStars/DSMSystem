@@ -737,4 +737,6 @@ src/lib/CMakeFiles/DSMLib.dir/simple_mutex.cpp.o: \
  /usr/include/rpc/detail/not.h /usr/include/rpc/detail/response.h \
  /usr/include/rpc/detail/make_unique.h /usr/include/rpc/dispatcher.inl \
  /usr/include/rpc/detail/pimpl.h \
- /home/arthur/Documents/repos/dsm_system/src/include/singleton.hpp
+ /home/arthur/Documents/repos/dsm_system/src/include/singleton.hpp \
+ /home/arthur/Documents/repos/dsm_system/src/include/test_and_set.hpp \
+ /home/arthur/Documents/repos/dsm_system/src/include/test_and_set.hpp

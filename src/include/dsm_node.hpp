@@ -52,22 +52,19 @@ struct NodeAddr {
 };
 
 #define IPC_NONE        0
-#define IPC_PAGE_COPY   1
-#define IPC_MPROTECT    2
-#define IPC_COMPLETE    3
+#define IPC_REQ         1
+#define IPC_PAGE_COPY   2
+#define IPC_MPROTECT    3
+#define IPC_COMPLETE    4
 
 class dsm_kernel_ipc_region {
     char page[PAGE_SIZE];
-    pthread_mutex_t mu;
-    pthread_cond_t complete;
-    pthread_cond_t request;
-    pthread_cond_t busy;
     int event_id;
+    int mu;
     union {
         struct {
             char const * src;
         } page_copy;
-
         struct {
             void * addr;
             size_t len;
@@ -75,14 +72,16 @@ class dsm_kernel_ipc_region {
         } mprotect;
     } event;
 public:
+    static void dsm_region_init(dsm_kernel_ipc_region * addr) {
+        addr->event_id = IPC_NONE;
+    }
     void run_ipc_server();
-    void page_copy(char * dst, const char * src);
-    void mprotect(void * addr, size_t len, int prot);
+    void page_copy_req(char * dst, const char * src);
+    void mprotect_req(void * addr, size_t len, int prot);
 };
 
-void dsm_init();
 char * dsm_init_master(NodeAddr self, size_t size);
-char * dsm_init_node(NodeAddr self, NodeAddr dst, size_t size);
+char * dsm_init_node(NodeAddr self, NodeAddr dst, size_t size, int node_id);
 
 typedef vector<char> page;
 
@@ -135,7 +134,7 @@ class DSMNode {
 
 public:
     DSMNode(NodeAddr m_addr, void *base, size_t len, 
-             bool is_master, int swapfd);
+             bool is_master, int swapfd, void * ipc_region);
     ~DSMNode() {
         if (!!tid)
             pthread_cancel(tid);
@@ -148,6 +147,8 @@ public:
     bool grant_read(char *addr);
     bool is_in_range(char *addr);
 };
+
+extern DSMNode *dsm_singleton;
 
 } // namespace dsm
 #endif
