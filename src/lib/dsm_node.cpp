@@ -376,7 +376,7 @@ DSMNode::DSMNode(NodeAddr m_addr, void * _base, size_t _len, bool is_master, int
     dsm_singleton = this;
     pthread_create(&this->tid, NULL, [](void * input) -> void * {
         rpc::server * serv = (rpc::server *)input;
-        serv->run();
+        serv->async_run(4);
         return nullptr;
     }, serv);
     DEBUG_STMT(printf("run server\n"));

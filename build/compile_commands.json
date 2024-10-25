@@ -1,0 +1,26 @@
+[
+{
+  "directory": "/home/arthur/Documents/repos/dsm_system/build",
+  "command": "/usr/bin/c++  -I/home/arthur/Documents/repos/dsm_system/build -I/home/arthur/Documents/repos/dsm_system/src/include -std=gnu++11 -o CMakeFiles/test1.dir/examples/test1.cpp.o -c /home/arthur/Documents/repos/dsm_system/examples/test1.cpp",
+  "file": "/home/arthur/Documents/repos/dsm_system/examples/test1.cpp",
+  "output": "CMakeFiles/test1.dir/examples/test1.cpp.o"
+},
+{
+  "directory": "/home/arthur/Documents/repos/dsm_system/build/src/lib",
+  "command": "/usr/bin/c++  -I/home/arthur/Documents/repos/dsm_system/src/include -std=gnu++11 -o CMakeFiles/DSMLib.dir/simple_mutex.cpp.o -c /home/arthur/Documents/repos/dsm_system/src/lib/simple_mutex.cpp",
+  "file": "/home/arthur/Documents/repos/dsm_system/src/lib/simple_mutex.cpp",
+  "output": "src/lib/CMakeFiles/DSMLib.dir/simple_mutex.cpp.o"
+},
+{
+  "directory": "/home/arthur/Documents/repos/dsm_system/build/src/lib",
+  "command": "/usr/bin/c++  -I/home/arthur/Documents/repos/dsm_system/src/include -std=gnu++11 -o CMakeFiles/DSMLib.dir/main.cpp.o -c /home/arthur/Documents/repos/dsm_system/src/lib/main.cpp",
+  "file": "/home/arthur/Documents/repos/dsm_system/src/lib/main.cpp",
+  "output": "src/lib/CMakeFiles/DSMLib.dir/main.cpp.o"
+},
+{
+  "directory": "/home/arthur/Documents/repos/dsm_system/build/src/lib",
+  "command": "/usr/bin/c++  -I/home/arthur/Documents/repos/dsm_system/src/include -std=gnu++11 -o CMakeFiles/DSMLib.dir/dsm_node.cpp.o -c /home/arthur/Documents/repos/dsm_system/src/lib/dsm_node.cpp",
+  "file": "/home/arthur/Documents/repos/dsm_system/src/lib/dsm_node.cpp",
+  "output": "src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.o"
+}
+]

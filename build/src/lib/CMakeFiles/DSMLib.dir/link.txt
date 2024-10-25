@@ -1,0 +1,2 @@
+/usr/bin/ar qc libDSMLib.a CMakeFiles/DSMLib.dir/simple_mutex.cpp.o CMakeFiles/DSMLib.dir/main.cpp.o CMakeFiles/DSMLib.dir/dsm_node.cpp.o
+/usr/bin/ranlib libDSMLib.a
