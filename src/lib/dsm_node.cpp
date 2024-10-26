@@ -110,8 +110,9 @@ char *dsm::dsm_init_node(NodeAddr self, NodeAddr dst, size_t size,
   int proj_id = rand();
   key_t ipc_key = ftok("./ipc", proj_id + node_id);
   int shmid = shmget(ipc_key, PAGE_SIZE * 2, 0666 | IPC_CREAT);
-  void *ipc_region = shmat(shmid, nullptr, 0);
-  dsm_kernel_ipc_region::dsm_region_init((dsm_kernel_ipc_region *)ipc_region);
+  dsm_kernel_ipc_region *ipc_region =
+      (dsm_kernel_ipc_region *)shmat(shmid, nullptr, 0);
+  dsm_kernel_ipc_region::dsm_region_init(ipc_region);
   DEBUG_STMT(printf("addr of mem_region: 0x%lx\n", ((intptr_t)mem_region)));
   int uffd = faultfd_init(mem_region, size);
   if (fork() == 0) {
@@ -124,12 +125,14 @@ char *dsm::dsm_init_node(NodeAddr self, NodeAddr dst, size_t size,
     NodeAddr dst_addr;
     DEBUG_STMT(printf("try connect\n"));
     node->connect(dst);
+    ipc_region->complete_dsm_setup();
     page_fault_service(&uffd);
   } else {
     pthread_t t;
     DEBUG_STMT(printf("start page manage service\n"));
     pthread_create(&t, NULL, page_manage_service, ipc_region);
   }
+  ipc_region->wait_setup();
   return mem_region;
 }
 
@@ -224,7 +227,8 @@ page DSMNode::response_read(uint64_t relative_page_id) {
     this->page_info[relative_page_id] = DSM_PROT_OWNED;
 #endif
     res.resize(PAGE_SIZE);
-    this->ipc_region->page_copy_req(&res[0], relative_page_id_to_addr(relative_page_id));
+    this->ipc_region->page_copy_req(&res[0],
+                                    relative_page_id_to_addr(relative_page_id));
     DEBUG_STMT(printf("master respond done\n"));
   }
   UNLOCK(this->mu)
@@ -437,6 +441,7 @@ DSMNode::DSMNode(NodeAddr m_addr, void *_base, size_t _len, bool is_master,
   }
 
 void dsm_kernel_ipc_region::run_ipc_server() {
+  this->complete_handler_setup();
   while (1) {
     while (this->event_id == IPC_NONE) {
       sched_yield();

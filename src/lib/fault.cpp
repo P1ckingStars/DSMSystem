@@ -1,11 +1,11 @@
 #include "fault.hpp"
 #include "dsm_node.hpp"
+#include <cstdint>
 #include <fcntl.h>
 #include <linux/userfaultfd.h>
 #include <poll.h>
 #include <pthread.h>
 #include <sched.h>
-#include <signal.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,16 +18,10 @@
 #include <sys/syscall.h>
 #include <sys/types.h>
 #include <sys/ucontext.h>
-#include <thread>
 #include <unistd.h>
-#include <vector>
-
-
-
 
 int faultfd_init(void *mem_addr, size_t length) {
   int uffd;
-  void *region;
 
   // open the userfault fd
   uffd = syscall(__NR_userfaultfd, O_CLOEXEC | O_NONBLOCK);
@@ -49,20 +43,13 @@ int faultfd_init(void *mem_addr, size_t length) {
     fprintf(stderr, "unsupported userfaultfd api\n");
     exit(1);
   }
-
-  // allocate a memory region to be managed by userfaultfd
-  region = mmap(NULL, length, PROT_READ | PROT_WRITE,
-                MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-  if (region == MAP_FAILED) {
-    perror("mmap");
-    exit(1);
-  }
-
   // register the pages in the region for missing callbacks
   struct uffdio_register uffdio_register;
-  uffdio_register.range.start = (unsigned long)region;
+  uffdio_register.range.start = (intptr_t)mem_addr;
   uffdio_register.range.len = length;
-  uffdio_register.mode = UFFDIO_REGISTER_MODE_MISSING;
+  uffdio_register.mode = UFFDIO_REGISTER_MODE_MISSING | UFFDIO_REGISTER_MODE_WP;
+  printf("registered addr %llx, length %llu\n", uffdio_register.range.start,
+         uffdio_register.range.len);
   if (ioctl(uffd, UFFDIO_REGISTER, &uffdio_register) == -1) {
     perror("ioctl/uffdio_register");
     exit(1);
@@ -73,6 +60,7 @@ int faultfd_init(void *mem_addr, size_t length) {
     fprintf(stderr, "unexpected userfaultfd ioctl set\n");
     // exit(1);
   }
+  printf("init uffd %d\n", uffd);
   return uffd;
 }
 
@@ -82,6 +70,7 @@ void *page_fault_service(void *args) {
   char buf[PAGE_SIZE];
 
   for (;;) {
+    printf("wait for uffd %d\n", uffd);
     struct uffd_msg msg;
 
     struct pollfd pollfd[1];

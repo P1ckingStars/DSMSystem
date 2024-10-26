@@ -57,9 +57,14 @@ struct NodeAddr {
 #define IPC_MPROTECT    3
 #define IPC_COMPLETE    4
 
+#define IPC_HANDLER_SETUP_COMPLETE  0b01 
+#define IPC_DSM_SETUP_COMPLETE      0b10 
+#define IPC_SETUP_COMPLETE          0b11
+
 class dsm_kernel_ipc_region {
     char page[PAGE_SIZE];
     int event_id;
+    int setup_state;
     int mu;
     union {
         struct {
@@ -74,6 +79,16 @@ class dsm_kernel_ipc_region {
 public:
     static void dsm_region_init(dsm_kernel_ipc_region * addr) {
         addr->event_id = IPC_NONE;
+        addr->setup_state = IPC_NONE;
+    }
+    void complete_handler_setup() {
+        setup_state |= IPC_HANDLER_SETUP_COMPLETE;
+    }
+    void complete_dsm_setup() {
+        setup_state |= IPC_DSM_SETUP_COMPLETE;
+    }
+    void wait_setup() {
+        while (setup_state != IPC_SETUP_COMPLETE);
     }
     void run_ipc_server();
     void page_copy_req(char * dst, const char * src);
