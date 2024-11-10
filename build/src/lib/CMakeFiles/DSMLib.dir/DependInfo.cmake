@@ -8,9 +8,9 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/arthur/Documents/repos/DSMSystem/src/lib/dsm_node.cpp" "src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.o" "gcc" "src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.o.d"
-  "/home/arthur/Documents/repos/DSMSystem/src/lib/main.cpp" "src/lib/CMakeFiles/DSMLib.dir/main.cpp.o" "gcc" "src/lib/CMakeFiles/DSMLib.dir/main.cpp.o.d"
-  "/home/arthur/Documents/repos/DSMSystem/src/lib/simple_mutex.cpp" "src/lib/CMakeFiles/DSMLib.dir/simple_mutex.cpp.o" "gcc" "src/lib/CMakeFiles/DSMLib.dir/simple_mutex.cpp.o.d"
+  "/home/arthur/Documents/repos/dsm_system/src/lib/dsm_node.cpp" "src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.o" "gcc" "src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.o.d"
+  "/home/arthur/Documents/repos/dsm_system/src/lib/main.cpp" "src/lib/CMakeFiles/DSMLib.dir/main.cpp.o" "gcc" "src/lib/CMakeFiles/DSMLib.dir/main.cpp.o.d"
+  "/home/arthur/Documents/repos/dsm_system/src/lib/simple_mutex.cpp" "src/lib/CMakeFiles/DSMLib.dir/simple_mutex.cpp.o" "gcc" "src/lib/CMakeFiles/DSMLib.dir/simple_mutex.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

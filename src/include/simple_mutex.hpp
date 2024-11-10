@@ -4,7 +4,20 @@
 #include "sync_interface.hpp"
 
 typedef uint SimpleMutex;
-
+inline uint
+xchgl(volatile uint *addr, uint newval)
+{   
+  uint result;
+  asm volatile("lock; xchgl %0, %1" :
+               "+m" (*addr), "=a" (result) :
+               "1" (newval) :
+               "cc");
+  return result;
+}
+inline bool test_and_set(SimpleMutex * mu) {
+    uint test = 1;
+    return xchgl(mu, test);
+}
 class SimpleNotDefinedCondvar {
     char x;
 };

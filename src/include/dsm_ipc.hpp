@@ -1,78 +1,71 @@
 #ifndef DSM_IPC_HPP
 #define DSM_IPC_HPP
 
-#include "dsm_node.hpp"
 #include <cstdint>
 #include <cstring>
+#include <sys/mman.h>
 
-class IpcRegion{
+#define PAGE_SIZE 4096
+
+inline bool
+xchgb(volatile bool *addr, bool newval)
+{   
+  bool result;
+  asm volatile("lock; xchgb %0, %1" :
+               "+m" (*addr), "=a" (result) :
+               "1" (newval) :
+               "cc");
+  return result;
+}
+
+struct IpcRegion {
     
     char download_page[PAGE_SIZE];
     char upload_page[PAGE_SIZE];
+    struct ipc_mutex {
+        bool state = 0;
+        void lock() {
+            while (xchgb(&state, 1));
+        }
+        void unlock() {
+            state = 0;
+        }
+    };
 
     #define REQ_NONE 0
     #define REQ_GRANT_WRITE 1
     #define REQ_GRANT_READ  2
     #define REQ_RSPS_READ   3
     #define REQ_RSPS_WRITE  4
-    #define MAX_REQ_QUEUE   20
+    #define MAX_REQ_QUEUE   4
     
-    #define STATE_FREE      0
-    #define STATE_UNRESOLVE 1
-    #define STATE_RESOLVED  2
+    #define STATE_FREE          0
+    #define STATE_UNRESOLVE     1
+    #define STATE_PAGE_COPIED   2
+    #define STATE_MPROTECT_SET  3
+    #define STATE_RESOLVED      4
 
     struct request {
         uint8_t status;
         uint8_t req;
         char * addr;
+        ipc_mutex mu;
     };
 
-    request dsm_req_queue[MAX_REQ_QUEUE];
-    int head;
-    int tail;
+    request dsm_page_req;
     request page_fault_req;
-
-    bool grant_write(char *addr) {
-        return true;
-    }
-    bool grant_read(char *addr) {
-        return true;
-    }
-    bool response_read(char *addr) {
-        
-        return true;
-    }
-    bool response_write(char *addr) {
-
-        return true;
-    }
-
-    void run_thread_ipc_server() {
-        while (1) {
-            if (head == tail) continue;
-            if (dsm_req_queue[head].req == REQ_RSPS_READ) {
-                memcpy(this->upload_page, dsm_req_queue[head].addr, PAGE_SIZE);
-                dsm_req_queue[head].status = STATE_RESOLVED;
-            } else /* page_fault_req.req == REQ_RSPS_WRITE */ {
-                memcpy(this->upload_page, dsm_req_queue[head].addr, PAGE_SIZE);
-                dsm_req_queue[head].status = STATE_RESOLVED;
-            }
-            head = (head + 1) % MAX_REQ_QUEUE;
-        }
-    }
-    void run_dsm_ipc_server(dsm::DSMNode * node) {
-        while (1) {
-            if (page_fault_req.status == STATE_UNRESOLVE) {
-                if (page_fault_req.req == REQ_GRANT_READ) {
-                    node->grant_read(page_fault_req.addr);
-                }
-                else /* page_fault_req.req == REQ_GRANT_WRITE */ {
-                    node->grant_write(page_fault_req.addr);
-                }
-                page_fault_req.status = STATE_FREE;
-            }
-        }
-    }
+    /*
+     * mprotect
+     * process copy page
+     * page sent to remote
+     * */
+    bool grant_write(char *addr);
+    bool grant_read(char *addr);
+    bool response(char *addr, char * dst, uint8_t req_type);
+    bool response_read(char * dst, char *addr);
+    bool response_write(char *addr, char * dst);
+    void run_thread_ipc_server();
+    void run_dsm_ipc_server(void * arg);
 };
 
 

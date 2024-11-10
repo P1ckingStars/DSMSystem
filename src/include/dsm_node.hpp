@@ -9,12 +9,14 @@
 #include <rpc/msgpack/adaptor/define_decl.hpp>
 #include <unordered_map>
 #include <vector>
+#include "dsm_ipc.hpp"
 
 #define RELEASE_CONSISTANCY
 #define PAGE_OFFSET_BIT 12
 #define PAGE_SIZE (1 << PAGE_OFFSET_BIT)
 #define VPID2VPADDR(vpid) ((vpid) << PAGE_OFFSET_BIT)
 #define VPADDR2VPID(vpaddr) ((vpaddr) >> PAGE_OFFSET_BIT)
+#define FLOOR(addr) ((addr) / PAGE_SIZE * PAGE_SIZE)
 
 #define ASSERT(EXP, MSG)                                                       \
 {                                                                            \
@@ -74,6 +76,7 @@ public:
 
 class DSMNode {
     char *base;
+    IpcRegion * ipc;
     int swap_file_fd;
     pthread_mutex_t mu;
     NodeAddr m_addr;
@@ -99,7 +102,7 @@ class DSMNode {
     page response_write(uint64_t pagenum);
     page request_read(NodeAddr dst_addr, uint64_t pagenum);
     page response_read(uint64_t pagenum);
-    bool grant_prot(page_id_t relative_page_id, int prot);
+    bool grant_prot(page_id_t relative_page_id, int prot, char * copy_to_addr);
     rpc::server *serv;
 
 public:
