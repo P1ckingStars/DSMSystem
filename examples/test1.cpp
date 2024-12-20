@@ -10,11 +10,13 @@ int dsm_main(char * mem_region, size_t length, int argc, char * argv[]) {
         mem_region[0] = 1;
         while (mem_region[1] == 0) {
             mem_region[0] = 1;
+            //printf("write!!!\n");
         }
     } else {
         mem_region[1] = 1;
         while (mem_region[0] == 0) {
             mem_region[1] = 1;
+            //printf("write!!!\n");
         }
     }
     printf("barrier complete!!!\n");

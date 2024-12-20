@@ -6,7 +6,10 @@
 add_library(DSMLib
     simple_mutex.cpp
     main.cpp
-    dsm_node.cpp)
+    dsm_node.cpp
+    injection.s 
+    user_mprotect.cpp
+)
 
 target_include_directories(DSMLib PUBLIC
     "${CMAKE_SOURCE_DIR}/src/include"

@@ -1,0 +1,98 @@
+
+#include "user_mprotect.hpp"
+#include "debug.hpp"
+#include <csignal>
+#include <cstddef>
+#include <cstdint>
+#include <cstdio>
+#include <pthread.h>
+#include <sched.h>
+#include <sys/ptrace.h>
+#include <sys/user.h>
+#include <sys/wait.h>
+
+class {
+  pthread_mutex_t mu_;
+  pid_t pid_;
+  void *addr_;
+  size_t size_;
+  int prot_;
+  uint8_t status_;
+#define REQ_INCOMPLETE 0
+#define REQ_COMPLETE 1
+public:
+  void init() { pthread_mutex_init(&mu_, NULL); }
+  void produce(pid_t pid, void *addr, size_t size, int prot) {
+    pthread_mutex_lock(&mu_);
+    this->pid_ = pid;
+    this->addr_ = addr;
+    this->size_ = size;
+    this->prot_ = prot;
+    this->status_ = REQ_INCOMPLETE;
+  }
+  void consume(pid_t *pid, void **addr, size_t *size, int *prot) {
+    *pid = this->pid_;
+    *addr = this->addr_;
+    *size = this->size_;
+    *prot = this->prot_;
+    pthread_mutex_unlock(&mu_);
+  }
+  void compelete() { this->status_ = REQ_COMPLETE; }
+  void wait_to_compelete() {
+    while (this->status_ == REQ_INCOMPLETE)
+      ;
+    pthread_mutex_unlock(&mu_);
+  }
+} mprotect_req;
+
+void injection();
+void injection2() {
+  printf("inject\n");
+  int *x = 0;
+  int y = *x;
+}
+
+void user_mprotect_init() { mprotect_req.init(); }
+
+void user_mprotect_req(pid_t pid, void *addr, size_t size, int prot) {
+  DEBUG_STMT(printf("try user mprotect\n"));
+  mprotect_req.produce(pid, addr, size, prot);
+  DEBUG_STMT(printf("rsps sent\n"));
+  kill(pid, SIGUSR2);
+  DEBUG_STMT(printf("wait to complete\n"));
+  mprotect_req.wait_to_compelete();
+}
+
+void user_mprotect_respond() {
+  pid_t pid;
+  void *addr;
+  size_t size;
+  int prot;
+  mprotect_req.consume(&pid, &addr, &size, &prot);
+  user_mprotect(pid, addr, size, prot);
+  mprotect_req.compelete();
+  DEBUG_STMT(printf("complete\n"));
+}
+
+void user_mprotect(pid_t pid, void *addr, size_t size, int prot) {
+  printf("user mprotect BEGIN at ADDR: %lx, PROT: %d\n", (intptr_t)addr, prot);
+  user_regs_struct regs;
+  user_regs_struct saved_regs;
+  ptrace(PTRACE_GETREGS, pid, NULL, &saved_regs);
+  regs.rax = 10;
+  regs.rdi = (intptr_t)addr;
+  regs.rsi = size;
+  regs.rdx = prot;
+  regs.rip = (intptr_t)injection;
+  __ptrace_syscall_info info;
+  int err;
+  ptrace(PTRACE_SETREGS, pid, NULL, &regs);
+  ptrace(PTRACE_CONT, pid, NULL, NULL);
+  printf("continue\n");
+  wait(NULL);
+  siginfo_t sig;
+  ptrace(PTRACE_GETSIGINFO, pid, NULL, &sig);
+  // reg_err = ptrace(PTRACE_PEEKDATA, child, reg_err, &sig);
+  ptrace(PTRACE_SETREGS, pid, NULL, &saved_regs);
+  printf("user mprotect FINISHED at ADDR: %lx, PROT: %d\n", (intptr_t)addr, prot);
+}

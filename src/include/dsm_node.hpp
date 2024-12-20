@@ -7,6 +7,7 @@
 #include <cstdio>
 #include <pthread.h>
 #include <rpc/msgpack/adaptor/define_decl.hpp>
+#include <sched.h>
 #include <unordered_map>
 #include <vector>
 
@@ -41,6 +42,8 @@ using namespace std;
 
 typedef uint64_t page_id_t;
 
+extern int x;
+
 namespace dsm {
 // init seg tree
 // setup handler
@@ -51,9 +54,9 @@ struct NodeAddr {
     MSGPACK_DEFINE_ARRAY(ip, port);
 };
 
-void dsm_init();
-char * dsm_init_master(NodeAddr self, size_t size);
-char * dsm_init_node(NodeAddr self, NodeAddr dst, size_t size);
+void dsm_init(pid_t child);
+char * dsm_init_master(pid_t child, NodeAddr self, char * region, size_t size);
+char * dsm_init_node(pid_t child, NodeAddr self, NodeAddr dst, char * region, size_t size);
 
 typedef vector<char> page;
 
@@ -74,7 +77,7 @@ public:
 
 class DSMNode {
     char *base;
-    int swap_file_fd;
+    pid_t pid;
     pthread_mutex_t mu;
     NodeAddr m_addr;
     pthread_t tid;
@@ -83,7 +86,7 @@ class DSMNode {
     char *relative_page_id_to_addr(page_id_t page_id) {
         return this->base + VPID2VPADDR(page_id);
     }
-    page_id_t relative_page_id_from_addr(char *ptr) {
+    page_id_t relative_page_id_from_addr(void *ptr) {
         return VPADDR2VPID((intptr_t)ptr - (intptr_t)this->base);
     }
     page_id_t relative_page_id_from_page_id(page_id_t page_id) {
@@ -112,7 +115,9 @@ public:
             delete serv;
     }
     void sync();
+    int prot_check(void *addr);
     void connect(NodeAddr dst_addr);
+    bool update_prot(void *addr);
     bool grant_write(char *addr);
     bool grant_read(char *addr);
     bool is_in_range(char *addr);

@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
+enable_language(ASM)
 # set the project name and version
 project(DSMProject VERSION 1.0)
 
