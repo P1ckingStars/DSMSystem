@@ -5,8 +5,11 @@
 #include <cstddef>
 #include <cstdint>
 #include <cstdio>
+#include <cstring>
 #include <pthread.h>
 #include <sched.h>
+#include <strings.h>
+#include <sys/mman.h>
 #include <sys/ptrace.h>
 #include <sys/user.h>
 #include <sys/wait.h>
@@ -35,7 +38,6 @@ public:
     *addr = this->addr_;
     *size = this->size_;
     *prot = this->prot_;
-    pthread_mutex_unlock(&mu_);
   }
   void compelete() { this->status_ = REQ_COMPLETE; }
   void wait_to_compelete() {
@@ -75,24 +77,28 @@ void user_mprotect_respond() {
 }
 
 void user_mprotect(pid_t pid, void *addr, size_t size, int prot) {
-  printf("user mprotect BEGIN at ADDR: %lx, PROT: %d\n", (intptr_t)addr, prot);
+  DEBUG_STMT(printf("user mprotect BEGIN at ADDR: %lx, PROT: %d\n", (intptr_t)addr, prot));
   user_regs_struct regs;
   user_regs_struct saved_regs;
   ptrace(PTRACE_GETREGS, pid, NULL, &saved_regs);
+  bzero(&regs, sizeof(regs));
   regs.rax = 10;
   regs.rdi = (intptr_t)addr;
   regs.rsi = size;
   regs.rdx = prot;
   regs.rip = (intptr_t)injection;
-  __ptrace_syscall_info info;
-  int err;
-  ptrace(PTRACE_SETREGS, pid, NULL, &regs);
+  int err = ptrace(PTRACE_SETREGS, pid, NULL, &regs);
+  if (err != 0) {
+    perror("ptrace");
+  }
   ptrace(PTRACE_CONT, pid, NULL, NULL);
-  printf("continue\n");
+  DEBUG_STMT(printf("continue\n"));
   wait(NULL);
   siginfo_t sig;
   ptrace(PTRACE_GETSIGINFO, pid, NULL, &sig);
+  DEBUG_STMT(printf("user mprotect recv sig: %d\n", sig.si_signo));
   // reg_err = ptrace(PTRACE_PEEKDATA, child, reg_err, &sig);
   ptrace(PTRACE_SETREGS, pid, NULL, &saved_regs);
-  printf("user mprotect FINISHED at ADDR: %lx, PROT: %d\n", (intptr_t)addr, prot);
+  DEBUG_STMT(printf("user mprotect FINISHED at ADDR: %lx, PROT: %d, PROT read: %d\n",
+         (intptr_t)addr, prot, PROT_READ));
 }

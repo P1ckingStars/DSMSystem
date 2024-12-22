@@ -2,7 +2,6 @@
 #include "debug.hpp"
 #include "rpc/client.h"
 #include "rpc/rpc_error.h"
-#include "simple_mutex.hpp"
 #include "syncheader.hpp"
 #include "user_mprotect.hpp"
 #include <chrono>
@@ -56,6 +55,7 @@ ssize_t inline remote_mempage_write(pid_t pid, char *local, char *remote) {
   liov[0].iov_len = PAGE_SIZE;
   riov[0].iov_base = remote;
   riov[0].iov_len = PAGE_SIZE;
+  printf("mem write at addr %lx\n", riov[0].iov_base);
   return process_vm_writev(pid, liov, 1, riov, 1, 0);
 }
 ssize_t inline remote_mempage_read(pid_t pid, char *local, char *remote) {
@@ -71,9 +71,13 @@ ssize_t inline remote_mempage_read(pid_t pid, char *local, char *remote) {
 static struct sigaction old_sa;
 
 static void handler(int sig, siginfo_t *si, void *unused) {
+  if (!dsm_singleton->is_in_range((char *)si->si_addr)) {
+    DEBUG_STMT(printf("Not in range: 0x%lx\n", (long)si->si_addr));
+  }
   int prot = dsm_singleton->prot_check(si->si_addr);
   bool is_write = prot & DSM_PROT_READ;
   if (OWNERSHIP(prot)) {
+    DEBUG_STMT(printf("owned: 0x%lx\n", (long)si->si_addr));
     dsm_singleton->update_prot(si->si_addr);
   }
   DEBUG_STMT(printf("Got SIGSEGV at address: 0x%lx\n", (long)si->si_addr));
@@ -146,9 +150,7 @@ char *dsm::dsm_init_master(pid_t child, NodeAddr self, char *region,
         node = new DSMNode(args->self, args->region, args->size, true,
                            args->child);
         kill(args->child, SIGUSR1);
-        DSMSync::create(node);
         DEBUG_STMT(printf("finish make new node\n"));
-
         return nullptr;
       },
       &args);
@@ -164,13 +166,14 @@ char *dsm::dsm_init_node(pid_t child, NodeAddr self, NodeAddr dst, char *region,
       &tid, NULL,
       [](void *input) -> void * {
         dsm_init_args *args = (dsm_init_args *)input;
-        DEBUG_STMT(printf("addr of mem_region: 0x%lx\n", ((intptr_t)args->region)));
+        DEBUG_STMT(
+            printf("addr of mem_region: 0x%lx\n", ((intptr_t)args->region)));
         DSMNode *node;
         DEBUG_STMT(printf("create process\n"));
         DEBUG_STMT(printf("make new node\n"));
-        node = new DSMNode(args->self, args->region, args->size, false, args->child);
+        node = new DSMNode(args->self, args->region, args->size, false,
+                           args->child);
         kill(args->child, SIGUSR1);
-        DSMSync::create(node);
         DEBUG_STMT(printf("finish make new node\n"));
         NodeAddr dst_addr;
         DEBUG_STMT(printf("try connect\n"));
@@ -227,30 +230,25 @@ page DSMNode::response_write(uint64_t relative_page_id) {
   DEBUG_STMT(printf("recieved write req %lx\n", relative_page_id));
   page res;
   res.clear();
-    sleep(1);
+  sleep(1);
   LOCK(this->mu)
   if (this->page_info.size() > relative_page_id &&
-      READABLE(this->page_info[relative_page_id])) {
+      OWNERSHIP(this->page_info[relative_page_id])) {
+    this->page_info[relative_page_id] = DSM_PROT_READ;
+    UNLOCK(this->mu)
+    user_mprotect_req(this->pid, relative_page_id_to_addr(relative_page_id),
+                      PAGE_SIZE, PROT_READ);
+    this_thread::sleep_for(std::chrono::milliseconds(random() % 100));
+    res.resize(PAGE_SIZE);
+    remote_mempage_read(this->pid, &res[0],
+                        relative_page_id_to_addr(relative_page_id));
 
-#ifndef RELEASE_CONSISTANCY
-    mprotect((void *)VPID2VPADDR(pagenum), PAGE_SIZE, PROT_NONE);
-#endif
-    if (OWNERSHIP(this->page_info[relative_page_id])) {
-#ifdef RELEASE_CONSISTANCY
-      this->page_info[relative_page_id] = DSM_PROT_READ;
-      user_mprotect_req(this->pid, relative_page_id_to_addr(relative_page_id),
-                        PAGE_SIZE, PROT_READ);
-#else
-      this->page_info[relative_page_id] = 0;
-#endif
-      this_thread::sleep_for(std::chrono::milliseconds(random() % 100));
-      res.resize(PAGE_SIZE);
-      remote_mempage_read(this->pid, &res[0],
-                          relative_page_id_to_addr(relative_page_id));
-      DEBUG_STMT(printf("setup result page\n"));
-    }
+    DEBUG_STMT(printf("res %d, %d, %lx\n", res[0], res[1],
+                      (intptr_t)relative_page_id_to_addr(relative_page_id)));
+    DEBUG_STMT(printf("setup result page\n"));
+  } else {
+    UNLOCK(this->mu)
   }
-  UNLOCK(this->mu)
   return res;
 }
 
@@ -383,8 +381,16 @@ bool DSMNode::grant_prot(page_id_t relative_page_id, int prot) {
 #endif
   bool succeed = false;
   if (arg_content->data.size() == PAGE_SIZE) {
-    remote_mempage_write(this->pid, &arg_content->data[0],
-                         relative_page_id_to_addr(relative_page_id));
+    user_mprotect(this->pid, relative_page_id_to_addr(relative_page_id),
+                  PAGE_SIZE, PROT_READ | PROT_WRITE);
+    int err = remote_mempage_write(this->pid, &arg_content->data[0],
+                                   relative_page_id_to_addr(relative_page_id));
+    DEBUG_STMT(printf("write %d, %d, %d, %lx\n", arg_content->data[0],
+                      arg_content->data[1], err,
+                      (intptr_t)relative_page_id_to_addr(relative_page_id)));
+    if (err < 0) {
+      perror("ERR remote page write");
+    }
     succeed = true;
   }
   DEBUG_STMT(printf("got rpc response %d\n", succeed));
@@ -413,8 +419,6 @@ bool DSMNode::grant_write(char *addr) {
   if (res) {
     LOCK(this->mu)
     this->page_info[relative_page_id] = DSM_PROT_WRITE;
-    user_mprotect(this->pid, (void *)FLOOR((intptr_t)addr), PAGE_SIZE,
-                  PROT_READ | PROT_WRITE);
     UNLOCK(this->mu)
   }
   return res;

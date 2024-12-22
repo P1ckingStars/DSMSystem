@@ -1,9 +1,15 @@
 	.file	"helper.cpp"
+	.section	.rodata
+.LC0:
+	.string	"hello"
 	.text
 	.globl	_Z9injectionv
 	.type	_Z9injectionv, @function
 _Z9injectionv:
     syscall
+    leaq	.LC0(%rip), %rax
+	movq	%rax, %rdi
+	call	puts@PLT
 	movq	$0, %rax
 	movl	(%rax), %eax
     

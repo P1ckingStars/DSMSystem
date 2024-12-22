@@ -20,6 +20,8 @@ int dsm_main(char * mem_region, size_t length, int argc, char * argv[]);
 int x = 1;
 
 int main(int argc, char * argv[]) {
+    int x;
+    printf("stack begin at %lx\n", (intptr_t)&x);
     bool is_master = atoi(argv[1]) == 0;
     int pages = atoi(argv[2]);
     char * mem_region = (char *)aligned_alloc(PAGE_SIZE, PAGE_SIZE * pages);
