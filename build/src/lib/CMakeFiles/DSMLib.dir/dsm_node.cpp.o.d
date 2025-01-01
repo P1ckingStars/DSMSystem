@@ -1,7 +1,7 @@
 src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.o: \
- /home/arthur/Documents/repos/DSMSystem/src/lib/dsm_node.cpp \
+ /home/arthur/Documents/repos/dsm_system/src/lib/dsm_node.cpp \
  /usr/include/stdc-predef.h \
- /home/arthur/Documents/repos/DSMSystem/src/include/dsm_node.hpp \
+ /home/arthur/Documents/repos/dsm_system/src/include/dsm_node.hpp \
  /usr/include/rpc/server.h /usr/include/rpc/config.h \
  /usr/include/c++/14.2.1/cstddef \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
@@ -733,8 +733,8 @@ src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.o: \
  /usr/include/rpc/detail/not.h /usr/include/rpc/detail/response.h \
  /usr/include/rpc/detail/make_unique.h /usr/include/rpc/dispatcher.inl \
  /usr/include/rpc/detail/pimpl.h \
- /home/arthur/Documents/repos/DSMSystem/src/include/debug.hpp \
- /home/arthur/Documents/repos/DSMSystem/src/include/config.hpp \
+ /home/arthur/Documents/repos/dsm_system/src/include/debug.hpp \
+ /home/arthur/Documents/repos/dsm_system/src/include/config.hpp \
  /usr/include/rpc/client.h /usr/include/c++/14.2.1/future \
  /usr/include/c++/14.2.1/mutex /usr/include/c++/14.2.1/bits/chrono.h \
  /usr/include/c++/14.2.1/ratio \
@@ -746,8 +746,8 @@ src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.o: \
  /usr/include/c++/14.2.1/bits/std_thread.h \
  /usr/include/rpc/nonstd/optional.hpp /usr/include/rpc/client.inl \
  /usr/include/rpc/rpc_error.h \
- /home/arthur/Documents/repos/DSMSystem/src/include/syncheader.hpp \
- /home/arthur/Documents/repos/DSMSystem/src/include/user_mprotect.hpp \
+ /home/arthur/Documents/repos/dsm_system/src/include/syncheader.hpp \
+ /home/arthur/Documents/repos/dsm_system/src/include/user_mprotect.hpp \
  /usr/include/c++/14.2.1/chrono /usr/include/c++/14.2.1/csignal \
  /usr/include/signal.h /usr/include/bits/signum-generic.h \
  /usr/include/bits/signum-arch.h /usr/include/bits/types/sig_atomic_t.h \

@@ -1,5 +1,5 @@
-src/lib/CMakeFiles/DSMLib.dir/simple_mutex.cpp.o: \
- /home/arthur/Documents/repos/dsm_system/src/lib/simple_mutex.cpp \
+src/lib/CMakeFiles/DSMLib.dir/dsm_lock.cpp.o: \
+ /home/arthur/Documents/repos/dsm_system/src/lib/dsm_lock.cpp \
  /usr/include/stdc-predef.h /usr/include/c++/14.2.1/cstdint \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/os_defines.h \
@@ -21,4 +21,5 @@ src/lib/CMakeFiles/DSMLib.dir/simple_mutex.cpp.o: \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stddef.h \
  /usr/include/bits/types/time_t.h \
  /usr/include/bits/types/struct_timespec.h /usr/include/bits/sched.h \
- /usr/include/bits/types/struct_sched_param.h /usr/include/bits/cpu-set.h
+ /usr/include/bits/types/struct_sched_param.h /usr/include/bits/cpu-set.h \
+ /home/arthur/Documents/repos/dsm_system/src/include/dsm_lock.hpp

@@ -1,7 +1,7 @@
 src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.o: \
- /home/arthur/Documents/repos/DSMSystem/src/lib/user_mprotect.cpp \
+ /home/arthur/Documents/repos/dsm_system/src/lib/user_mprotect.cpp \
  /usr/include/stdc-predef.h \
- /home/arthur/Documents/repos/DSMSystem/src/include/user_mprotect.hpp \
+ /home/arthur/Documents/repos/dsm_system/src/include/user_mprotect.hpp \
  /usr/include/c++/14.2.1/cstddef \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/os_defines.h \
@@ -38,8 +38,8 @@ src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.o: \
  /usr/include/endian.h /usr/include/bits/byteswap.h \
  /usr/include/bits/uintn-identity.h /usr/include/sys/select.h \
  /usr/include/bits/select.h /usr/include/bits/types/sigset_t.h \
- /home/arthur/Documents/repos/DSMSystem/src/include/debug.hpp \
- /home/arthur/Documents/repos/DSMSystem/src/include/config.hpp \
+ /home/arthur/Documents/repos/dsm_system/src/include/debug.hpp \
+ /home/arthur/Documents/repos/dsm_system/src/include/config.hpp \
  /usr/include/c++/14.2.1/csignal /usr/include/signal.h \
  /usr/include/bits/signum-generic.h /usr/include/bits/signum-arch.h \
  /usr/include/bits/types/sig_atomic_t.h \

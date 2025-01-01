@@ -96,7 +96,7 @@ int DSMNode::prot_check(void *addr) {
   return this->page_info[relative_page_id_from_addr(addr)];
 }
 
-void dsm::dsm_init(pid_t child) {
+void dsm::dsm_init(pid_t child, int *wait_x) {
   DEBUG_STMT(printf("setup handler\n"));
   while (1) {
     wait(NULL);
@@ -113,12 +113,14 @@ void dsm::dsm_init(pid_t child) {
       DEBUG_STMT(printf("SIGUSR1\n"));
       struct iovec local[1];
       struct iovec remote[1];
-      x = 0;
-      local[0].iov_base = &x;
+      *wait_x = 0;
+      local[0].iov_base = wait_x;
       local[0].iov_len = sizeof(int);
-      remote[0].iov_base = &x;
+      remote[0].iov_base = wait_x;
       remote[0].iov_len = sizeof(int);
-      process_vm_writev(child, local, 1, remote, 1, 0);
+      DEBUG_STMT(printf("write at %lx, %d\n", (intptr_t)(wait_x), *wait_x));
+      int err = process_vm_writev(child, local, 1, remote, 1, 0);
+      ASSERT_PERROR(err);
     }
     // printf("sig num: %d, addr: %lx, pc: %llx, inst: %lx, rsp: %lx\n",
     //        sig.si_signo, sig.si_addr, saved_regs.rip, *(uint64_t *)pc,
@@ -134,7 +136,7 @@ struct dsm_init_args {
   size_t size;
 };
 char *dsm::dsm_init_master(pid_t child, NodeAddr self, char *region,
-                           size_t size) {
+                           size_t size, int *wait_x) {
   user_mprotect_init();
   pthread_t tid;
   dsm_init_args args = {child, self, NodeAddr(), region, size};
@@ -154,11 +156,11 @@ char *dsm::dsm_init_master(pid_t child, NodeAddr self, char *region,
         return nullptr;
       },
       &args);
-  dsm_init(child);
+  dsm_init(child, wait_x);
   return region;
 }
 char *dsm::dsm_init_node(pid_t child, NodeAddr self, NodeAddr dst, char *region,
-                         size_t size) {
+                         size_t size, int *wait_x) {
   user_mprotect_init();
   pthread_t tid;
   dsm_init_args args = {child, self, dst, region, size};
@@ -181,7 +183,7 @@ char *dsm::dsm_init_node(pid_t child, NodeAddr self, NodeAddr dst, char *region,
         return nullptr;
       },
       &args);
-  dsm_init(child);
+  dsm_init(child, wait_x);
   return region;
 }
 

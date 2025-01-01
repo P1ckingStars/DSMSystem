@@ -1,5 +1,5 @@
 CMakeFiles/test1.dir/examples/test1.cpp.o: \
- /home/arthur/Documents/repos/DSMSystem/examples/test1.cpp \
+ /home/arthur/Documents/repos/dsm_system/examples/test1.cpp \
  /usr/include/stdc-predef.h /usr/include/c++/14.2.1/cstdint \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/os_defines.h \

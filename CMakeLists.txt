@@ -17,6 +17,11 @@ add_subdirectory(src/lib)
 # add the executable
 add_executable(test1 examples/test1.cpp)
 
+target_link_options(test1 PRIVATE
+    "-T${CMAKE_SOURCE_DIR}/linker.ld"
+)
+
+
 link_directories(${PROJECT_SOURCE_DIR}/dependency)
 
 target_link_libraries(test1 DSMLib rpc)

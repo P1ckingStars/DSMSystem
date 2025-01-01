@@ -4,29 +4,35 @@
 #include <stdio.h>
 #include <sys/mman.h>
 
+int var;
+int mu;
+int p;
+
 int dsm_main(char * mem_region, size_t length, int argc, char * argv[]) {
+    printf("---------------run user code now-------------\n");
     bool is_master = atoi(argv[1]) == 0;
+    char *x_part = (char *)&var;
+    int k = x_part[2];
+    printf("write %lx!!!\n", (intptr_t)&x_part[1]);
     if (is_master) {
-        mem_region[0] = 1;
-        while (mem_region[1] == 0) {
-            mem_region[0] = 1;
-            // printf("write %lx!!!\n", (intptr_t)&mem_region[0]);
+        x_part[0] = 1;
+        while (x_part[1] == 0) {
+            x_part[0] = 1;
         }
     } else {
-        mem_region[1] = 1;
-        while (mem_region[0] == 0) {
-            mem_region[1] = 1;
-            // printf("write %lx!!!\n", (intptr_t)&mem_region[1]);
+        x_part[1] = 1;
+        while (x_part[0] == 0) {
+            x_part[1] = 1;
         }
     }
     printf("barrier complete!!!\n");
-    int * mu = (int *)(&mem_region[5000]);
     for (int i = 0; i < 300; i++) {
-        printf("mutex2: %d\n", *mu);
-        ((int *)mem_region)[20]++;
-        printf("count = %d\n", ((int *)mem_region)[20]);
-        printf("mutex3: %d\n", *mu);
+        printf("mutex2: %d\n", mu);
+        p++;
+        printf("count = %d\n", p);
+        printf("mutex3: %d\n", mu);
     }
     printf("complete!!!\n");
+    while(1);
     return 0;
 }

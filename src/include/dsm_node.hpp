@@ -13,6 +13,7 @@
 
 #define RELEASE_CONSISTANCY
 #define PAGE_OFFSET_BIT 12
+#define PAGE_ALIGNED_ADDR(x) ((x >> PAGE_OFFSET_BIT) << PAGE_OFFSET_BIT)
 #define PAGE_SIZE (1 << PAGE_OFFSET_BIT)
 #define VPID2VPADDR(vpid) ((vpid) << PAGE_OFFSET_BIT)
 #define VPADDR2VPID(vpaddr) ((vpaddr) >> PAGE_OFFSET_BIT)
@@ -42,8 +43,6 @@ using namespace std;
 
 typedef uint64_t page_id_t;
 
-extern int x;
-
 namespace dsm {
 // init seg tree
 // setup handler
@@ -54,9 +53,9 @@ struct NodeAddr {
     MSGPACK_DEFINE_ARRAY(ip, port);
 };
 
-void dsm_init(pid_t child);
-char * dsm_init_master(pid_t child, NodeAddr self, char * region, size_t size);
-char * dsm_init_node(pid_t child, NodeAddr self, NodeAddr dst, char * region, size_t size);
+void dsm_init(pid_t child, int * wait_x);
+char * dsm_init_master(pid_t child, NodeAddr self, char * region, size_t size, int * wait_x);
+char * dsm_init_node(pid_t child, NodeAddr self, NodeAddr dst, char * region, size_t size, int * wait_x);
 
 typedef vector<char> page;
 

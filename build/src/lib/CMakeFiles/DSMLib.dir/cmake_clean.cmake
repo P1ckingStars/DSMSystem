@@ -1,11 +1,11 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/DSMLib.dir/dsm_lock.cpp.o"
+  "CMakeFiles/DSMLib.dir/dsm_lock.cpp.o.d"
   "CMakeFiles/DSMLib.dir/dsm_node.cpp.o"
   "CMakeFiles/DSMLib.dir/dsm_node.cpp.o.d"
   "CMakeFiles/DSMLib.dir/injection.s.o"
   "CMakeFiles/DSMLib.dir/main.cpp.o"
   "CMakeFiles/DSMLib.dir/main.cpp.o.d"
-  "CMakeFiles/DSMLib.dir/simple_mutex.cpp.o"
-  "CMakeFiles/DSMLib.dir/simple_mutex.cpp.o.d"
   "CMakeFiles/DSMLib.dir/user_mprotect.cpp.o"
   "CMakeFiles/DSMLib.dir/user_mprotect.cpp.o.d"
   "libDSMLib.a"

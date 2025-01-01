@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/arthur/Documents/repos/DSMSystem/build -I/home/arthur/Documents/repos/DSMSystem/src/include
+CXX_INCLUDES = -I/home/arthur/Documents/repos/dsm_system/build -I/home/arthur/Documents/repos/dsm_system/src/include
 
 CXX_FLAGS = -std=gnu++11
 

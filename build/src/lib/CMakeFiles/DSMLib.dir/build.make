@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/arthur/Documents/repos/DSMSystem
+CMAKE_SOURCE_DIR = /home/arthur/Documents/repos/dsm_system
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/arthur/Documents/repos/DSMSystem/build
+CMAKE_BINARY_DIR = /home/arthur/Documents/repos/dsm_system/build
 
 # Include any dependencies generated for this target.
 include src/lib/CMakeFiles/DSMLib.dir/depend.make
@@ -72,78 +72,78 @@ include src/lib/CMakeFiles/DSMLib.dir/flags.make
 src/lib/CMakeFiles/DSMLib.dir/codegen:
 .PHONY : src/lib/CMakeFiles/DSMLib.dir/codegen
 
-src/lib/CMakeFiles/DSMLib.dir/simple_mutex.cpp.o: src/lib/CMakeFiles/DSMLib.dir/flags.make
-src/lib/CMakeFiles/DSMLib.dir/simple_mutex.cpp.o: /home/arthur/Documents/repos/DSMSystem/src/lib/simple_mutex.cpp
-src/lib/CMakeFiles/DSMLib.dir/simple_mutex.cpp.o: src/lib/CMakeFiles/DSMLib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/arthur/Documents/repos/DSMSystem/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object src/lib/CMakeFiles/DSMLib.dir/simple_mutex.cpp.o"
-	cd /home/arthur/Documents/repos/DSMSystem/build/src/lib && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/lib/CMakeFiles/DSMLib.dir/simple_mutex.cpp.o -MF CMakeFiles/DSMLib.dir/simple_mutex.cpp.o.d -o CMakeFiles/DSMLib.dir/simple_mutex.cpp.o -c /home/arthur/Documents/repos/DSMSystem/src/lib/simple_mutex.cpp
+src/lib/CMakeFiles/DSMLib.dir/dsm_lock.cpp.o: src/lib/CMakeFiles/DSMLib.dir/flags.make
+src/lib/CMakeFiles/DSMLib.dir/dsm_lock.cpp.o: /home/arthur/Documents/repos/dsm_system/src/lib/dsm_lock.cpp
+src/lib/CMakeFiles/DSMLib.dir/dsm_lock.cpp.o: src/lib/CMakeFiles/DSMLib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/arthur/Documents/repos/dsm_system/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object src/lib/CMakeFiles/DSMLib.dir/dsm_lock.cpp.o"
+	cd /home/arthur/Documents/repos/dsm_system/build/src/lib && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/lib/CMakeFiles/DSMLib.dir/dsm_lock.cpp.o -MF CMakeFiles/DSMLib.dir/dsm_lock.cpp.o.d -o CMakeFiles/DSMLib.dir/dsm_lock.cpp.o -c /home/arthur/Documents/repos/dsm_system/src/lib/dsm_lock.cpp
 
-src/lib/CMakeFiles/DSMLib.dir/simple_mutex.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/DSMLib.dir/simple_mutex.cpp.i"
-	cd /home/arthur/Documents/repos/DSMSystem/build/src/lib && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/arthur/Documents/repos/DSMSystem/src/lib/simple_mutex.cpp > CMakeFiles/DSMLib.dir/simple_mutex.cpp.i
+src/lib/CMakeFiles/DSMLib.dir/dsm_lock.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/DSMLib.dir/dsm_lock.cpp.i"
+	cd /home/arthur/Documents/repos/dsm_system/build/src/lib && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/arthur/Documents/repos/dsm_system/src/lib/dsm_lock.cpp > CMakeFiles/DSMLib.dir/dsm_lock.cpp.i
 
-src/lib/CMakeFiles/DSMLib.dir/simple_mutex.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/DSMLib.dir/simple_mutex.cpp.s"
-	cd /home/arthur/Documents/repos/DSMSystem/build/src/lib && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arthur/Documents/repos/DSMSystem/src/lib/simple_mutex.cpp -o CMakeFiles/DSMLib.dir/simple_mutex.cpp.s
+src/lib/CMakeFiles/DSMLib.dir/dsm_lock.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/DSMLib.dir/dsm_lock.cpp.s"
+	cd /home/arthur/Documents/repos/dsm_system/build/src/lib && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arthur/Documents/repos/dsm_system/src/lib/dsm_lock.cpp -o CMakeFiles/DSMLib.dir/dsm_lock.cpp.s
 
 src/lib/CMakeFiles/DSMLib.dir/main.cpp.o: src/lib/CMakeFiles/DSMLib.dir/flags.make
-src/lib/CMakeFiles/DSMLib.dir/main.cpp.o: /home/arthur/Documents/repos/DSMSystem/src/lib/main.cpp
+src/lib/CMakeFiles/DSMLib.dir/main.cpp.o: /home/arthur/Documents/repos/dsm_system/src/lib/main.cpp
 src/lib/CMakeFiles/DSMLib.dir/main.cpp.o: src/lib/CMakeFiles/DSMLib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/arthur/Documents/repos/DSMSystem/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object src/lib/CMakeFiles/DSMLib.dir/main.cpp.o"
-	cd /home/arthur/Documents/repos/DSMSystem/build/src/lib && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/lib/CMakeFiles/DSMLib.dir/main.cpp.o -MF CMakeFiles/DSMLib.dir/main.cpp.o.d -o CMakeFiles/DSMLib.dir/main.cpp.o -c /home/arthur/Documents/repos/DSMSystem/src/lib/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/arthur/Documents/repos/dsm_system/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object src/lib/CMakeFiles/DSMLib.dir/main.cpp.o"
+	cd /home/arthur/Documents/repos/dsm_system/build/src/lib && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/lib/CMakeFiles/DSMLib.dir/main.cpp.o -MF CMakeFiles/DSMLib.dir/main.cpp.o.d -o CMakeFiles/DSMLib.dir/main.cpp.o -c /home/arthur/Documents/repos/dsm_system/src/lib/main.cpp
 
 src/lib/CMakeFiles/DSMLib.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/DSMLib.dir/main.cpp.i"
-	cd /home/arthur/Documents/repos/DSMSystem/build/src/lib && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/arthur/Documents/repos/DSMSystem/src/lib/main.cpp > CMakeFiles/DSMLib.dir/main.cpp.i
+	cd /home/arthur/Documents/repos/dsm_system/build/src/lib && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/arthur/Documents/repos/dsm_system/src/lib/main.cpp > CMakeFiles/DSMLib.dir/main.cpp.i
 
 src/lib/CMakeFiles/DSMLib.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/DSMLib.dir/main.cpp.s"
-	cd /home/arthur/Documents/repos/DSMSystem/build/src/lib && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arthur/Documents/repos/DSMSystem/src/lib/main.cpp -o CMakeFiles/DSMLib.dir/main.cpp.s
+	cd /home/arthur/Documents/repos/dsm_system/build/src/lib && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arthur/Documents/repos/dsm_system/src/lib/main.cpp -o CMakeFiles/DSMLib.dir/main.cpp.s
 
 src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.o: src/lib/CMakeFiles/DSMLib.dir/flags.make
-src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.o: /home/arthur/Documents/repos/DSMSystem/src/lib/dsm_node.cpp
+src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.o: /home/arthur/Documents/repos/dsm_system/src/lib/dsm_node.cpp
 src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.o: src/lib/CMakeFiles/DSMLib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/arthur/Documents/repos/DSMSystem/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.o"
-	cd /home/arthur/Documents/repos/DSMSystem/build/src/lib && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.o -MF CMakeFiles/DSMLib.dir/dsm_node.cpp.o.d -o CMakeFiles/DSMLib.dir/dsm_node.cpp.o -c /home/arthur/Documents/repos/DSMSystem/src/lib/dsm_node.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/arthur/Documents/repos/dsm_system/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.o"
+	cd /home/arthur/Documents/repos/dsm_system/build/src/lib && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.o -MF CMakeFiles/DSMLib.dir/dsm_node.cpp.o.d -o CMakeFiles/DSMLib.dir/dsm_node.cpp.o -c /home/arthur/Documents/repos/dsm_system/src/lib/dsm_node.cpp
 
 src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/DSMLib.dir/dsm_node.cpp.i"
-	cd /home/arthur/Documents/repos/DSMSystem/build/src/lib && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/arthur/Documents/repos/DSMSystem/src/lib/dsm_node.cpp > CMakeFiles/DSMLib.dir/dsm_node.cpp.i
+	cd /home/arthur/Documents/repos/dsm_system/build/src/lib && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/arthur/Documents/repos/dsm_system/src/lib/dsm_node.cpp > CMakeFiles/DSMLib.dir/dsm_node.cpp.i
 
 src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/DSMLib.dir/dsm_node.cpp.s"
-	cd /home/arthur/Documents/repos/DSMSystem/build/src/lib && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arthur/Documents/repos/DSMSystem/src/lib/dsm_node.cpp -o CMakeFiles/DSMLib.dir/dsm_node.cpp.s
+	cd /home/arthur/Documents/repos/dsm_system/build/src/lib && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arthur/Documents/repos/dsm_system/src/lib/dsm_node.cpp -o CMakeFiles/DSMLib.dir/dsm_node.cpp.s
 
 src/lib/CMakeFiles/DSMLib.dir/injection.s.o: src/lib/CMakeFiles/DSMLib.dir/flags.make
-src/lib/CMakeFiles/DSMLib.dir/injection.s.o: /home/arthur/Documents/repos/DSMSystem/src/lib/injection.s
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/arthur/Documents/repos/DSMSystem/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building ASM object src/lib/CMakeFiles/DSMLib.dir/injection.s.o"
-	cd /home/arthur/Documents/repos/DSMSystem/build/src/lib && /usr/bin/cc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/DSMLib.dir/injection.s.o -c /home/arthur/Documents/repos/DSMSystem/src/lib/injection.s
+src/lib/CMakeFiles/DSMLib.dir/injection.s.o: /home/arthur/Documents/repos/dsm_system/src/lib/injection.s
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/arthur/Documents/repos/dsm_system/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building ASM object src/lib/CMakeFiles/DSMLib.dir/injection.s.o"
+	cd /home/arthur/Documents/repos/dsm_system/build/src/lib && /usr/bin/cc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/DSMLib.dir/injection.s.o -c /home/arthur/Documents/repos/dsm_system/src/lib/injection.s
 
 src/lib/CMakeFiles/DSMLib.dir/injection.s.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing ASM source to CMakeFiles/DSMLib.dir/injection.s.i"
-	cd /home/arthur/Documents/repos/DSMSystem/build/src/lib && /usr/bin/cc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -E /home/arthur/Documents/repos/DSMSystem/src/lib/injection.s > CMakeFiles/DSMLib.dir/injection.s.i
+	cd /home/arthur/Documents/repos/dsm_system/build/src/lib && /usr/bin/cc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -E /home/arthur/Documents/repos/dsm_system/src/lib/injection.s > CMakeFiles/DSMLib.dir/injection.s.i
 
 src/lib/CMakeFiles/DSMLib.dir/injection.s.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling ASM source to assembly CMakeFiles/DSMLib.dir/injection.s.s"
-	cd /home/arthur/Documents/repos/DSMSystem/build/src/lib && /usr/bin/cc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -S /home/arthur/Documents/repos/DSMSystem/src/lib/injection.s -o CMakeFiles/DSMLib.dir/injection.s.s
+	cd /home/arthur/Documents/repos/dsm_system/build/src/lib && /usr/bin/cc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -S /home/arthur/Documents/repos/dsm_system/src/lib/injection.s -o CMakeFiles/DSMLib.dir/injection.s.s
 
 src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.o: src/lib/CMakeFiles/DSMLib.dir/flags.make
-src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.o: /home/arthur/Documents/repos/DSMSystem/src/lib/user_mprotect.cpp
+src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.o: /home/arthur/Documents/repos/dsm_system/src/lib/user_mprotect.cpp
 src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.o: src/lib/CMakeFiles/DSMLib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/arthur/Documents/repos/DSMSystem/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.o"
-	cd /home/arthur/Documents/repos/DSMSystem/build/src/lib && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.o -MF CMakeFiles/DSMLib.dir/user_mprotect.cpp.o.d -o CMakeFiles/DSMLib.dir/user_mprotect.cpp.o -c /home/arthur/Documents/repos/DSMSystem/src/lib/user_mprotect.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/arthur/Documents/repos/dsm_system/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.o"
+	cd /home/arthur/Documents/repos/dsm_system/build/src/lib && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.o -MF CMakeFiles/DSMLib.dir/user_mprotect.cpp.o.d -o CMakeFiles/DSMLib.dir/user_mprotect.cpp.o -c /home/arthur/Documents/repos/dsm_system/src/lib/user_mprotect.cpp
 
 src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/DSMLib.dir/user_mprotect.cpp.i"
-	cd /home/arthur/Documents/repos/DSMSystem/build/src/lib && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/arthur/Documents/repos/DSMSystem/src/lib/user_mprotect.cpp > CMakeFiles/DSMLib.dir/user_mprotect.cpp.i
+	cd /home/arthur/Documents/repos/dsm_system/build/src/lib && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/arthur/Documents/repos/dsm_system/src/lib/user_mprotect.cpp > CMakeFiles/DSMLib.dir/user_mprotect.cpp.i
 
 src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/DSMLib.dir/user_mprotect.cpp.s"
-	cd /home/arthur/Documents/repos/DSMSystem/build/src/lib && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arthur/Documents/repos/DSMSystem/src/lib/user_mprotect.cpp -o CMakeFiles/DSMLib.dir/user_mprotect.cpp.s
+	cd /home/arthur/Documents/repos/dsm_system/build/src/lib && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arthur/Documents/repos/dsm_system/src/lib/user_mprotect.cpp -o CMakeFiles/DSMLib.dir/user_mprotect.cpp.s
 
 # Object files for target DSMLib
 DSMLib_OBJECTS = \
-"CMakeFiles/DSMLib.dir/simple_mutex.cpp.o" \
+"CMakeFiles/DSMLib.dir/dsm_lock.cpp.o" \
 "CMakeFiles/DSMLib.dir/main.cpp.o" \
 "CMakeFiles/DSMLib.dir/dsm_node.cpp.o" \
 "CMakeFiles/DSMLib.dir/injection.s.o" \
@@ -152,26 +152,26 @@ DSMLib_OBJECTS = \
 # External object files for target DSMLib
 DSMLib_EXTERNAL_OBJECTS =
 
-src/lib/libDSMLib.a: src/lib/CMakeFiles/DSMLib.dir/simple_mutex.cpp.o
+src/lib/libDSMLib.a: src/lib/CMakeFiles/DSMLib.dir/dsm_lock.cpp.o
 src/lib/libDSMLib.a: src/lib/CMakeFiles/DSMLib.dir/main.cpp.o
 src/lib/libDSMLib.a: src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.o
 src/lib/libDSMLib.a: src/lib/CMakeFiles/DSMLib.dir/injection.s.o
 src/lib/libDSMLib.a: src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.o
 src/lib/libDSMLib.a: src/lib/CMakeFiles/DSMLib.dir/build.make
 src/lib/libDSMLib.a: src/lib/CMakeFiles/DSMLib.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/arthur/Documents/repos/DSMSystem/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX static library libDSMLib.a"
-	cd /home/arthur/Documents/repos/DSMSystem/build/src/lib && $(CMAKE_COMMAND) -P CMakeFiles/DSMLib.dir/cmake_clean_target.cmake
-	cd /home/arthur/Documents/repos/DSMSystem/build/src/lib && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/DSMLib.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/arthur/Documents/repos/dsm_system/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX static library libDSMLib.a"
+	cd /home/arthur/Documents/repos/dsm_system/build/src/lib && $(CMAKE_COMMAND) -P CMakeFiles/DSMLib.dir/cmake_clean_target.cmake
+	cd /home/arthur/Documents/repos/dsm_system/build/src/lib && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/DSMLib.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 src/lib/CMakeFiles/DSMLib.dir/build: src/lib/libDSMLib.a
 .PHONY : src/lib/CMakeFiles/DSMLib.dir/build
 
 src/lib/CMakeFiles/DSMLib.dir/clean:
-	cd /home/arthur/Documents/repos/DSMSystem/build/src/lib && $(CMAKE_COMMAND) -P CMakeFiles/DSMLib.dir/cmake_clean.cmake
+	cd /home/arthur/Documents/repos/dsm_system/build/src/lib && $(CMAKE_COMMAND) -P CMakeFiles/DSMLib.dir/cmake_clean.cmake
 .PHONY : src/lib/CMakeFiles/DSMLib.dir/clean
 
 src/lib/CMakeFiles/DSMLib.dir/depend:
-	cd /home/arthur/Documents/repos/DSMSystem/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/arthur/Documents/repos/DSMSystem /home/arthur/Documents/repos/DSMSystem/src/lib /home/arthur/Documents/repos/DSMSystem/build /home/arthur/Documents/repos/DSMSystem/build/src/lib /home/arthur/Documents/repos/DSMSystem/build/src/lib/CMakeFiles/DSMLib.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/arthur/Documents/repos/dsm_system/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/arthur/Documents/repos/dsm_system /home/arthur/Documents/repos/dsm_system/src/lib /home/arthur/Documents/repos/dsm_system/build /home/arthur/Documents/repos/dsm_system/build/src/lib /home/arthur/Documents/repos/dsm_system/build/src/lib/CMakeFiles/DSMLib.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : src/lib/CMakeFiles/DSMLib.dir/depend
 

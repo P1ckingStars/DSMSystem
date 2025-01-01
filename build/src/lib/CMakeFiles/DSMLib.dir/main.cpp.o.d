@@ -1,7 +1,9 @@
 src/lib/CMakeFiles/DSMLib.dir/main.cpp.o: \
- /home/arthur/Documents/repos/DSMSystem/src/lib/main.cpp \
+ /home/arthur/Documents/repos/dsm_system/src/lib/main.cpp \
  /usr/include/stdc-predef.h \
- /home/arthur/Documents/repos/DSMSystem/src/include/dsm_node.hpp \
+ /home/arthur/Documents/repos/dsm_system/src/include/debug.hpp \
+ /home/arthur/Documents/repos/dsm_system/src/include/config.hpp \
+ /home/arthur/Documents/repos/dsm_system/src/include/dsm_node.hpp \
  /usr/include/rpc/server.h /usr/include/rpc/config.h \
  /usr/include/c++/14.2.1/cstddef \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
@@ -732,9 +734,9 @@ src/lib/CMakeFiles/DSMLib.dir/main.cpp.o: \
  /usr/include/rpc/detail/func_traits.h /usr/include/rpc/detail/log.h \
  /usr/include/rpc/detail/not.h /usr/include/rpc/detail/response.h \
  /usr/include/rpc/detail/make_unique.h /usr/include/rpc/dispatcher.inl \
- /usr/include/rpc/detail/pimpl.h /usr/include/signal.h \
- /usr/include/bits/signum-generic.h /usr/include/bits/signum-arch.h \
- /usr/include/bits/types/sig_atomic_t.h \
+ /usr/include/rpc/detail/pimpl.h /usr/include/malloc.h \
+ /usr/include/signal.h /usr/include/bits/signum-generic.h \
+ /usr/include/bits/signum-arch.h /usr/include/bits/types/sig_atomic_t.h \
  /usr/include/bits/types/siginfo_t.h /usr/include/bits/types/__sigval_t.h \
  /usr/include/bits/siginfo-arch.h /usr/include/bits/siginfo-consts.h \
  /usr/include/bits/siginfo-consts-arch.h \
@@ -748,11 +750,8 @@ src/lib/CMakeFiles/DSMLib.dir/main.cpp.o: \
  /usr/include/bits/getopt_core.h /usr/include/bits/unistd_ext.h \
  /usr/include/linux/close_range.h /usr/include/bits/ss_flags.h \
  /usr/include/bits/types/struct_sigstack.h /usr/include/bits/sigthread.h \
- /usr/include/bits/signal_ext.h /usr/include/malloc.h \
- /usr/include/sys/mman.h /usr/include/bits/mman.h \
- /usr/include/bits/mman-map-flags-generic.h \
+ /usr/include/bits/signal_ext.h /usr/include/sys/mman.h \
+ /usr/include/bits/mman.h /usr/include/bits/mman-map-flags-generic.h \
  /usr/include/bits/mman-linux.h /usr/include/bits/mman-shared.h \
  /usr/include/bits/mman_ext.h /usr/include/sys/ptrace.h \
- /usr/include/bits/ptrace-shared.h \
- /home/arthur/Documents/repos/DSMSystem/src/include/debug.hpp \
- /home/arthur/Documents/repos/DSMSystem/src/include/config.hpp
+ /usr/include/bits/ptrace-shared.h

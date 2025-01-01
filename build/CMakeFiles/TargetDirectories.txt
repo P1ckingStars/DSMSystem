@@ -1,6 +1,6 @@
-/home/arthur/Documents/repos/DSMSystem/build/CMakeFiles/test1.dir
-/home/arthur/Documents/repos/DSMSystem/build/CMakeFiles/edit_cache.dir
-/home/arthur/Documents/repos/DSMSystem/build/CMakeFiles/rebuild_cache.dir
-/home/arthur/Documents/repos/DSMSystem/build/src/lib/CMakeFiles/DSMLib.dir
-/home/arthur/Documents/repos/DSMSystem/build/src/lib/CMakeFiles/edit_cache.dir
-/home/arthur/Documents/repos/DSMSystem/build/src/lib/CMakeFiles/rebuild_cache.dir
+/home/arthur/Documents/repos/dsm_system/build/CMakeFiles/test1.dir
+/home/arthur/Documents/repos/dsm_system/build/CMakeFiles/edit_cache.dir
+/home/arthur/Documents/repos/dsm_system/build/CMakeFiles/rebuild_cache.dir
+/home/arthur/Documents/repos/dsm_system/build/src/lib/CMakeFiles/DSMLib.dir
+/home/arthur/Documents/repos/dsm_system/build/src/lib/CMakeFiles/edit_cache.dir
+/home/arthur/Documents/repos/dsm_system/build/src/lib/CMakeFiles/rebuild_cache.dir

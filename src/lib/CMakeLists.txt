@@ -4,7 +4,7 @@
 # and mysqrt.cxx
 
 add_library(DSMLib
-    simple_mutex.cpp
+    dsm_lock.cpp
     main.cpp
     dsm_node.cpp
     injection.s 

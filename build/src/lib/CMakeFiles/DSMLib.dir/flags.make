@@ -5,13 +5,13 @@
 # compile CXX with /usr/bin/c++
 ASM_DEFINES = 
 
-ASM_INCLUDES = -I/home/arthur/Documents/repos/DSMSystem/src/include
+ASM_INCLUDES = -I/home/arthur/Documents/repos/dsm_system/src/include
 
 ASM_FLAGS = 
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/arthur/Documents/repos/DSMSystem/src/include
+CXX_INCLUDES = -I/home/arthur/Documents/repos/dsm_system/src/include
 
 CXX_FLAGS = -std=gnu++11
 

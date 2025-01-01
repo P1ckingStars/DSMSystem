@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/arthur/Documents/repos/DSMSystem
+CMAKE_SOURCE_DIR = /home/arthur/Documents/repos/dsm_system
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/arthur/Documents/repos/DSMSystem/build
+CMAKE_BINARY_DIR = /home/arthur/Documents/repos/dsm_system/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,14 +87,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/arthur/Documents/repos/DSMSystem/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/arthur/Documents/repos/DSMSystem/build/CMakeFiles /home/arthur/Documents/repos/DSMSystem/build/src/lib//CMakeFiles/progress.marks
-	cd /home/arthur/Documents/repos/DSMSystem/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/lib/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/arthur/Documents/repos/DSMSystem/build/CMakeFiles 0
+	cd /home/arthur/Documents/repos/dsm_system/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/arthur/Documents/repos/dsm_system/build/CMakeFiles /home/arthur/Documents/repos/dsm_system/build/src/lib//CMakeFiles/progress.marks
+	cd /home/arthur/Documents/repos/dsm_system/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/lib/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/arthur/Documents/repos/dsm_system/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/arthur/Documents/repos/DSMSystem/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/lib/clean
+	cd /home/arthur/Documents/repos/dsm_system/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/lib/clean
 .PHONY : clean
 
 # The main clean target
@@ -103,22 +103,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/arthur/Documents/repos/DSMSystem/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/lib/preinstall
+	cd /home/arthur/Documents/repos/dsm_system/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/lib/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/arthur/Documents/repos/DSMSystem/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/lib/preinstall
+	cd /home/arthur/Documents/repos/dsm_system/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/lib/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/arthur/Documents/repos/DSMSystem/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/arthur/Documents/repos/dsm_system/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 src/lib/CMakeFiles/DSMLib.dir/rule:
-	cd /home/arthur/Documents/repos/DSMSystem/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/lib/CMakeFiles/DSMLib.dir/rule
+	cd /home/arthur/Documents/repos/dsm_system/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/lib/CMakeFiles/DSMLib.dir/rule
 .PHONY : src/lib/CMakeFiles/DSMLib.dir/rule
 
 # Convenience name for target.
@@ -127,15 +127,39 @@ DSMLib: src/lib/CMakeFiles/DSMLib.dir/rule
 
 # fast build rule for target.
 DSMLib/fast:
-	cd /home/arthur/Documents/repos/DSMSystem/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/build
+	cd /home/arthur/Documents/repos/dsm_system/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/build
 .PHONY : DSMLib/fast
+
+dsm_lock.o: dsm_lock.cpp.o
+.PHONY : dsm_lock.o
+
+# target to build an object file
+dsm_lock.cpp.o:
+	cd /home/arthur/Documents/repos/dsm_system/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/dsm_lock.cpp.o
+.PHONY : dsm_lock.cpp.o
+
+dsm_lock.i: dsm_lock.cpp.i
+.PHONY : dsm_lock.i
+
+# target to preprocess a source file
+dsm_lock.cpp.i:
+	cd /home/arthur/Documents/repos/dsm_system/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/dsm_lock.cpp.i
+.PHONY : dsm_lock.cpp.i
+
+dsm_lock.s: dsm_lock.cpp.s
+.PHONY : dsm_lock.s
+
+# target to generate assembly for a file
+dsm_lock.cpp.s:
+	cd /home/arthur/Documents/repos/dsm_system/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/dsm_lock.cpp.s
+.PHONY : dsm_lock.cpp.s
 
 dsm_node.o: dsm_node.cpp.o
 .PHONY : dsm_node.o
 
 # target to build an object file
 dsm_node.cpp.o:
-	cd /home/arthur/Documents/repos/DSMSystem/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.o
+	cd /home/arthur/Documents/repos/dsm_system/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.o
 .PHONY : dsm_node.cpp.o
 
 dsm_node.i: dsm_node.cpp.i
@@ -143,7 +167,7 @@ dsm_node.i: dsm_node.cpp.i
 
 # target to preprocess a source file
 dsm_node.cpp.i:
-	cd /home/arthur/Documents/repos/DSMSystem/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.i
+	cd /home/arthur/Documents/repos/dsm_system/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.i
 .PHONY : dsm_node.cpp.i
 
 dsm_node.s: dsm_node.cpp.s
@@ -151,7 +175,7 @@ dsm_node.s: dsm_node.cpp.s
 
 # target to generate assembly for a file
 dsm_node.cpp.s:
-	cd /home/arthur/Documents/repos/DSMSystem/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.s
+	cd /home/arthur/Documents/repos/dsm_system/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.s
 .PHONY : dsm_node.cpp.s
 
 injection.o: injection.s.o
@@ -159,7 +183,7 @@ injection.o: injection.s.o
 
 # target to build an object file
 injection.s.o:
-	cd /home/arthur/Documents/repos/DSMSystem/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/injection.s.o
+	cd /home/arthur/Documents/repos/dsm_system/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/injection.s.o
 .PHONY : injection.s.o
 
 main.o: main.cpp.o
@@ -167,7 +191,7 @@ main.o: main.cpp.o
 
 # target to build an object file
 main.cpp.o:
-	cd /home/arthur/Documents/repos/DSMSystem/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/main.cpp.o
+	cd /home/arthur/Documents/repos/dsm_system/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -175,7 +199,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	cd /home/arthur/Documents/repos/DSMSystem/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/main.cpp.i
+	cd /home/arthur/Documents/repos/dsm_system/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -183,39 +207,15 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	cd /home/arthur/Documents/repos/DSMSystem/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/main.cpp.s
+	cd /home/arthur/Documents/repos/dsm_system/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/main.cpp.s
 .PHONY : main.cpp.s
-
-simple_mutex.o: simple_mutex.cpp.o
-.PHONY : simple_mutex.o
-
-# target to build an object file
-simple_mutex.cpp.o:
-	cd /home/arthur/Documents/repos/DSMSystem/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/simple_mutex.cpp.o
-.PHONY : simple_mutex.cpp.o
-
-simple_mutex.i: simple_mutex.cpp.i
-.PHONY : simple_mutex.i
-
-# target to preprocess a source file
-simple_mutex.cpp.i:
-	cd /home/arthur/Documents/repos/DSMSystem/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/simple_mutex.cpp.i
-.PHONY : simple_mutex.cpp.i
-
-simple_mutex.s: simple_mutex.cpp.s
-.PHONY : simple_mutex.s
-
-# target to generate assembly for a file
-simple_mutex.cpp.s:
-	cd /home/arthur/Documents/repos/DSMSystem/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/simple_mutex.cpp.s
-.PHONY : simple_mutex.cpp.s
 
 user_mprotect.o: user_mprotect.cpp.o
 .PHONY : user_mprotect.o
 
 # target to build an object file
 user_mprotect.cpp.o:
-	cd /home/arthur/Documents/repos/DSMSystem/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.o
+	cd /home/arthur/Documents/repos/dsm_system/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.o
 .PHONY : user_mprotect.cpp.o
 
 user_mprotect.i: user_mprotect.cpp.i
@@ -223,7 +223,7 @@ user_mprotect.i: user_mprotect.cpp.i
 
 # target to preprocess a source file
 user_mprotect.cpp.i:
-	cd /home/arthur/Documents/repos/DSMSystem/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.i
+	cd /home/arthur/Documents/repos/dsm_system/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.i
 .PHONY : user_mprotect.cpp.i
 
 user_mprotect.s: user_mprotect.cpp.s
@@ -231,7 +231,7 @@ user_mprotect.s: user_mprotect.cpp.s
 
 # target to generate assembly for a file
 user_mprotect.cpp.s:
-	cd /home/arthur/Documents/repos/DSMSystem/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.s
+	cd /home/arthur/Documents/repos/dsm_system/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.s
 .PHONY : user_mprotect.cpp.s
 
 # Help Target
@@ -243,6 +243,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... DSMLib"
+	@echo "... dsm_lock.o"
+	@echo "... dsm_lock.i"
+	@echo "... dsm_lock.s"
 	@echo "... dsm_node.o"
 	@echo "... dsm_node.i"
 	@echo "... dsm_node.s"
@@ -250,9 +253,6 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
-	@echo "... simple_mutex.o"
-	@echo "... simple_mutex.i"
-	@echo "... simple_mutex.s"
 	@echo "... user_mprotect.o"
 	@echo "... user_mprotect.i"
 	@echo "... user_mprotect.s"
@@ -267,6 +267,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/arthur/Documents/repos/DSMSystem/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/arthur/Documents/repos/dsm_system/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 
