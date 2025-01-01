@@ -33,6 +33,5 @@ int dsm_main(char * mem_region, size_t length, int argc, char * argv[]) {
         printf("mutex3: %d\n", mu);
     }
     printf("complete!!!\n");
-    while(1);
     return 0;
 }

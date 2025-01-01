@@ -41,23 +41,23 @@ int main(int argc, char *argv[]) {
       ;
     printf("start dsm main\n");
     int res = dsm_main(mem_region, size, argc, argv);
-    return 0;
-  }
-  if (is_master) {
-    printf("create master\n");
-    NodeAddr addr;
-    addr.ip = string(argv[3]);
-    addr.port = stoi(argv[4]);
-    dsm_init_master(child, addr, mem_region, size, &x);
   } else {
-    printf("create node\n");
-    NodeAddr addr;
-    addr.ip = string(argv[3]);
-    addr.port = stoi(argv[4]);
-    NodeAddr dst_addr;
-    dst_addr.ip = string(argv[5]);
-    dst_addr.port = stoi(argv[6]);
-    dsm_init_node(child, addr, dst_addr, mem_region, size, &x);
+    if (is_master) {
+      printf("create master\n");
+      NodeAddr addr;
+      addr.ip = string(argv[3]);
+      addr.port = stoi(argv[4]);
+      dsm_init_master(child, addr, mem_region, size, &x);
+    } else {
+      printf("create node\n");
+      NodeAddr addr;
+      addr.ip = string(argv[3]);
+      addr.port = stoi(argv[4]);
+      NodeAddr dst_addr;
+      dst_addr.ip = string(argv[5]);
+      dst_addr.port = stoi(argv[6]);
+      dsm_init_node(child, addr, dst_addr, mem_region, size, &x);
+    }
   }
   while (1)
     ;
