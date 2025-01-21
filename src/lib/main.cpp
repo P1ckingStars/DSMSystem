@@ -1,5 +1,7 @@
 #include "debug.hpp"
+#include "dsm_lock.hpp"
 #include "dsm_node.hpp"
+#include "threadlib/cpu.h"
 #include <alloca.h>
 #include <cstddef>
 #include <cstdint>
@@ -13,10 +15,16 @@
 #include <sys/mman.h>
 #include <sys/ptrace.h>
 #include <unistd.h>
+#include <vector>
+
+#define NUM_NODE 2
 
 using namespace dsm;
 
 int dsm_main(char *mem_region, size_t length, int argc, char *argv[]);
+void dsm_main1(void *args);
+
+vector<int> arr;
 
 extern char __bss_start;
 
@@ -32,15 +40,30 @@ int main(int argc, char *argv[]) {
   size_t size = mem_end - mem_region;
   printf("mem size %lx\n", size);
   bool is_master = atoi(argv[1]) == 0;
-  int pages = atoi(argv[2]);
-  int x = 1;
+  // int x = 0;
+  int x = -1;
+  dsm::total_page = 25000;
   if ((child = fork()) == 0) {
     ptrace(PTRACE_TRACEME, 0, nullptr, nullptr);
+    // if (1) {
     printf("wait on x: %lx, %d\n", (intptr_t)(&x), x);
-    while (x)
+    while (x == -1)
       ;
+    int local_cpuid = x;
+    cpuid = &local_cpuid;
     printf("start dsm main\n");
-    int res = dsm_main(mem_region, size, argc, argv);
+    printf("arr.size() %zu\n", arr.size());
+    arr.push_back(9);
+    printf("arr[0] %d\n", arr[0]);
+    if (is_master) {
+      cpu_list = new cpu *[NUM_NODE];
+      printf("cpu list addr %lx\n", (intptr_t)cpu_list);
+      cpu_list[x] = new cpu;
+      cpu_list[x]->run(dsm_main1, nullptr);
+    } else {
+      cpu_list[x] = new cpu;
+      cpu_list[x]->run(nullptr, nullptr);
+    }
   } else {
     if (is_master) {
       printf("create master\n");

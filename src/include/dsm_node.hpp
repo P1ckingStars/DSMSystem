@@ -1,6 +1,7 @@
 #ifndef DSM_NODE
 #define DSM_NODE
 
+#include "macros.hpp"
 #include "rpc/server.h"
 #include <cstddef>
 #include <cstdint>
@@ -8,37 +9,7 @@
 #include <pthread.h>
 #include <rpc/msgpack/adaptor/define_decl.hpp>
 #include <sched.h>
-#include <unordered_map>
 #include <vector>
-
-#define RELEASE_CONSISTANCY
-#define PAGE_OFFSET_BIT 12
-#define PAGE_ALIGNED_ADDR(x) ((x >> PAGE_OFFSET_BIT) << PAGE_OFFSET_BIT)
-#define PAGE_SIZE (1 << PAGE_OFFSET_BIT)
-#define VPID2VPADDR(vpid) ((vpid) << PAGE_OFFSET_BIT)
-#define VPADDR2VPID(vpaddr) ((vpaddr) >> PAGE_OFFSET_BIT)
-
-#define ASSERT(EXP, MSG)                                                       \
-{                                                                            \
-    if (!(EXP)) {                                                              \
-        printf("ASSERTION FAILED at %s:%d: %s\n", __FILE__, __LINE__, MSG);      \
-        exit(-1);                                                                \
-    }                                                                          \
-}
-
-#define ASSERT_PAGE_ALIGN(addr)                                                \
-ASSERT(((intptr)addr) % PAGE_SIZE == 0, "addr page align")
-#define ASSERT_NOT_NULL(ptr) ASSERT(ptr, "null ptr error")
-#define ASSERT_NOT_NULL_MSG(ptr, MSG) ASSERT(ptr, MSG)
-#define ASSERT_POSIX_STATUS(status) ASSERT(status != -1, "posix error")
-#define ASSERT_PERROR(err_no)                                                         \
-{                                                                            \
-    if ((int64_t)(err_no) == -1) {                                             \
-        perror("POSIX ");                                                        \
-        exit(-1);                                                                \
-    }                                                                          \
-}
-
 using namespace std;
 
 typedef uint64_t page_id_t;
@@ -53,7 +24,7 @@ struct NodeAddr {
     MSGPACK_DEFINE_ARRAY(ip, port);
 };
 
-void dsm_init(pid_t child, int * wait_x);
+void dsm_init(pid_t child, int * wait_x, int node_id);
 char * dsm_init_master(pid_t child, NodeAddr self, char * region, size_t size, int * wait_x);
 char * dsm_init_node(pid_t child, NodeAddr self, NodeAddr dst, char * region, size_t size, int * wait_x);
 

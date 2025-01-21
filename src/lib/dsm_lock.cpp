@@ -1,21 +1,20 @@
 
+#include <cstddef>
 #include <cstdint>
 #include <cwctype>
 #include <sched.h>
+#include <sys/mman.h>
 
 #include "dsm_lock.hpp"
+#include "macros.hpp"
 
 using namespace dsm;
-  
-static inline int
-xchgl(volatile int *addr, int newval)
-{   
-  int result;
-  asm volatile("lock; xchgl %0, %1" :
-               "+m" (*addr), "=a" (result) :
-               "1" (newval) :
-               "cc");
-  return result;
+
+size_t dsm::total_page;
+extern char __bss_start;
+
+inline void sync() {
+    mprotect(&__bss_start, total_page * PAGE_SIZE, PROT_NONE);
 }
 
 inline bool test_and_set(int * mu) {
@@ -23,11 +22,12 @@ inline bool test_and_set(int * mu) {
     return xchgl(mu, test);
 }
 
-void dsm_mutex_lock(dsm_mutex * mu) {
+void dsm::dsm_mutex_lock(dsm_mutex * mu) {
     while (test_and_set(mu));
+    sync();   
 }
 
-void dsm_mutex_unlock(dsm_mutex * mu) {
+void dsm::dsm_mutex_unlock(dsm_mutex * mu) {
     *mu = 0;
 }
 

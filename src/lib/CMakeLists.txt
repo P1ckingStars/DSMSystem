@@ -9,7 +9,14 @@ add_library(DSMLib
     dsm_node.cpp
     injection.s 
     user_mprotect.cpp
+    threadlib/cpu.cpp
+    threadlib/cv.cpp
+    threadlib/dsm_cpu_impl.cpp
+    threadlib/mutex.cpp
+    threadlib/schedulerState.cpp
+    threadlib/thread.cpp
 )
+
 
 target_include_directories(DSMLib PUBLIC
     "${CMAKE_SOURCE_DIR}/src/include"

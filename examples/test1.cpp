@@ -1,37 +1,48 @@
 
 #include <cstdint>
 #include <cstdlib>
+#include <cstdlib> // For std::exit
+#include <iostream>
 #include <stdio.h>
 #include <sys/mman.h>
+#include <ucontext.h>
 
-int var;
-int mu;
-int p;
-
-int dsm_main(char * mem_region, size_t length, int argc, char * argv[]) {
-    printf("---------------run user code now-------------\n");
-    bool is_master = atoi(argv[1]) == 0;
-    char *x_part = (char *)&var;
-    int k = x_part[2];
-    printf("write %lx!!!\n", (intptr_t)&x_part[1]);
-    if (is_master) {
-        x_part[0] = 1;
-        while (x_part[1] == 0) {
-            x_part[0] = 1;
-        }
-    } else {
-        x_part[1] = 1;
-        while (x_part[0] == 0) {
-            x_part[1] = 1;
-        }
-    }
-    printf("barrier complete!!!\n");
-    for (int i = 0; i < 300; i++) {
-        printf("mutex2: %d\n", mu);
-        p++;
-        printf("count = %d\n", p);
-        printf("mutex3: %d\n", mu);
-    }
-    printf("complete!!!\n");
-    return 0;
+void dsm_main1(void *arg) {
+  printf("---------------run user code now-------------\n");
+  printf("complete!!!\n");
 }
+
+//   ucontext_t main_context, func_context;
+//
+//   void func() {
+//       std::cout << "Inside func()" << std::endl;
+//
+//       // Switch back to the main context
+//       swapcontext(&func_context, &main_context);
+//
+//       std::cout << "Back in func() after swap" << std::endl;
+//
+//       // Exit the program to avoid undefined behavior
+//       std::exit(0);
+//   }
+//
+//   void dsm_main1(void * arg) {
+//       char * stack = new char[1024 * 64]; // Stack for the new context
+//
+//       // Get the current context as a template for func_context
+//       getcontext(&func_context);
+//
+//       // Set up the new context
+//       func_context.uc_stack.ss_sp = stack;
+//       func_context.uc_stack.ss_size = sizeof(stack);
+//       func_context.uc_link = nullptr; // Where to return after func()
+//       finishes makecontext(&func_context, func, 0); // Set the function to
+//       execute
+//
+//       std::cout << "Switching to func_context" << std::endl;
+//
+//       // Switch to the new context
+//       swapcontext(&main_context, &func_context);
+//
+//       std::cout << "Back in main_context" << std::endl;
+//   }

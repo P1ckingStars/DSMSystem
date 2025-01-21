@@ -12,7 +12,6 @@
 #include <cstdlib>
 #include <cstring>
 #include <fcntl.h>
-#include <iostream>
 #include <pthread.h>
 #include <sched.h>
 #include <signal.h>
@@ -55,7 +54,7 @@ ssize_t inline remote_mempage_write(pid_t pid, char *local, char *remote) {
   liov[0].iov_len = PAGE_SIZE;
   riov[0].iov_base = remote;
   riov[0].iov_len = PAGE_SIZE;
-  printf("mem write at addr %lx\n", riov[0].iov_base);
+  printf("!!!WRITE at addr %lx\n", riov[0].iov_base);
   return process_vm_writev(pid, liov, 1, riov, 1, 0);
 }
 ssize_t inline remote_mempage_read(pid_t pid, char *local, char *remote) {
@@ -79,6 +78,7 @@ static void handler(int sig, siginfo_t *si, void *unused) {
   if (OWNERSHIP(prot)) {
     DEBUG_STMT(printf("owned: 0x%lx\n", (long)si->si_addr));
     dsm_singleton->update_prot(si->si_addr);
+    return;
   }
   DEBUG_STMT(printf("Got SIGSEGV at address: 0x%lx\n", (long)si->si_addr));
   if (!dsm_singleton->is_in_range((char *)si->si_addr)) {
@@ -96,7 +96,7 @@ int DSMNode::prot_check(void *addr) {
   return this->page_info[relative_page_id_from_addr(addr)];
 }
 
-void dsm::dsm_init(pid_t child, int *wait_x) {
+void dsm::dsm_init(pid_t child, int *wait_x, int node_id) {
   DEBUG_STMT(printf("setup handler\n"));
   while (1) {
     wait(NULL);
@@ -113,12 +113,12 @@ void dsm::dsm_init(pid_t child, int *wait_x) {
       DEBUG_STMT(printf("SIGUSR1\n"));
       struct iovec local[1];
       struct iovec remote[1];
-      *wait_x = 0;
+      *wait_x = node_id;
       local[0].iov_base = wait_x;
       local[0].iov_len = sizeof(int);
       remote[0].iov_base = wait_x;
       remote[0].iov_len = sizeof(int);
-      DEBUG_STMT(printf("write at %lx, %d\n", (intptr_t)(wait_x), *wait_x));
+      DEBUG_STMT(printf("!!!WRITE at %lx, %d\n", (intptr_t)(wait_x), *wait_x));
       int err = process_vm_writev(child, local, 1, remote, 1, 0);
       ASSERT_PERROR(err);
     }
@@ -156,7 +156,7 @@ char *dsm::dsm_init_master(pid_t child, NodeAddr self, char *region,
         return nullptr;
       },
       &args);
-  dsm_init(child, wait_x);
+  dsm_init(child, wait_x, 0);
   return region;
 }
 char *dsm::dsm_init_node(pid_t child, NodeAddr self, NodeAddr dst, char *region,
@@ -183,7 +183,7 @@ char *dsm::dsm_init_node(pid_t child, NodeAddr self, NodeAddr dst, char *region,
         return nullptr;
       },
       &args);
-  dsm_init(child, wait_x);
+  dsm_init(child, wait_x, 1);
   return region;
 }
 
