@@ -6,8 +6,11 @@
 #include "threadlib/schedulerState.h"
 #include "debug.hpp"
 
+
+
 uint64_t next_tid = 1; // initialize the first thread id
 
+int total_threads = 0;
 /**
  * Wrapper function that calls the actual thread function and handles return,
  * properly deallocate finished threads
@@ -24,11 +27,12 @@ void threadWrapperFunc(thread_startfunc_t func,
     shared_bool *isDead, 
     char *stackptr,
     ucontext_t *recycle){
+    cpu::self()->thread_handler();
     DEBUG_STMT(printf("run wrapper\n"));
     UNLOCK
-    cpu::self()->thread_handler();
     cpu::interrupt_enable();
     func(arg);
+    DEBUG_STMT(printf("completed thread\n"));
     cpu::interrupt_disable();
     LOCK
     SchedulerState::scheduler.wakeAll(wait);
@@ -88,7 +92,7 @@ thread::thread(thread_startfunc_t func, void* arg) {
         cpu::interrupt_enable();
         throw;
     }
-
+    total_threads++;
     UNLOCK
     cpu::interrupt_enable();
 }

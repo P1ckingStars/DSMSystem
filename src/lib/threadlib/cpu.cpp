@@ -35,6 +35,7 @@ void cpu::thread_handler() {
         delete[] stackptr;
         delete this->garbageCtx;
         delete this->wait;
+        total_threads--;
     } // else prev is in SchedulerState::scheduler state
     this->status = NONE;
 }
@@ -89,25 +90,32 @@ void cpu::run(thread_startfunc_t func, void* arg) {
     LOCK
     SchedulerState::scheduler.hasNext();
     UNLOCK
-    DEBUG_STMT(printf("RUN SCHEDULER\n"));
     // cpu scheduling
     while (1){
+        DEBUG_STMT(printf("RUN SCHEDULER\n"));
         this->status = NONE;
         // run next ready thread on ready queue
         SchedulerState::scheduler.runNextFromKernel();
+        DEBUG_STMT(printf("RUN THREAD HANDLER\n"));
         cpu::thread_handler();
         // if the ready queue is empty and cpu is idle
         if (!SchedulerState::scheduler.hasNext()) {
-            LOCK
-            // push self back on the cpu queue
-            cpu::cpus.push(this);
-            UNLOCK
-            // enable interrupt and suspend this cpu
-            cpu::interrupt_enable_suspend();
-            cpu::interrupt_disable();
-            LOCK
-            cpu::cpus.pop();
-            UNLOCK
+            if (total_threads == 0) {
+                DEBUG_STMT(printf("EXIT\n"));
+                exit(-1);
+            }
+                DEBUG_STMT(printf("EXIT\n"));
+                exit(-1);
+          // LOCK
+          // // push self back on the cpu queue
+          // cpu::cpus.push(this);
+          // UNLOCK
+          // // enable interrupt and suspend this cpu
+          // cpu::interrupt_enable_suspend();
+          // cpu::interrupt_disable();
+          // LOCK
+          // cpu::cpus.pop();
+          // UNLOCK
         }
     }
     exit(-1);

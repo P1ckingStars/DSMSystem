@@ -1,48 +1,53 @@
-
-#include <cstdint>
-#include <cstdlib>
-#include <cstdlib> // For std::exit
+#include "threadlib/cpu.h"
+#include "threadlib/cv.h"
+#include "threadlib/mutex.h"
+#include "threadlib/thread.h"
+#include "queue.hpp"
 #include <iostream>
-#include <stdio.h>
-#include <sys/mman.h>
-#include <ucontext.h>
+
+
+using std::cout;
+using std::endl;
+
+mutex bufferMutex;
+cv bufferNotEmpty;
+cv bufferNotFull;
+Queue<int> buffer;
+const size_t bufferSize = 10;
+
+void producer(void *arg) {
+  for (int i = 0; i < 50; ++i) {
+    bufferMutex.lock();
+    while (buffer.size() == bufferSize) {
+      bufferNotFull.wait(bufferMutex);
+    }
+    buffer.enqueue(i);
+    cout << "Produced: " << i << endl;
+    bufferNotEmpty.signal();
+    bufferMutex.unlock();
+  }
+}
+
+void consumer(void *arg) {
+  while (true) {
+    bufferMutex.lock();
+    while (buffer.isEmpty()) {
+      bufferNotEmpty.wait(bufferMutex);
+    }
+    int item = buffer.front();
+    buffer.dequeue();
+    cout << "Consumed: " << item << endl;
+    bufferNotFull.signal();
+    bufferMutex.unlock();
+  }
+}
 
 void dsm_main1(void *arg) {
   printf("---------------run user code now-------------\n");
+  thread prod(producer, nullptr);
+  thread cons(consumer, nullptr);
+  prod.join();
+  cons.join(); // In a real scenario, you might need a way to stop the consumer
+               // thread gracefully.
   printf("complete!!!\n");
 }
-
-//   ucontext_t main_context, func_context;
-//
-//   void func() {
-//       std::cout << "Inside func()" << std::endl;
-//
-//       // Switch back to the main context
-//       swapcontext(&func_context, &main_context);
-//
-//       std::cout << "Back in func() after swap" << std::endl;
-//
-//       // Exit the program to avoid undefined behavior
-//       std::exit(0);
-//   }
-//
-//   void dsm_main1(void * arg) {
-//       char * stack = new char[1024 * 64]; // Stack for the new context
-//
-//       // Get the current context as a template for func_context
-//       getcontext(&func_context);
-//
-//       // Set up the new context
-//       func_context.uc_stack.ss_sp = stack;
-//       func_context.uc_stack.ss_size = sizeof(stack);
-//       func_context.uc_link = nullptr; // Where to return after func()
-//       finishes makecontext(&func_context, func, 0); // Set the function to
-//       execute
-//
-//       std::cout << "Switching to func_context" << std::endl;
-//
-//       // Switch to the new context
-//       swapcontext(&main_context, &func_context);
-//
-//       std::cout << "Back in main_context" << std::endl;
-//   }

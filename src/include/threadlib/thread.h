@@ -8,17 +8,50 @@
  *
  * Do not modify any of the given function declarations.
  */
+#include <cstddef>
 #include <sys/ucontext.h>
 #include <ucontext.h>
+#include "macros.hpp"
 #include "waitable.h"
 
 #pragma once
 
+#define TOTAL_STACK_PAGES 10000
+#define PAGES_PER_STACK 250
+#define TOTAL_POSSIBLE_STACKS (TOTAL_STACK_PAGES/PAGES_PER_STACK)
 
-static constexpr unsigned int STACK_SIZE=1024; //262144; // size of each thread's stack in bytes
+extern char __bss_start;
+extern int total_threads;
+
+//static constexpr unsigned int STACK_SIZE=4096; //262144; // size of each thread's stack in bytes
 
 using thread_startfunc_t = void (*)(void*);
 
+class stack_pool {
+    char * stacks[TOTAL_POSSIBLE_STACKS];
+    int tail;
+public:
+    void init() {
+        tail = TOTAL_POSSIBLE_STACKS;
+        char * mem = &__bss_start;
+        for (int i = 0; i < TOTAL_POSSIBLE_STACKS; i++) {
+            stacks[i] = mem + i * PAGES_PER_STACK * PAGE_SIZE;
+        }
+    }
+    void push(char * addr) {
+        ASSERT(tail < TOTAL_POSSIBLE_STACKS, "More stacks than expected");
+        stacks[tail++] = addr;
+    }
+    char * pop(char * addr) {
+        if (tail == 0) return nullptr;
+        return stacks[--tail];
+    }
+    size_t size() {
+        return TOTAL_POSSIBLE_STACKS-tail;
+    }
+};
+
+extern stack_pool pool;
 /**
  * a class of shared boolean to store the information that if its owner is alive
 */

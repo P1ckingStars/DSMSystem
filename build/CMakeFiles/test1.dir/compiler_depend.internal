@@ -3,6 +3,13 @@
 
 CMakeFiles/test1.dir/examples/test1.cpp.o
  /home/arthur/Documents/repos/dsm_system/examples/test1.cpp
+ /home/arthur/Documents/repos/dsm_system/src/include/dsm_lock.hpp
+ /home/arthur/Documents/repos/dsm_system/src/include/queue.hpp
+ /home/arthur/Documents/repos/dsm_system/src/include/threadlib/cpu.h
+ /home/arthur/Documents/repos/dsm_system/src/include/threadlib/cv.h
+ /home/arthur/Documents/repos/dsm_system/src/include/threadlib/mutex.h
+ /home/arthur/Documents/repos/dsm_system/src/include/threadlib/thread.h
+ /home/arthur/Documents/repos/dsm_system/src/include/threadlib/waitable.h
  /usr/include/alloca.h
  /usr/include/asm-generic/errno-base.h
  /usr/include/asm-generic/errno.h
@@ -19,11 +26,6 @@ CMakeFiles/test1.dir/examples/test1.cpp.o
  /usr/include/bits/libc-header-start.h
  /usr/include/bits/locale.h
  /usr/include/bits/long-double.h
- /usr/include/bits/mman-linux.h
- /usr/include/bits/mman-map-flags-generic.h
- /usr/include/bits/mman-shared.h
- /usr/include/bits/mman.h
- /usr/include/bits/mman_ext.h
  /usr/include/bits/pthread_stack_min-dynamic.h
  /usr/include/bits/pthreadtypes-arch.h
  /usr/include/bits/pthreadtypes.h
@@ -75,9 +77,16 @@ CMakeFiles/test1.dir/examples/test1.cpp.o
  /usr/include/bits/wchar.h
  /usr/include/bits/wctype-wchar.h
  /usr/include/bits/wordsize.h
+ /usr/include/c++/14.2.1/atomic
+ /usr/include/c++/14.2.1/backward/auto_ptr.h
  /usr/include/c++/14.2.1/backward/binders.h
+ /usr/include/c++/14.2.1/bit
+ /usr/include/c++/14.2.1/bits/align.h
  /usr/include/c++/14.2.1/bits/alloc_traits.h
+ /usr/include/c++/14.2.1/bits/allocated_ptr.h
  /usr/include/c++/14.2.1/bits/allocator.h
+ /usr/include/c++/14.2.1/bits/atomic_base.h
+ /usr/include/c++/14.2.1/bits/atomic_lockfree_defines.h
  /usr/include/c++/14.2.1/bits/basic_ios.h
  /usr/include/c++/14.2.1/bits/basic_ios.tcc
  /usr/include/c++/14.2.1/bits/basic_string.h
@@ -88,12 +97,17 @@ CMakeFiles/test1.dir/examples/test1.cpp.o
  /usr/include/c++/14.2.1/bits/cpp_type_traits.h
  /usr/include/c++/14.2.1/bits/cxxabi_forced.h
  /usr/include/c++/14.2.1/bits/cxxabi_init_exception.h
+ /usr/include/c++/14.2.1/bits/deque.tcc
+ /usr/include/c++/14.2.1/bits/enable_special_members.h
+ /usr/include/c++/14.2.1/bits/erase_if.h
  /usr/include/c++/14.2.1/bits/exception.h
  /usr/include/c++/14.2.1/bits/exception_defines.h
  /usr/include/c++/14.2.1/bits/exception_ptr.h
  /usr/include/c++/14.2.1/bits/functexcept.h
  /usr/include/c++/14.2.1/bits/functional_hash.h
  /usr/include/c++/14.2.1/bits/hash_bytes.h
+ /usr/include/c++/14.2.1/bits/hashtable.h
+ /usr/include/c++/14.2.1/bits/hashtable_policy.h
  /usr/include/c++/14.2.1/bits/invoke.h
  /usr/include/c++/14.2.1/bits/ios_base.h
  /usr/include/c++/14.2.1/bits/istream.tcc
@@ -114,32 +128,50 @@ CMakeFiles/test1.dir/examples/test1.cpp.o
  /usr/include/c++/14.2.1/bits/range_access.h
  /usr/include/c++/14.2.1/bits/refwrap.h
  /usr/include/c++/14.2.1/bits/requires_hosted.h
+ /usr/include/c++/14.2.1/bits/shared_ptr.h
+ /usr/include/c++/14.2.1/bits/shared_ptr_atomic.h
+ /usr/include/c++/14.2.1/bits/shared_ptr_base.h
  /usr/include/c++/14.2.1/bits/std_abs.h
  /usr/include/c++/14.2.1/bits/stl_algobase.h
+ /usr/include/c++/14.2.1/bits/stl_bvector.h
  /usr/include/c++/14.2.1/bits/stl_construct.h
+ /usr/include/c++/14.2.1/bits/stl_deque.h
  /usr/include/c++/14.2.1/bits/stl_function.h
+ /usr/include/c++/14.2.1/bits/stl_heap.h
  /usr/include/c++/14.2.1/bits/stl_iterator.h
  /usr/include/c++/14.2.1/bits/stl_iterator_base_funcs.h
  /usr/include/c++/14.2.1/bits/stl_iterator_base_types.h
  /usr/include/c++/14.2.1/bits/stl_pair.h
+ /usr/include/c++/14.2.1/bits/stl_queue.h
+ /usr/include/c++/14.2.1/bits/stl_raw_storage_iter.h
+ /usr/include/c++/14.2.1/bits/stl_tempbuf.h
+ /usr/include/c++/14.2.1/bits/stl_uninitialized.h
+ /usr/include/c++/14.2.1/bits/stl_vector.h
  /usr/include/c++/14.2.1/bits/streambuf.tcc
  /usr/include/c++/14.2.1/bits/streambuf_iterator.h
  /usr/include/c++/14.2.1/bits/stringfwd.h
+ /usr/include/c++/14.2.1/bits/unique_ptr.h
+ /usr/include/c++/14.2.1/bits/unordered_map.h
+ /usr/include/c++/14.2.1/bits/uses_allocator.h
  /usr/include/c++/14.2.1/bits/utility.h
+ /usr/include/c++/14.2.1/bits/vector.tcc
  /usr/include/c++/14.2.1/bits/version.h
  /usr/include/c++/14.2.1/cctype
  /usr/include/c++/14.2.1/cerrno
  /usr/include/c++/14.2.1/clocale
- /usr/include/c++/14.2.1/cstdint
+ /usr/include/c++/14.2.1/cstddef
  /usr/include/c++/14.2.1/cstdio
  /usr/include/c++/14.2.1/cstdlib
  /usr/include/c++/14.2.1/cwchar
  /usr/include/c++/14.2.1/cwctype
  /usr/include/c++/14.2.1/debug/assertions.h
  /usr/include/c++/14.2.1/debug/debug.h
+ /usr/include/c++/14.2.1/deque
  /usr/include/c++/14.2.1/exception
+ /usr/include/c++/14.2.1/ext/aligned_buffer.h
  /usr/include/c++/14.2.1/ext/alloc_traits.h
  /usr/include/c++/14.2.1/ext/atomicity.h
+ /usr/include/c++/14.2.1/ext/concurrence.h
  /usr/include/c++/14.2.1/ext/numeric_traits.h
  /usr/include/c++/14.2.1/ext/string_conversions.h
  /usr/include/c++/14.2.1/ext/type_traits.h
@@ -148,14 +180,19 @@ CMakeFiles/test1.dir/examples/test1.cpp.o
  /usr/include/c++/14.2.1/iosfwd
  /usr/include/c++/14.2.1/iostream
  /usr/include/c++/14.2.1/istream
+ /usr/include/c++/14.2.1/memory
  /usr/include/c++/14.2.1/new
  /usr/include/c++/14.2.1/ostream
+ /usr/include/c++/14.2.1/queue
  /usr/include/c++/14.2.1/stdexcept
  /usr/include/c++/14.2.1/streambuf
  /usr/include/c++/14.2.1/string
  /usr/include/c++/14.2.1/system_error
+ /usr/include/c++/14.2.1/tuple
  /usr/include/c++/14.2.1/type_traits
  /usr/include/c++/14.2.1/typeinfo
+ /usr/include/c++/14.2.1/unordered_map
+ /usr/include/c++/14.2.1/vector
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/atomic_word.h
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++allocator.h
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h
@@ -183,7 +220,6 @@ CMakeFiles/test1.dir/examples/test1.cpp.o
  /usr/include/stdio.h
  /usr/include/stdlib.h
  /usr/include/sys/cdefs.h
- /usr/include/sys/mman.h
  /usr/include/sys/select.h
  /usr/include/sys/single_threaded.h
  /usr/include/sys/types.h

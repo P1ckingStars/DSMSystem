@@ -83,11 +83,8 @@ void user_mprotect(pid_t pid, void *addr, size_t size, int prot) {
   user_regs_struct regs;
   user_regs_struct saved_regs;
   user_fpregs_struct saved_fp_regs;
-  iovec saved_pr_state;
-  ptrace(PTRACE_GETREGSET, pid, NT_PRSTATUS, &saved_pr_state);
   ptrace(PTRACE_GETREGS, pid, 0, &saved_regs);
   ptrace(PTRACE_GETFPREGS, pid, 0, &saved_fp_regs);
-  printf("iovec len %zu\n", saved_pr_state.iov_len);
   bzero(&regs, sizeof(regs));
   regs.rax = 10;
   regs.rdi = (intptr_t)addr;
@@ -105,7 +102,6 @@ void user_mprotect(pid_t pid, void *addr, size_t size, int prot) {
   ptrace(PTRACE_GETSIGINFO, pid, NULL, &sig);
   DEBUG_STMT(printf("user mprotect recv sig: %d\n", sig.si_signo));
   // reg_err = ptrace(PTRACE_PEEKDATA, child, reg_err, &sig);
-  ptrace(PTRACE_SETREGSET, pid, 1, &saved_pr_state);
   ptrace(PTRACE_SETREGS, pid, 0, &saved_regs);
   ptrace(PTRACE_SETFPREGS, pid, 0, &saved_fp_regs);
   DEBUG_STMT(

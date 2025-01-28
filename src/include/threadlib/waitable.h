@@ -1,8 +1,8 @@
 
 #include <sys/ucontext.h>
 #include <ucontext.h>
-#include <queue>
 #include <memory>
+#include "queue.hpp"
 
 #ifndef WAITABLE_H
 #define WAITABLE_H
@@ -12,14 +12,14 @@
 */
 class waitable {
 protected:
-    std::queue<ucontext_t*> waitingQueue;
+    Queue<ucontext_t*> waitingQueue;
 public:
     /**
      * @param ctx a ucontext_t pointer which need to be enqueued
     */
     inline void enqueue(ucontext_t *ctx)
     {
-        waitingQueue.push(ctx);
+        waitingQueue.enqueue(ctx);
     }
 
     /**
@@ -27,7 +27,7 @@ public:
     */
     inline bool empty()
     {
-        return waitingQueue.empty();
+        return waitingQueue.isEmpty();
     }
 
     /**
@@ -37,7 +37,7 @@ public:
     inline ucontext_t *dequeue()
     {
         auto ctx = waitingQueue.front();
-        waitingQueue.pop();
+        waitingQueue.dequeue();
         return ctx;
     }
 };

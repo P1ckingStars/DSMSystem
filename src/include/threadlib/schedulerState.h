@@ -1,9 +1,9 @@
 #include "cpu.h"
 #include "debug.hpp"
+#include "queue.hpp"
 #include "waitable.h"
 #include <cstdint>
 #include <cstdio>
-#include <deque>
 #include <sys/ucontext.h>
 #include <ucontext.h>
 
@@ -36,6 +36,9 @@ inline void ctx_set(ucontext_t *next) {
  * if the thread finishes executions
  */
 inline void ctx_switch(ucontext_t *current, ucontext_t *next) {
+  printf("bug? %lx\n", (intptr_t)cpu::self());
+  printf("ctx_switch %lx, %lx\n", (intptr_t)&cpu::self()->currContext,
+         (intptr_t)&cpu::self()->mainContext);
   cpu::self()->currContext = next == cpu::self()->mainContext ? nullptr : next;
   printf("%lx, %lx\n", (intptr_t)current, (intptr_t)next);
   swapcontext(current, next);
@@ -46,7 +49,7 @@ inline void ctx_switch(ucontext_t *current, ucontext_t *next) {
  * a class of scheduler
  */
 class SchedulerState {
-  std::deque<ucontext_t *> readyQueue;
+  Queue<ucontext_t *> readyQueue;
 
   /**
    * this function pop the next thread on the ready queue
@@ -54,7 +57,7 @@ class SchedulerState {
    */
   ucontext_t *getNext() {
     auto currContext = readyQueue.front();
-    readyQueue.pop_front();
+    readyQueue.dequeue();
     if (hasNext())
       ipi_send();
     return currContext;
@@ -101,8 +104,8 @@ public:
    */
   void putInReady(ucontext_t *ctx) {
     DEBUG_STMT(printf("TRY ADD NEW CTX TO QUEUE\n"));
-    readyQueue.push_back(ctx);
-    DEBUG_STMT(printf("ADDED NEW CTX TO QUEUE %d\n", readyQueue.empty()));
+    readyQueue.enqueue(ctx);
+    DEBUG_STMT(printf("ADDED NEW CTX TO QUEUE %d\n", readyQueue.isEmpty()));
     DEBUG_STMT(printf("ADDED NEW CTX TO QUEUE %d\n", hasNext()));
     ipi_send();
   }
@@ -165,7 +168,7 @@ public:
    */
   bool hasNext() {
     DEBUG_STMT(printf("has next\n"));
-    auto res = !readyQueue.empty();
+    auto res = !readyQueue.isEmpty();
     DEBUG_STMT(printf("done has next\n"));
     return res;
   }

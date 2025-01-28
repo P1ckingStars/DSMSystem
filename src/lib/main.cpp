@@ -34,14 +34,14 @@ int main(int argc, char *argv[]) {
   printf("mem region begin at %lx\n", (intptr_t)&__bss_start);
   char *mem_region = (char *)&__bss_start;
   char *mem_end =
-      (char *)PAGE_ALIGNED_ADDR(((intptr_t)&__bss_start + 25000 * PAGE_SIZE));
+      (char *)PAGE_ALIGNED_ADDR(((intptr_t)&__bss_start + 35000 * PAGE_SIZE));
   brk(mem_end);
   pid_t child;
   size_t size = mem_end - mem_region;
   printf("mem size %lx\n", size);
   bool is_master = atoi(argv[1]) == 0;
-  // int x = 0;
-  int x = -1;
+  int x = 0;
+  // int x = -1;
   dsm::total_page = 25000;
   if ((child = fork()) == 0) {
     ptrace(PTRACE_TRACEME, 0, nullptr, nullptr);
@@ -65,6 +65,7 @@ int main(int argc, char *argv[]) {
       cpu_list[x]->run(nullptr, nullptr);
     }
   } else {
+    exit(-1);
     if (is_master) {
       printf("create master\n");
       NodeAddr addr;
