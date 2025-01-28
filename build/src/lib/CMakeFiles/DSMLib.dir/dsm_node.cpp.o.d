@@ -736,6 +736,7 @@ src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.o: \
  /usr/include/rpc/detail/pimpl.h \
  /home/arthur/Documents/repos/dsm_system/src/include/debug.hpp \
  /home/arthur/Documents/repos/dsm_system/src/include/config.hpp \
+ /home/arthur/Documents/repos/dsm_system/src/include/macros.hpp \
  /usr/include/rpc/client.h /usr/include/c++/14.2.1/future \
  /usr/include/c++/14.2.1/mutex /usr/include/c++/14.2.1/bits/chrono.h \
  /usr/include/c++/14.2.1/ratio \
@@ -748,6 +749,13 @@ src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.o: \
  /usr/include/rpc/nonstd/optional.hpp /usr/include/rpc/client.inl \
  /usr/include/rpc/rpc_error.h \
  /home/arthur/Documents/repos/dsm_system/src/include/syncheader.hpp \
+ /home/arthur/Documents/repos/dsm_system/src/include/threadlib/thread.h \
+ /usr/include/sys/ucontext.h /usr/include/bits/types/stack_t.h \
+ /usr/include/ucontext.h /usr/include/bits/indirect-return.h \
+ /home/arthur/Documents/repos/dsm_system/src/include/threadlib/waitable.h \
+ /home/arthur/Documents/repos/dsm_system/src/include/queue.hpp \
+ /usr/include/c++/14.2.1/iostream /usr/include/c++/14.2.1/istream \
+ /usr/include/c++/14.2.1/bits/istream.tcc \
  /home/arthur/Documents/repos/dsm_system/src/include/user_mprotect.hpp \
  /usr/include/c++/14.2.1/chrono /usr/include/c++/14.2.1/csignal \
  /usr/include/signal.h /usr/include/bits/signum-generic.h \
@@ -757,8 +765,7 @@ src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.o: \
  /usr/include/bits/siginfo-consts-arch.h \
  /usr/include/bits/types/sigval_t.h /usr/include/bits/types/sigevent_t.h \
  /usr/include/bits/sigevent-consts.h /usr/include/bits/sigaction.h \
- /usr/include/bits/sigcontext.h /usr/include/bits/types/stack_t.h \
- /usr/include/sys/ucontext.h /usr/include/bits/sigstack.h \
+ /usr/include/bits/sigcontext.h /usr/include/bits/sigstack.h \
  /usr/include/bits/sigstksz.h /usr/include/unistd.h \
  /usr/include/bits/posix_opt.h /usr/include/bits/environments.h \
  /usr/include/bits/confname.h /usr/include/bits/getopt_posix.h \

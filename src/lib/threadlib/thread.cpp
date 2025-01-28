@@ -2,11 +2,13 @@
 #include <cstdint>
 #include <cstdio>
 #include <ucontext.h>
+#include "macros.hpp"
 #include "threadlib/cpu.h"
 #include "threadlib/schedulerState.h"
 #include "debug.hpp"
 
 
+stack_pool pool;
 
 uint64_t next_tid = 1; // initialize the first thread id
 
@@ -53,16 +55,16 @@ thread::thread(thread_startfunc_t func, void* arg) {
     this->isDead                = nullptr;
     this->wait                  = nullptr;
     ucontext_t *ucontext_ptr    = nullptr;
-    void * stackptr             = nullptr;
+    void * stackptr             = pool.pop();
+    if (stackptr == nullptr) throw;
     try {
         this->isDead = new shared_bool{true, true, false};
         this->wait   = new waitable();
         ucontext_ptr = new ucontext_t;
-        stackptr     = new char[STACK_SIZE];
         
         getcontext(ucontext_ptr);
         ucontext_ptr->uc_stack.ss_sp = stackptr;
-        ucontext_ptr->uc_stack.ss_size = STACK_SIZE;
+        ucontext_ptr->uc_stack.ss_size = PAGES_PER_STACK * PAGE_SIZE;
         ucontext_ptr->uc_link = nullptr;
         makecontext(ucontext_ptr, (void (*)())threadWrapperFunc, 6,
             func,
@@ -76,7 +78,7 @@ thread::thread(thread_startfunc_t func, void* arg) {
         if (!this->isDead)  delete this->isDead;
         if (!this->wait)    delete this->wait;
         if (!ucontext_ptr)  delete ucontext_ptr;
-        if (!stackptr)      delete stackptr;
+        if (!stackptr)      pool.push((char *)stackptr);
         cpu::interrupt_enable(); 
         throw;
     }

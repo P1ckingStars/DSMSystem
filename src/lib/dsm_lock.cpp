@@ -24,7 +24,7 @@ inline bool test_and_set(int * mu) {
 
 void dsm::dsm_mutex_lock(dsm_mutex * mu) {
     while (test_and_set(mu));
-    //sync();   
+    sync();   
 }
 
 void dsm::dsm_mutex_unlock(dsm_mutex * mu) {

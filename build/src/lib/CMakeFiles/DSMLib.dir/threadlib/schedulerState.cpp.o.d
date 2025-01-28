@@ -28,6 +28,9 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/schedulerState.cpp.o: \
  /usr/include/sys/ucontext.h /usr/include/bits/types/sigset_t.h \
  /usr/include/bits/types/__sigset_t.h /usr/include/bits/types/stack_t.h \
  /usr/include/ucontext.h /usr/include/bits/indirect-return.h \
+ /home/arthur/Documents/repos/dsm_system/src/include/debug.hpp \
+ /home/arthur/Documents/repos/dsm_system/src/include/config.hpp \
+ /home/arthur/Documents/repos/dsm_system/src/include/macros.hpp \
  /home/arthur/Documents/repos/dsm_system/src/include/threadlib/waitable.h \
  /usr/include/c++/14.2.1/memory /usr/include/c++/14.2.1/bits/memoryfwd.h \
  /usr/include/c++/14.2.1/bits/allocator.h \
@@ -169,7 +172,4 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/schedulerState.cpp.o: \
  /usr/include/c++/14.2.1/bits/hashtable.h \
  /usr/include/c++/14.2.1/bits/hashtable_policy.h \
  /usr/include/c++/14.2.1/bits/enable_special_members.h \
- /usr/include/c++/14.2.1/bits/erase_if.h \
- /home/arthur/Documents/repos/dsm_system/src/include/debug.hpp \
- /home/arthur/Documents/repos/dsm_system/src/include/config.hpp \
- /usr/include/c++/14.2.1/cstdint
+ /usr/include/c++/14.2.1/bits/erase_if.h /usr/include/c++/14.2.1/cstdint

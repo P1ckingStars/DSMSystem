@@ -58,7 +58,10 @@ src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.o
  /home/arthur/Documents/repos/dsm_system/src/include/debug.hpp
  /home/arthur/Documents/repos/dsm_system/src/include/dsm_node.hpp
  /home/arthur/Documents/repos/dsm_system/src/include/macros.hpp
+ /home/arthur/Documents/repos/dsm_system/src/include/queue.hpp
  /home/arthur/Documents/repos/dsm_system/src/include/syncheader.hpp
+ /home/arthur/Documents/repos/dsm_system/src/include/threadlib/thread.h
+ /home/arthur/Documents/repos/dsm_system/src/include/threadlib/waitable.h
  /home/arthur/Documents/repos/dsm_system/src/include/user_mprotect.hpp
  /usr/include/alloca.h
  /usr/include/arpa/inet.h
@@ -90,6 +93,7 @@ src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.o
  /usr/include/bits/getopt_core.h
  /usr/include/bits/getopt_posix.h
  /usr/include/bits/in.h
+ /usr/include/bits/indirect-return.h
  /usr/include/bits/libc-header-start.h
  /usr/include/bits/local_lim.h
  /usr/include/bits/locale.h
@@ -227,6 +231,7 @@ src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.o
  /usr/include/c++/14.2.1/bits/hashtable_policy.h
  /usr/include/c++/14.2.1/bits/invoke.h
  /usr/include/c++/14.2.1/bits/ios_base.h
+ /usr/include/c++/14.2.1/bits/istream.tcc
  /usr/include/c++/14.2.1/bits/list.tcc
  /usr/include/c++/14.2.1/bits/locale_classes.h
  /usr/include/c++/14.2.1/bits/locale_classes.tcc
@@ -326,6 +331,8 @@ src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.o
  /usr/include/c++/14.2.1/iomanip
  /usr/include/c++/14.2.1/ios
  /usr/include/c++/14.2.1/iosfwd
+ /usr/include/c++/14.2.1/iostream
+ /usr/include/c++/14.2.1/istream
  /usr/include/c++/14.2.1/limits
  /usr/include/c++/14.2.1/list
  /usr/include/c++/14.2.1/locale
@@ -938,6 +945,7 @@ src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.o
  /usr/include/sys/uio.h
  /usr/include/sys/wait.h
  /usr/include/time.h
+ /usr/include/ucontext.h
  /usr/include/unistd.h
  /usr/include/wchar.h
  /usr/include/wctype.h
@@ -1834,6 +1842,7 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/cpu.cpp.o
  /home/arthur/Documents/repos/dsm_system/src/include/config.hpp
  /home/arthur/Documents/repos/dsm_system/src/include/debug.hpp
  /home/arthur/Documents/repos/dsm_system/src/include/dsm_lock.hpp
+ /home/arthur/Documents/repos/dsm_system/src/include/macros.hpp
  /home/arthur/Documents/repos/dsm_system/src/include/queue.hpp
  /home/arthur/Documents/repos/dsm_system/src/include/threadlib/cpu.h
  /home/arthur/Documents/repos/dsm_system/src/include/threadlib/schedulerState.h
@@ -2067,6 +2076,7 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/cv.cpp.o
  /home/arthur/Documents/repos/dsm_system/src/include/config.hpp
  /home/arthur/Documents/repos/dsm_system/src/include/debug.hpp
  /home/arthur/Documents/repos/dsm_system/src/include/dsm_lock.hpp
+ /home/arthur/Documents/repos/dsm_system/src/include/macros.hpp
  /home/arthur/Documents/repos/dsm_system/src/include/queue.hpp
  /home/arthur/Documents/repos/dsm_system/src/include/threadlib/cpu.h
  /home/arthur/Documents/repos/dsm_system/src/include/threadlib/cv.h
@@ -2302,6 +2312,7 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/dsm_cpu_impl.cpp.o
  /home/arthur/Documents/repos/dsm_system/src/include/config.hpp
  /home/arthur/Documents/repos/dsm_system/src/include/debug.hpp
  /home/arthur/Documents/repos/dsm_system/src/include/dsm_lock.hpp
+ /home/arthur/Documents/repos/dsm_system/src/include/macros.hpp
  /home/arthur/Documents/repos/dsm_system/src/include/queue.hpp
  /home/arthur/Documents/repos/dsm_system/src/include/threadlib/cpu.h
  /home/arthur/Documents/repos/dsm_system/src/include/threadlib/thread.h
@@ -2534,6 +2545,7 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/mutex.cpp.o
  /home/arthur/Documents/repos/dsm_system/src/include/config.hpp
  /home/arthur/Documents/repos/dsm_system/src/include/debug.hpp
  /home/arthur/Documents/repos/dsm_system/src/include/dsm_lock.hpp
+ /home/arthur/Documents/repos/dsm_system/src/include/macros.hpp
  /home/arthur/Documents/repos/dsm_system/src/include/queue.hpp
  /home/arthur/Documents/repos/dsm_system/src/include/threadlib/cpu.h
  /home/arthur/Documents/repos/dsm_system/src/include/threadlib/mutex.h
@@ -2768,6 +2780,7 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/schedulerState.cpp.o
  /home/arthur/Documents/repos/dsm_system/src/include/config.hpp
  /home/arthur/Documents/repos/dsm_system/src/include/debug.hpp
  /home/arthur/Documents/repos/dsm_system/src/include/dsm_lock.hpp
+ /home/arthur/Documents/repos/dsm_system/src/include/macros.hpp
  /home/arthur/Documents/repos/dsm_system/src/include/queue.hpp
  /home/arthur/Documents/repos/dsm_system/src/include/threadlib/cpu.h
  /home/arthur/Documents/repos/dsm_system/src/include/threadlib/schedulerState.h
@@ -3001,6 +3014,7 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/thread.cpp.o
  /home/arthur/Documents/repos/dsm_system/src/include/config.hpp
  /home/arthur/Documents/repos/dsm_system/src/include/debug.hpp
  /home/arthur/Documents/repos/dsm_system/src/include/dsm_lock.hpp
+ /home/arthur/Documents/repos/dsm_system/src/include/macros.hpp
  /home/arthur/Documents/repos/dsm_system/src/include/queue.hpp
  /home/arthur/Documents/repos/dsm_system/src/include/threadlib/cpu.h
  /home/arthur/Documents/repos/dsm_system/src/include/threadlib/schedulerState.h

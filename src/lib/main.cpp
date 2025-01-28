@@ -2,6 +2,7 @@
 #include "dsm_lock.hpp"
 #include "dsm_node.hpp"
 #include "threadlib/cpu.h"
+#include "threadlib/thread.h"
 #include <alloca.h>
 #include <cstddef>
 #include <cstdint>
@@ -40,8 +41,11 @@ int main(int argc, char *argv[]) {
   size_t size = mem_end - mem_region;
   printf("mem size %lx\n", size);
   bool is_master = atoi(argv[1]) == 0;
-  int x = 0;
-  // int x = -1;
+  if (is_master) {
+    pool.init();
+  }
+  //int x = 0;
+  int x = -1;
   dsm::total_page = 25000;
   if ((child = fork()) == 0) {
     ptrace(PTRACE_TRACEME, 0, nullptr, nullptr);
@@ -65,7 +69,6 @@ int main(int argc, char *argv[]) {
       cpu_list[x]->run(nullptr, nullptr);
     }
   } else {
-    exit(-1);
     if (is_master) {
       printf("create master\n");
       NodeAddr addr;

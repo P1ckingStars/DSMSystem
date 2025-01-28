@@ -3,7 +3,10 @@
 
 CMakeFiles/test1.dir/examples/test1.cpp.o
  /home/arthur/Documents/repos/dsm_system/examples/test1.cpp
+ /home/arthur/Documents/repos/dsm_system/src/include/config.hpp
+ /home/arthur/Documents/repos/dsm_system/src/include/debug.hpp
  /home/arthur/Documents/repos/dsm_system/src/include/dsm_lock.hpp
+ /home/arthur/Documents/repos/dsm_system/src/include/macros.hpp
  /home/arthur/Documents/repos/dsm_system/src/include/queue.hpp
  /home/arthur/Documents/repos/dsm_system/src/include/threadlib/cpu.h
  /home/arthur/Documents/repos/dsm_system/src/include/threadlib/cv.h

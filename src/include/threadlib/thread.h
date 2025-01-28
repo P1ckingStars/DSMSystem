@@ -11,6 +11,7 @@
 #include <cstddef>
 #include <sys/ucontext.h>
 #include <ucontext.h>
+#include "debug.hpp"
 #include "macros.hpp"
 #include "waitable.h"
 
@@ -32,6 +33,7 @@ class stack_pool {
     int tail;
 public:
     void init() {
+        DEBUG_STMT(printf("stack init\n"));
         tail = TOTAL_POSSIBLE_STACKS;
         char * mem = &__bss_start;
         for (int i = 0; i < TOTAL_POSSIBLE_STACKS; i++) {
@@ -42,7 +44,7 @@ public:
         ASSERT(tail < TOTAL_POSSIBLE_STACKS, "More stacks than expected");
         stacks[tail++] = addr;
     }
-    char * pop(char * addr) {
+    char * pop() {
         if (tail == 0) return nullptr;
         return stacks[--tail];
     }

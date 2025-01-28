@@ -29,6 +29,7 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/dsm_cpu_impl.cpp.o: \
  /usr/include/sys/ucontext.h /usr/include/bits/types/sigset_t.h \
  /usr/include/bits/types/__sigset_t.h /usr/include/bits/types/stack_t.h \
  /usr/include/ucontext.h /usr/include/bits/indirect-return.h \
+ /home/arthur/Documents/repos/dsm_system/src/include/macros.hpp \
  /home/arthur/Documents/repos/dsm_system/src/include/threadlib/waitable.h \
  /usr/include/c++/14.2.1/memory /usr/include/c++/14.2.1/bits/memoryfwd.h \
  /usr/include/c++/14.2.1/bits/allocator.h \

@@ -742,6 +742,7 @@ src/lib/CMakeFiles/DSMLib.dir/main.cpp.o: \
  /home/arthur/Documents/repos/dsm_system/src/include/threadlib/thread.h \
  /usr/include/sys/ucontext.h /usr/include/bits/types/stack_t.h \
  /usr/include/ucontext.h /usr/include/bits/indirect-return.h \
+ /home/arthur/Documents/repos/dsm_system/src/include/macros.hpp \
  /home/arthur/Documents/repos/dsm_system/src/include/threadlib/waitable.h \
  /home/arthur/Documents/repos/dsm_system/src/include/queue.hpp \
  /usr/include/c++/14.2.1/iostream /usr/include/c++/14.2.1/istream \

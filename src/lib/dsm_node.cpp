@@ -1,8 +1,10 @@
 #include "dsm_node.hpp"
 #include "debug.hpp"
+#include "macros.hpp"
 #include "rpc/client.h"
 #include "rpc/rpc_error.h"
 #include "syncheader.hpp"
+#include "threadlib/thread.h"
 #include "user_mprotect.hpp"
 #include <chrono>
 #include <csignal>
@@ -125,7 +127,10 @@ void dsm::dsm_init(pid_t child, int *wait_x, int node_id) {
     // printf("sig num: %d, addr: %lx, pc: %llx, inst: %lx, rsp: %lx\n",
     //        sig.si_signo, sig.si_addr, saved_regs.rip, *(uint64_t *)pc,
     //        rsp);
-    ptrace(PTRACE_CONT, child, NULL, NULL);
+    if (ptrace(PTRACE_CONT, child, NULL, NULL) < 0) {
+      perror("ptrace");
+      exit(0);
+    }
   }
 }
 struct dsm_init_args {
@@ -188,9 +193,12 @@ char *dsm::dsm_init_node(pid_t child, NodeAddr self, NodeAddr dst, char *region,
 }
 
 bool DSMNode::is_in_range(char *addr) {
-  return (intptr_t)addr >= (intptr_t)this->base &&
-         (intptr_t)addr <
-             ((intptr_t)this->base) + PAGE_SIZE * this->page_info.size();
+  int idx = ((intptr_t)addr - (intptr_t)&__bss_start) / PAGE_SIZE;
+  return !(idx >= 0 && idx < TOTAL_POSSIBLE_STACKS &&
+           idx % PAGES_PER_STACK == 0) &&
+         ((intptr_t)addr >= (intptr_t)this->base) &&
+         ((intptr_t)addr <
+          ((intptr_t)this->base) + PAGE_SIZE * this->page_info.size());
 }
 
 void DSMNode::request_hand_shake(NodeAddr my_addr, NodeAddr dst_addr) {

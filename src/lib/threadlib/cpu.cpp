@@ -32,7 +32,7 @@ void ipc_interrupt() {}
 void cpu::thread_handler() {
     if (this->status == END_STATE){
         tid_map.erase(this->garbageCtx);
-        delete[] stackptr;
+        pool.push(stackptr);
         delete this->garbageCtx;
         delete this->wait;
         total_threads--;

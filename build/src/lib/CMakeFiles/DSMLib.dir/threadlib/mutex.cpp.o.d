@@ -157,6 +157,9 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/mutex.cpp.o: \
  /home/arthur/Documents/repos/dsm_system/src/include/dsm_lock.hpp \
  /usr/include/c++/14.2.1/cstddef /usr/include/c++/14.2.1/atomic \
  /home/arthur/Documents/repos/dsm_system/src/include/threadlib/thread.h \
+ /home/arthur/Documents/repos/dsm_system/src/include/debug.hpp \
+ /home/arthur/Documents/repos/dsm_system/src/include/config.hpp \
+ /home/arthur/Documents/repos/dsm_system/src/include/macros.hpp \
  /usr/include/c++/14.2.1/queue /usr/include/c++/14.2.1/deque \
  /usr/include/c++/14.2.1/bits/stl_deque.h \
  /usr/include/c++/14.2.1/bits/deque.tcc /usr/include/c++/14.2.1/vector \
@@ -172,6 +175,4 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/mutex.cpp.o: \
  /usr/include/c++/14.2.1/bits/enable_special_members.h \
  /usr/include/c++/14.2.1/bits/erase_if.h \
  /home/arthur/Documents/repos/dsm_system/src/include/threadlib/schedulerState.h \
- /home/arthur/Documents/repos/dsm_system/src/include/debug.hpp \
- /home/arthur/Documents/repos/dsm_system/src/include/config.hpp \
  /usr/include/c++/14.2.1/cstdint
