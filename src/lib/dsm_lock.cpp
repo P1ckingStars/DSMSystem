@@ -13,7 +13,7 @@ using namespace dsm;
 size_t dsm::total_page;
 extern char __bss_start;
 
-inline void sync() {
+void dsm::sync() {
     mprotect(&__bss_start, total_page * PAGE_SIZE, PROT_NONE);
 }
 

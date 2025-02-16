@@ -14,6 +14,7 @@
 #include "debug.hpp"
 #include "macros.hpp"
 #include "waitable.h"
+#include "linker_symbol.hpp"
 
 #pragma once
 
@@ -21,7 +22,6 @@
 #define PAGES_PER_STACK 250
 #define TOTAL_POSSIBLE_STACKS (TOTAL_STACK_PAGES/PAGES_PER_STACK)
 
-extern char __bss_start;
 extern int total_threads;
 
 //static constexpr unsigned int STACK_SIZE=4096; //262144; // size of each thread's stack in bytes
@@ -35,7 +35,7 @@ public:
     void init() {
         DEBUG_STMT(printf("stack init\n"));
         tail = TOTAL_POSSIBLE_STACKS;
-        char * mem = &__bss_start;
+        char * mem = STACK_START;
         for (int i = 0; i < TOTAL_POSSIBLE_STACKS; i++) {
             stacks[i] = mem + i * PAGES_PER_STACK * PAGE_SIZE;
         }

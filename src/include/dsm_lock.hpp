@@ -20,6 +20,8 @@ xchgl(volatile int *addr, int newval)
   return result;
 }
 
+void sync();
+
 void dsm_mutex_lock(dsm_mutex * mu);
 void dsm_mutex_unlock(dsm_mutex * mu);
 

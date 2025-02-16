@@ -1,5 +1,6 @@
 #include "dsm_node.hpp"
 #include "debug.hpp"
+#include "linker_symbol.hpp"
 #include "macros.hpp"
 #include "rpc/client.h"
 #include "rpc/rpc_error.h"
@@ -193,7 +194,7 @@ char *dsm::dsm_init_node(pid_t child, NodeAddr self, NodeAddr dst, char *region,
 }
 
 bool DSMNode::is_in_range(char *addr) {
-  int idx = ((intptr_t)addr - (intptr_t)&__bss_start) / PAGE_SIZE;
+  int idx = ((intptr_t)addr - (intptr_t)STACK_START) / PAGE_SIZE;
   return !(idx >= 0 && idx < TOTAL_POSSIBLE_STACKS &&
            idx % PAGES_PER_STACK == 0) &&
          ((intptr_t)addr >= (intptr_t)this->base) &&
@@ -332,6 +333,7 @@ struct thread_arg {
   int idx;
   int relative_page_id;
   int prot;
+  bool done;
 };
 
 bool DSMNode::grant_prot(page_id_t relative_page_id, int prot) {
@@ -353,6 +355,7 @@ bool DSMNode::grant_prot(page_id_t relative_page_id, int prot) {
     args[i].idx = i;
     args[i].relative_page_id = relative_page_id;
     args[i].prot = prot;
+    args[i].done = false;
     DEBUG_STMT(printf("relative_page_id %x\n", args[i].relative_page_id));
     pthread_create(
         &threads[i], NULL,
@@ -370,6 +373,7 @@ bool DSMNode::grant_prot(page_id_t relative_page_id, int prot) {
             arg->content->data = res;
           }
           arg->content->count--;
+          arg->done = true;
           // SIGNAL(arg->content->cond)
           UNLOCK(arg->content->mu)
           delete arg;
@@ -382,6 +386,11 @@ bool DSMNode::grant_prot(page_id_t relative_page_id, int prot) {
   //     WAIT(arg_content->cond, arg_content->mu)
   // }
   for (int i = 0; i < this->conn.size(); i++) {
+    while (!args[i].done) {
+      // Handle mprotect request to solve dead lock when two threads get page
+      // fault at the same time
+      user_mprotect_respond();
+    }
     pthread_join(threads[i], nullptr);
   }
 #else

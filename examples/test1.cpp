@@ -1,10 +1,10 @@
+#include "dsm_lock.hpp"
+#include "queue.hpp"
 #include "threadlib/cpu.h"
 #include "threadlib/cv.h"
 #include "threadlib/mutex.h"
 #include "threadlib/thread.h"
-#include "queue.hpp"
 #include <iostream>
-
 
 using std::cout;
 using std::endl;
@@ -14,8 +14,12 @@ cv bufferNotEmpty;
 cv bufferNotFull;
 Queue<int> buffer;
 const size_t bufferSize = 10;
+bool x = 1;
 
 void producer(void *arg) {
+  while (x) {
+    dsm::sync();
+  }
   for (int i = 0; i < 50; ++i) {
     bufferMutex.lock();
     while (buffer.size() == bufferSize) {
@@ -29,6 +33,7 @@ void producer(void *arg) {
 }
 
 void consumer(void *arg) {
+  x = 0;
   while (true) {
     bufferMutex.lock();
     while (buffer.isEmpty()) {

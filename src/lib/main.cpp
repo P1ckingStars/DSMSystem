@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
   if (is_master) {
     pool.init();
   }
-  //int x = 0;
+  // int x = 0;
   int x = -1;
   dsm::total_page = 25000;
   if ((child = fork()) == 0) {
@@ -65,6 +65,9 @@ int main(int argc, char *argv[]) {
       cpu_list[x] = new cpu;
       cpu_list[x]->run(dsm_main1, nullptr);
     } else {
+      printf("cpu list addr reference %lx\n", (intptr_t)&cpu_list);
+      printf("cpu list addr %lx\n", (intptr_t)cpu_list);
+      printf("x: %d\n", x);
       cpu_list[x] = new cpu;
       cpu_list[x]->run(nullptr, nullptr);
     }

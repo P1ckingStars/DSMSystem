@@ -15,17 +15,20 @@
 #include <sys/user.h>
 #include <sys/wait.h>
 
+#define REQ_INCOMPLETE 1
+#define REQ_COMPLETE 0
+
 class {
   pthread_mutex_t mu_;
   pid_t pid_;
   void *addr_;
   size_t size_;
   int prot_;
-  uint8_t status_;
-#define REQ_INCOMPLETE 0
-#define REQ_COMPLETE 1
+  uint8_t status_ = REQ_COMPLETE;
+
 public:
   void init() { pthread_mutex_init(&mu_, NULL); }
+  bool empty() { return status_ == REQ_COMPLETE; }
   void produce(pid_t pid, void *addr, size_t size, int prot) {
     pthread_mutex_lock(&mu_);
     this->pid_ = pid;
@@ -67,6 +70,9 @@ void user_mprotect_req(pid_t pid, void *addr, size_t size, int prot) {
 }
 
 void user_mprotect_respond() {
+  if (mprotect_req.empty()) {
+    return;
+  }
   pid_t pid;
   void *addr;
   size_t size;
