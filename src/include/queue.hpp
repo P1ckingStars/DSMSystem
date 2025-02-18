@@ -1,4 +1,4 @@
-#include <iostream>
+#include "util/lin_allocator.hpp"
 #include <stdexcept>
 #ifndef QUEUE_HPP
 #define QUEUE_HPP
@@ -33,7 +33,7 @@ public:
 
     // Enqueue operation
     void enqueue(const T& value) {
-        Node<T>* newNode = new Node<T>(value);
+        Node<T>* newNode = make<Node<T>>(value);
         if (isEmpty()) {
             frontNode = rearNode = newNode;
         } else {
@@ -50,7 +50,7 @@ public:
         }
         Node<T>* temp = frontNode;
         frontNode = frontNode->next;
-        delete temp;
+        dealloc(temp);
         queueSize--;
         if (isEmpty()) {
             rearNode = nullptr;

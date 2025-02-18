@@ -13,6 +13,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # to the source code
 
 add_subdirectory(src/lib)
+add_subdirectory(malloc)
 
 # add the executable
 add_executable(test1 examples/test1.cpp)
@@ -24,7 +25,7 @@ target_link_options(test1 PRIVATE
 
 link_directories(${PROJECT_SOURCE_DIR}/dependency)
 
-target_link_libraries(test1 DSMLib rpc)
+target_link_libraries(test1 DSMLib rpc malloc)
 
 target_include_directories(test1 PUBLIC
                           "${PROJECT_BINARY_DIR}"

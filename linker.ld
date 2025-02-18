@@ -167,8 +167,9 @@ SECTIONS
   __bss_start = .;
   .bss            : ALIGN(4096)
   {
-    __stack_start = .;
     . = __bss_start + 4096 * 10000;
+    __stack_start = .;
+    . = __stack_start + 4096 * 10000;
    *(.dynbss)
    *(.bss .bss.* .gnu.linkonce.b.*)
    *(COMMON)

@@ -181,11 +181,11 @@ char *dsm::dsm_init_node(pid_t child, NodeAddr self, NodeAddr dst, char *region,
         DEBUG_STMT(printf("make new node\n"));
         node = new DSMNode(args->self, args->region, args->size, false,
                            args->child);
-        kill(args->child, SIGUSR1);
-        DEBUG_STMT(printf("finish make new node\n"));
         NodeAddr dst_addr;
         DEBUG_STMT(printf("try connect\n"));
         node->connect(args->dst);
+        kill(args->child, SIGUSR1);
+        DEBUG_STMT(printf("finish make new node\n"));
         return nullptr;
       },
       &args);
@@ -195,6 +195,11 @@ char *dsm::dsm_init_node(pid_t child, NodeAddr self, NodeAddr dst, char *region,
 
 bool DSMNode::is_in_range(char *addr) {
   int idx = ((intptr_t)addr - (intptr_t)STACK_START) / PAGE_SIZE;
+  printf(
+      "idx %d, base: %lx, end: %lx, violate 1: %d\n", idx, (intptr_t)this->base,
+      ((intptr_t)this->base) + PAGE_SIZE * this->page_info.size(),
+      !(idx >= 0 && idx < TOTAL_POSSIBLE_STACKS && idx % PAGES_PER_STACK == 0));
+
   return !(idx >= 0 && idx < TOTAL_POSSIBLE_STACKS &&
            idx % PAGES_PER_STACK == 0) &&
          ((intptr_t)addr >= (intptr_t)this->base) &&
@@ -349,7 +354,7 @@ bool DSMNode::grant_prot(page_id_t relative_page_id, int prot) {
 
   pthread_mutex_init(&arg_content->mu, NULL);
   pthread_cond_init(&arg_content->cond, NULL);
-  DEBUG_STMT(printf("sending rpc..."));
+  DEBUG_STMT(printf("sending rpc... %zu\n", conn.size()));
   for (int i = 0; i < this->conn.size(); i++) {
     args[i].content = arg_content;
     args[i].idx = i;
@@ -376,7 +381,6 @@ bool DSMNode::grant_prot(page_id_t relative_page_id, int prot) {
           arg->done = true;
           // SIGNAL(arg->content->cond)
           UNLOCK(arg->content->mu)
-          delete arg;
           return NULL;
         },
         &args[i]);

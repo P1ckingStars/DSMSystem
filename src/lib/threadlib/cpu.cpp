@@ -2,6 +2,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include "threadlib/cpu.h"
+#include <sys/ucontext.h>
 #include <ucontext.h>
 #include "debug.hpp"
 #include "threadlib/thread.h"
@@ -33,8 +34,8 @@ void cpu::thread_handler() {
     if (this->status == END_STATE){
         tid_map.erase(this->garbageCtx);
         pool.push(stackptr);
-        delete this->garbageCtx;
-        delete this->wait;
+        dealloc(this->garbageCtx);
+        dealloc(this->wait);
         total_threads--;
     } // else prev is in SchedulerState::scheduler state
     this->status = NONE;
@@ -80,9 +81,9 @@ void cpu::run(thread_startfunc_t func, void* arg) {
     UNLOCK
     // allocate main context
     try {
-        this->mainContext = new ucontext_t;
+        this->mainContext = make<ucontext_t>();
     } catch (std::bad_alloc){
-        if (this->mainContext) delete this->mainContext;
+        if (this->mainContext) dealloc(this->mainContext);
         cpu::interrupt_enable();
         throw;
     }

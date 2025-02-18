@@ -1,4 +1,5 @@
 #include "threadlib/thread.h"
+#include "util/lin_allocator.hpp"
 #include <cstdint>
 #include <cstdio>
 #include <ucontext.h>
@@ -42,7 +43,7 @@ void threadWrapperFunc(thread_startfunc_t func,
     cpu::self()->setDone(stackptr, wait, recycle);
     isDead->val = true;
     isDead->ownedByStack = false;
-    if (!isDead->ownedByThread) delete isDead;
+    if (!isDead->ownedByThread) dealloc(isDead);
     SchedulerState::scheduler.runNextFromUser();
 }
 
@@ -58,13 +59,14 @@ thread::thread(thread_startfunc_t func, void* arg) {
     void * stackptr             = pool.pop();
     if (stackptr == nullptr) throw;
     try {
-        this->isDead = new shared_bool{true, true, false};
-        this->wait   = new waitable();
-        ucontext_ptr = new ucontext_t;
+        this->isDead = make<shared_bool>();
+        *this->isDead = {true, true, false};
+        this->wait   = make<waitable>();
+        ucontext_ptr = make<ucontext_t>();
         
         getcontext(ucontext_ptr);
-        ucontext_ptr->uc_stack.ss_sp = stackptr;
-        ucontext_ptr->uc_stack.ss_size = PAGES_PER_STACK * PAGE_SIZE;
+        ucontext_ptr->uc_stack.ss_sp = (char *)stackptr + PAGE_SIZE;
+        ucontext_ptr->uc_stack.ss_size = (PAGES_PER_STACK-1) * PAGE_SIZE;
         ucontext_ptr->uc_link = nullptr;
         makecontext(ucontext_ptr, (void (*)())threadWrapperFunc, 6,
             func,
@@ -75,9 +77,9 @@ thread::thread(thread_startfunc_t func, void* arg) {
             ucontext_ptr);
     
     } catch (std::bad_alloc) {
-        if (!this->isDead)  delete this->isDead;
-        if (!this->wait)    delete this->wait;
-        if (!ucontext_ptr)  delete ucontext_ptr;
+        if (!this->isDead)  dealloc(this->isDead);
+        if (!this->wait)    dealloc(this->wait);
+        if (!ucontext_ptr)  dealloc(ucontext_ptr);
         if (!stackptr)      pool.push((char *)stackptr);
         cpu::interrupt_enable(); 
         throw;
@@ -105,7 +107,7 @@ thread::thread(thread_startfunc_t func, void* arg) {
 thread::~thread() {
     cpu::interrupt_disable();
     this->isDead->ownedByThread = false;
-    if (!isDead->ownedByStack) delete isDead;
+    if (!isDead->ownedByStack) dealloc(isDead);
     cpu::interrupt_enable();
 }
 

@@ -35,11 +35,11 @@ int main(int argc, char *argv[]) {
   printf("mem region begin at %lx\n", (intptr_t)&__bss_start);
   char *mem_region = (char *)&__bss_start;
   char *mem_end =
-      (char *)PAGE_ALIGNED_ADDR(((intptr_t)&__bss_start + 35000 * PAGE_SIZE));
+      (char *)((intptr_t)&__bss_start + 45000 * PAGE_SIZE);
   brk(mem_end);
   pid_t child;
   size_t size = mem_end - mem_region;
-  printf("mem size %lx\n", size);
+  printf("mem size %lx, %lx\n", size, (intptr_t)mem_end);
   bool is_master = atoi(argv[1]) == 0;
   if (is_master) {
     pool.init();
@@ -53,7 +53,9 @@ int main(int argc, char *argv[]) {
     printf("wait on x: %lx, %d\n", (intptr_t)(&x), x);
     while (x == -1)
       ;
+    printf("wait on x: %lx, %d\n", (intptr_t)(&x), x);
     int local_cpuid = x;
+    printf("cpu id %lx\n", (intptr_t)&cpuid);
     cpuid = &local_cpuid;
     printf("start dsm main\n");
     printf("arr.size() %zu\n", arr.size());
