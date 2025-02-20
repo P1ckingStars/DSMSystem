@@ -7,7 +7,7 @@ void dealloc(void *addr);
 
 template<class T, typename... Args>
 T * make(Args... args) {
-    T * res = alloc(sizeof(T));
+    T * res = (T *)alloc(sizeof(T));
     new (res) T(args...);
     return res;
 }

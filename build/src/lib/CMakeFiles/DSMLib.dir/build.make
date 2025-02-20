@@ -225,6 +225,20 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/thread.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/DSMLib.dir/threadlib/thread.cpp.s"
 	cd /home/arthur/Documents/repos/dsm_system/build/src/lib && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arthur/Documents/repos/dsm_system/src/lib/threadlib/thread.cpp -o CMakeFiles/DSMLib.dir/threadlib/thread.cpp.s
 
+src/lib/CMakeFiles/DSMLib.dir/util/lin_allocator.cpp.o: src/lib/CMakeFiles/DSMLib.dir/flags.make
+src/lib/CMakeFiles/DSMLib.dir/util/lin_allocator.cpp.o: /home/arthur/Documents/repos/dsm_system/src/lib/util/lin_allocator.cpp
+src/lib/CMakeFiles/DSMLib.dir/util/lin_allocator.cpp.o: src/lib/CMakeFiles/DSMLib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/arthur/Documents/repos/dsm_system/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object src/lib/CMakeFiles/DSMLib.dir/util/lin_allocator.cpp.o"
+	cd /home/arthur/Documents/repos/dsm_system/build/src/lib && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/lib/CMakeFiles/DSMLib.dir/util/lin_allocator.cpp.o -MF CMakeFiles/DSMLib.dir/util/lin_allocator.cpp.o.d -o CMakeFiles/DSMLib.dir/util/lin_allocator.cpp.o -c /home/arthur/Documents/repos/dsm_system/src/lib/util/lin_allocator.cpp
+
+src/lib/CMakeFiles/DSMLib.dir/util/lin_allocator.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/DSMLib.dir/util/lin_allocator.cpp.i"
+	cd /home/arthur/Documents/repos/dsm_system/build/src/lib && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/arthur/Documents/repos/dsm_system/src/lib/util/lin_allocator.cpp > CMakeFiles/DSMLib.dir/util/lin_allocator.cpp.i
+
+src/lib/CMakeFiles/DSMLib.dir/util/lin_allocator.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/DSMLib.dir/util/lin_allocator.cpp.s"
+	cd /home/arthur/Documents/repos/dsm_system/build/src/lib && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arthur/Documents/repos/dsm_system/src/lib/util/lin_allocator.cpp -o CMakeFiles/DSMLib.dir/util/lin_allocator.cpp.s
+
 # Object files for target DSMLib
 DSMLib_OBJECTS = \
 "CMakeFiles/DSMLib.dir/dsm_lock.cpp.o" \
@@ -237,7 +251,8 @@ DSMLib_OBJECTS = \
 "CMakeFiles/DSMLib.dir/threadlib/dsm_cpu_impl.cpp.o" \
 "CMakeFiles/DSMLib.dir/threadlib/mutex.cpp.o" \
 "CMakeFiles/DSMLib.dir/threadlib/schedulerState.cpp.o" \
-"CMakeFiles/DSMLib.dir/threadlib/thread.cpp.o"
+"CMakeFiles/DSMLib.dir/threadlib/thread.cpp.o" \
+"CMakeFiles/DSMLib.dir/util/lin_allocator.cpp.o"
 
 # External object files for target DSMLib
 DSMLib_EXTERNAL_OBJECTS =
@@ -253,9 +268,10 @@ src/lib/libDSMLib.a: src/lib/CMakeFiles/DSMLib.dir/threadlib/dsm_cpu_impl.cpp.o
 src/lib/libDSMLib.a: src/lib/CMakeFiles/DSMLib.dir/threadlib/mutex.cpp.o
 src/lib/libDSMLib.a: src/lib/CMakeFiles/DSMLib.dir/threadlib/schedulerState.cpp.o
 src/lib/libDSMLib.a: src/lib/CMakeFiles/DSMLib.dir/threadlib/thread.cpp.o
+src/lib/libDSMLib.a: src/lib/CMakeFiles/DSMLib.dir/util/lin_allocator.cpp.o
 src/lib/libDSMLib.a: src/lib/CMakeFiles/DSMLib.dir/build.make
 src/lib/libDSMLib.a: src/lib/CMakeFiles/DSMLib.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/arthur/Documents/repos/dsm_system/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Linking CXX static library libDSMLib.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/arthur/Documents/repos/dsm_system/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Linking CXX static library libDSMLib.a"
 	cd /home/arthur/Documents/repos/dsm_system/build/src/lib && $(CMAKE_COMMAND) -P CMakeFiles/DSMLib.dir/cmake_clean_target.cmake
 	cd /home/arthur/Documents/repos/dsm_system/build/src/lib && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/DSMLib.dir/link.txt --verbose=$(VERBOSE)
 

@@ -142,19 +142,6 @@ DSMLib/fast:
 	$(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/build
 .PHONY : DSMLib/fast
 
-#=============================================================================
-# Target rules for targets named malloc
-
-# Build rule for target.
-malloc: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 malloc
-.PHONY : malloc
-
-# fast build rule for target.
-malloc/fast:
-	$(MAKE) $(MAKESILENT) -f malloc/CMakeFiles/malloc.dir/build.make malloc/CMakeFiles/malloc.dir/build
-.PHONY : malloc/fast
-
 examples/test1.o: examples/test1.cpp.o
 .PHONY : examples/test1.o
 
@@ -188,7 +175,6 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... DSMLib"
-	@echo "... malloc"
 	@echo "... test1"
 	@echo "... examples/test1.o"
 	@echo "... examples/test1.i"

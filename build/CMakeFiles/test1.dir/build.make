@@ -97,7 +97,6 @@ test1: CMakeFiles/test1.dir/examples/test1.cpp.o
 test1: CMakeFiles/test1.dir/build.make
 test1: CMakeFiles/test1.dir/compiler_depend.ts
 test1: src/lib/libDSMLib.a
-test1: lib/libmalloc.so
 test1: CMakeFiles/test1.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/arthur/Documents/repos/dsm_system/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable test1"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/test1.dir/link.txt --verbose=$(VERBOSE)

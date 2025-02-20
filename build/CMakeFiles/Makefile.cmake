@@ -12,7 +12,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/3.31.5/CMakeCCompiler.cmake"
   "CMakeFiles/3.31.5/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.31.5/CMakeSystem.cmake"
-  "/home/arthur/Documents/repos/dsm_system/malloc/CMakeLists.txt"
   "/home/arthur/Documents/repos/dsm_system/src/lib/CMakeLists.txt"
   "/usr/share/cmake/Modules/CMakeASMInformation.cmake"
   "/usr/share/cmake/Modules/CMakeCInformation.cmake"
@@ -59,12 +58,10 @@ set(CMAKE_MAKEFILE_OUTPUTS
 set(CMAKE_MAKEFILE_PRODUCTS
   "CMakeFiles/CMakeDirectoryInformation.cmake"
   "src/lib/CMakeFiles/CMakeDirectoryInformation.cmake"
-  "malloc/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/test1.dir/DependInfo.cmake"
   "src/lib/CMakeFiles/DSMLib.dir/DependInfo.cmake"
-  "malloc/CMakeFiles/malloc.dir/DependInfo.cmake"
   )

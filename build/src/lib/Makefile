@@ -378,6 +378,30 @@ user_mprotect.cpp.s:
 	cd /home/arthur/Documents/repos/dsm_system/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.s
 .PHONY : user_mprotect.cpp.s
 
+util/lin_allocator.o: util/lin_allocator.cpp.o
+.PHONY : util/lin_allocator.o
+
+# target to build an object file
+util/lin_allocator.cpp.o:
+	cd /home/arthur/Documents/repos/dsm_system/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/util/lin_allocator.cpp.o
+.PHONY : util/lin_allocator.cpp.o
+
+util/lin_allocator.i: util/lin_allocator.cpp.i
+.PHONY : util/lin_allocator.i
+
+# target to preprocess a source file
+util/lin_allocator.cpp.i:
+	cd /home/arthur/Documents/repos/dsm_system/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/util/lin_allocator.cpp.i
+.PHONY : util/lin_allocator.cpp.i
+
+util/lin_allocator.s: util/lin_allocator.cpp.s
+.PHONY : util/lin_allocator.s
+
+# target to generate assembly for a file
+util/lin_allocator.cpp.s:
+	cd /home/arthur/Documents/repos/dsm_system/build && $(MAKE) $(MAKESILENT) -f src/lib/CMakeFiles/DSMLib.dir/build.make src/lib/CMakeFiles/DSMLib.dir/util/lin_allocator.cpp.s
+.PHONY : util/lin_allocator.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -418,6 +442,9 @@ help:
 	@echo "... user_mprotect.o"
 	@echo "... user_mprotect.i"
 	@echo "... user_mprotect.s"
+	@echo "... util/lin_allocator.o"
+	@echo "... util/lin_allocator.i"
+	@echo "... util/lin_allocator.s"
 .PHONY : help
 
 

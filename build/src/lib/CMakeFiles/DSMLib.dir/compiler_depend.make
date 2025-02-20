@@ -74,6 +74,7 @@ src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.o: /home/arthur/Documents/repos/dsm_s
   /home/arthur/Documents/repos/dsm_system/src/include/threadlib/thread.h \
   /home/arthur/Documents/repos/dsm_system/src/include/threadlib/waitable.h \
   /home/arthur/Documents/repos/dsm_system/src/include/user_mprotect.hpp \
+  /home/arthur/Documents/repos/dsm_system/src/include/util/lin_allocator.hpp \
   /usr/include/alloca.h \
   /usr/include/arpa/inet.h \
   /usr/include/asm-generic/bitsperlong.h \
@@ -245,7 +246,6 @@ src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.o: /home/arthur/Documents/repos/dsm_s
   /usr/include/c++/14.2.1/bits/hashtable_policy.h \
   /usr/include/c++/14.2.1/bits/invoke.h \
   /usr/include/c++/14.2.1/bits/ios_base.h \
-  /usr/include/c++/14.2.1/bits/istream.tcc \
   /usr/include/c++/14.2.1/bits/list.tcc \
   /usr/include/c++/14.2.1/bits/locale_classes.h \
   /usr/include/c++/14.2.1/bits/locale_classes.tcc \
@@ -345,8 +345,6 @@ src/lib/CMakeFiles/DSMLib.dir/dsm_node.cpp.o: /home/arthur/Documents/repos/dsm_s
   /usr/include/c++/14.2.1/iomanip \
   /usr/include/c++/14.2.1/ios \
   /usr/include/c++/14.2.1/iosfwd \
-  /usr/include/c++/14.2.1/iostream \
-  /usr/include/c++/14.2.1/istream \
   /usr/include/c++/14.2.1/limits \
   /usr/include/c++/14.2.1/list \
   /usr/include/c++/14.2.1/locale \
@@ -983,6 +981,7 @@ src/lib/CMakeFiles/DSMLib.dir/main.cpp.o: /home/arthur/Documents/repos/dsm_syste
   /home/arthur/Documents/repos/dsm_system/src/include/threadlib/cpu.h \
   /home/arthur/Documents/repos/dsm_system/src/include/threadlib/thread.h \
   /home/arthur/Documents/repos/dsm_system/src/include/threadlib/waitable.h \
+  /home/arthur/Documents/repos/dsm_system/src/include/util/lin_allocator.hpp \
   /usr/include/alloca.h \
   /usr/include/arpa/inet.h \
   /usr/include/asm-generic/bitsperlong.h \
@@ -1147,7 +1146,6 @@ src/lib/CMakeFiles/DSMLib.dir/main.cpp.o: /home/arthur/Documents/repos/dsm_syste
   /usr/include/c++/14.2.1/bits/hashtable_policy.h \
   /usr/include/c++/14.2.1/bits/invoke.h \
   /usr/include/c++/14.2.1/bits/ios_base.h \
-  /usr/include/c++/14.2.1/bits/istream.tcc \
   /usr/include/c++/14.2.1/bits/list.tcc \
   /usr/include/c++/14.2.1/bits/locale_classes.h \
   /usr/include/c++/14.2.1/bits/locale_classes.tcc \
@@ -1239,8 +1237,6 @@ src/lib/CMakeFiles/DSMLib.dir/main.cpp.o: /home/arthur/Documents/repos/dsm_syste
   /usr/include/c++/14.2.1/iomanip \
   /usr/include/c++/14.2.1/ios \
   /usr/include/c++/14.2.1/iosfwd \
-  /usr/include/c++/14.2.1/iostream \
-  /usr/include/c++/14.2.1/istream \
   /usr/include/c++/14.2.1/limits \
   /usr/include/c++/14.2.1/list \
   /usr/include/c++/14.2.1/locale \
@@ -1869,6 +1865,7 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/cpu.cpp.o: /home/arthur/Documents/repos/
   /home/arthur/Documents/repos/dsm_system/src/include/threadlib/schedulerState.h \
   /home/arthur/Documents/repos/dsm_system/src/include/threadlib/thread.h \
   /home/arthur/Documents/repos/dsm_system/src/include/threadlib/waitable.h \
+  /home/arthur/Documents/repos/dsm_system/src/include/util/lin_allocator.hpp \
   /usr/include/alloca.h \
   /usr/include/asm-generic/bitsperlong.h \
   /usr/include/asm-generic/errno-base.h \
@@ -1942,7 +1939,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/cpu.cpp.o: /home/arthur/Documents/repos/
   /usr/include/bits/waitflags.h \
   /usr/include/bits/waitstatus.h \
   /usr/include/bits/wchar.h \
-  /usr/include/bits/wctype-wchar.h \
   /usr/include/bits/wordsize.h \
   /usr/include/c++/14.2.1/atomic \
   /usr/include/c++/14.2.1/backward/auto_ptr.h \
@@ -1954,8 +1950,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/cpu.cpp.o: /home/arthur/Documents/repos/
   /usr/include/c++/14.2.1/bits/allocator.h \
   /usr/include/c++/14.2.1/bits/atomic_base.h \
   /usr/include/c++/14.2.1/bits/atomic_lockfree_defines.h \
-  /usr/include/c++/14.2.1/bits/basic_ios.h \
-  /usr/include/c++/14.2.1/bits/basic_ios.tcc \
   /usr/include/c++/14.2.1/bits/basic_string.h \
   /usr/include/c++/14.2.1/bits/basic_string.tcc \
   /usr/include/c++/14.2.1/bits/char_traits.h \
@@ -1976,18 +1970,11 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/cpu.cpp.o: /home/arthur/Documents/repos/
   /usr/include/c++/14.2.1/bits/hashtable.h \
   /usr/include/c++/14.2.1/bits/hashtable_policy.h \
   /usr/include/c++/14.2.1/bits/invoke.h \
-  /usr/include/c++/14.2.1/bits/ios_base.h \
-  /usr/include/c++/14.2.1/bits/istream.tcc \
-  /usr/include/c++/14.2.1/bits/locale_classes.h \
-  /usr/include/c++/14.2.1/bits/locale_classes.tcc \
-  /usr/include/c++/14.2.1/bits/locale_facets.h \
-  /usr/include/c++/14.2.1/bits/locale_facets.tcc \
   /usr/include/c++/14.2.1/bits/localefwd.h \
   /usr/include/c++/14.2.1/bits/memoryfwd.h \
   /usr/include/c++/14.2.1/bits/move.h \
   /usr/include/c++/14.2.1/bits/nested_exception.h \
   /usr/include/c++/14.2.1/bits/new_allocator.h \
-  /usr/include/c++/14.2.1/bits/ostream.tcc \
   /usr/include/c++/14.2.1/bits/ostream_insert.h \
   /usr/include/c++/14.2.1/bits/postypes.h \
   /usr/include/c++/14.2.1/bits/predefined_ops.h \
@@ -2014,8 +2001,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/cpu.cpp.o: /home/arthur/Documents/repos/
   /usr/include/c++/14.2.1/bits/stl_tempbuf.h \
   /usr/include/c++/14.2.1/bits/stl_uninitialized.h \
   /usr/include/c++/14.2.1/bits/stl_vector.h \
-  /usr/include/c++/14.2.1/bits/streambuf.tcc \
-  /usr/include/c++/14.2.1/bits/streambuf_iterator.h \
   /usr/include/c++/14.2.1/bits/stringfwd.h \
   /usr/include/c++/14.2.1/bits/unique_ptr.h \
   /usr/include/c++/14.2.1/bits/unordered_map.h \
@@ -2031,7 +2016,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/cpu.cpp.o: /home/arthur/Documents/repos/
   /usr/include/c++/14.2.1/cstdio \
   /usr/include/c++/14.2.1/cstdlib \
   /usr/include/c++/14.2.1/cwchar \
-  /usr/include/c++/14.2.1/cwctype \
   /usr/include/c++/14.2.1/debug/assertions.h \
   /usr/include/c++/14.2.1/debug/debug.h \
   /usr/include/c++/14.2.1/deque \
@@ -2044,18 +2028,12 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/cpu.cpp.o: /home/arthur/Documents/repos/
   /usr/include/c++/14.2.1/ext/string_conversions.h \
   /usr/include/c++/14.2.1/ext/type_traits.h \
   /usr/include/c++/14.2.1/initializer_list \
-  /usr/include/c++/14.2.1/ios \
   /usr/include/c++/14.2.1/iosfwd \
-  /usr/include/c++/14.2.1/iostream \
-  /usr/include/c++/14.2.1/istream \
   /usr/include/c++/14.2.1/memory \
   /usr/include/c++/14.2.1/new \
-  /usr/include/c++/14.2.1/ostream \
   /usr/include/c++/14.2.1/queue \
   /usr/include/c++/14.2.1/stdexcept \
-  /usr/include/c++/14.2.1/streambuf \
   /usr/include/c++/14.2.1/string \
-  /usr/include/c++/14.2.1/system_error \
   /usr/include/c++/14.2.1/tuple \
   /usr/include/c++/14.2.1/type_traits \
   /usr/include/c++/14.2.1/typeinfo \
@@ -2066,9 +2044,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/cpu.cpp.o: /home/arthur/Documents/repos/
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++locale.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/cpu_defines.h \
-  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/ctype_base.h \
-  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/ctype_inline.h \
-  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/error_constants.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/gthr-default.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/gthr.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/os_defines.h \
@@ -2099,7 +2074,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/cpu.cpp.o: /home/arthur/Documents/repos/
   /usr/include/time.h \
   /usr/include/ucontext.h \
   /usr/include/wchar.h \
-  /usr/include/wctype.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdarg.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stddef.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdint.h
@@ -2117,6 +2091,7 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/cv.cpp.o: /home/arthur/Documents/repos/d
   /home/arthur/Documents/repos/dsm_system/src/include/threadlib/schedulerState.h \
   /home/arthur/Documents/repos/dsm_system/src/include/threadlib/thread.h \
   /home/arthur/Documents/repos/dsm_system/src/include/threadlib/waitable.h \
+  /home/arthur/Documents/repos/dsm_system/src/include/util/lin_allocator.hpp \
   /usr/include/alloca.h \
   /usr/include/asm-generic/bitsperlong.h \
   /usr/include/asm-generic/errno-base.h \
@@ -2190,7 +2165,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/cv.cpp.o: /home/arthur/Documents/repos/d
   /usr/include/bits/waitflags.h \
   /usr/include/bits/waitstatus.h \
   /usr/include/bits/wchar.h \
-  /usr/include/bits/wctype-wchar.h \
   /usr/include/bits/wordsize.h \
   /usr/include/c++/14.2.1/atomic \
   /usr/include/c++/14.2.1/backward/auto_ptr.h \
@@ -2202,8 +2176,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/cv.cpp.o: /home/arthur/Documents/repos/d
   /usr/include/c++/14.2.1/bits/allocator.h \
   /usr/include/c++/14.2.1/bits/atomic_base.h \
   /usr/include/c++/14.2.1/bits/atomic_lockfree_defines.h \
-  /usr/include/c++/14.2.1/bits/basic_ios.h \
-  /usr/include/c++/14.2.1/bits/basic_ios.tcc \
   /usr/include/c++/14.2.1/bits/basic_string.h \
   /usr/include/c++/14.2.1/bits/basic_string.tcc \
   /usr/include/c++/14.2.1/bits/char_traits.h \
@@ -2224,18 +2196,11 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/cv.cpp.o: /home/arthur/Documents/repos/d
   /usr/include/c++/14.2.1/bits/hashtable.h \
   /usr/include/c++/14.2.1/bits/hashtable_policy.h \
   /usr/include/c++/14.2.1/bits/invoke.h \
-  /usr/include/c++/14.2.1/bits/ios_base.h \
-  /usr/include/c++/14.2.1/bits/istream.tcc \
-  /usr/include/c++/14.2.1/bits/locale_classes.h \
-  /usr/include/c++/14.2.1/bits/locale_classes.tcc \
-  /usr/include/c++/14.2.1/bits/locale_facets.h \
-  /usr/include/c++/14.2.1/bits/locale_facets.tcc \
   /usr/include/c++/14.2.1/bits/localefwd.h \
   /usr/include/c++/14.2.1/bits/memoryfwd.h \
   /usr/include/c++/14.2.1/bits/move.h \
   /usr/include/c++/14.2.1/bits/nested_exception.h \
   /usr/include/c++/14.2.1/bits/new_allocator.h \
-  /usr/include/c++/14.2.1/bits/ostream.tcc \
   /usr/include/c++/14.2.1/bits/ostream_insert.h \
   /usr/include/c++/14.2.1/bits/postypes.h \
   /usr/include/c++/14.2.1/bits/predefined_ops.h \
@@ -2262,8 +2227,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/cv.cpp.o: /home/arthur/Documents/repos/d
   /usr/include/c++/14.2.1/bits/stl_tempbuf.h \
   /usr/include/c++/14.2.1/bits/stl_uninitialized.h \
   /usr/include/c++/14.2.1/bits/stl_vector.h \
-  /usr/include/c++/14.2.1/bits/streambuf.tcc \
-  /usr/include/c++/14.2.1/bits/streambuf_iterator.h \
   /usr/include/c++/14.2.1/bits/stringfwd.h \
   /usr/include/c++/14.2.1/bits/unique_ptr.h \
   /usr/include/c++/14.2.1/bits/unordered_map.h \
@@ -2279,7 +2242,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/cv.cpp.o: /home/arthur/Documents/repos/d
   /usr/include/c++/14.2.1/cstdio \
   /usr/include/c++/14.2.1/cstdlib \
   /usr/include/c++/14.2.1/cwchar \
-  /usr/include/c++/14.2.1/cwctype \
   /usr/include/c++/14.2.1/debug/assertions.h \
   /usr/include/c++/14.2.1/debug/debug.h \
   /usr/include/c++/14.2.1/deque \
@@ -2292,18 +2254,12 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/cv.cpp.o: /home/arthur/Documents/repos/d
   /usr/include/c++/14.2.1/ext/string_conversions.h \
   /usr/include/c++/14.2.1/ext/type_traits.h \
   /usr/include/c++/14.2.1/initializer_list \
-  /usr/include/c++/14.2.1/ios \
   /usr/include/c++/14.2.1/iosfwd \
-  /usr/include/c++/14.2.1/iostream \
-  /usr/include/c++/14.2.1/istream \
   /usr/include/c++/14.2.1/memory \
   /usr/include/c++/14.2.1/new \
-  /usr/include/c++/14.2.1/ostream \
   /usr/include/c++/14.2.1/queue \
   /usr/include/c++/14.2.1/stdexcept \
-  /usr/include/c++/14.2.1/streambuf \
   /usr/include/c++/14.2.1/string \
-  /usr/include/c++/14.2.1/system_error \
   /usr/include/c++/14.2.1/tuple \
   /usr/include/c++/14.2.1/type_traits \
   /usr/include/c++/14.2.1/typeinfo \
@@ -2314,9 +2270,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/cv.cpp.o: /home/arthur/Documents/repos/d
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++locale.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/cpu_defines.h \
-  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/ctype_base.h \
-  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/ctype_inline.h \
-  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/error_constants.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/gthr-default.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/gthr.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/os_defines.h \
@@ -2347,7 +2300,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/cv.cpp.o: /home/arthur/Documents/repos/d
   /usr/include/time.h \
   /usr/include/ucontext.h \
   /usr/include/wchar.h \
-  /usr/include/wctype.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdarg.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stddef.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdint.h
@@ -2362,6 +2314,7 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/dsm_cpu_impl.cpp.o: /home/arthur/Documen
   /home/arthur/Documents/repos/dsm_system/src/include/threadlib/cpu.h \
   /home/arthur/Documents/repos/dsm_system/src/include/threadlib/thread.h \
   /home/arthur/Documents/repos/dsm_system/src/include/threadlib/waitable.h \
+  /home/arthur/Documents/repos/dsm_system/src/include/util/lin_allocator.hpp \
   /usr/include/alloca.h \
   /usr/include/asm-generic/bitsperlong.h \
   /usr/include/asm-generic/errno-base.h \
@@ -2435,7 +2388,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/dsm_cpu_impl.cpp.o: /home/arthur/Documen
   /usr/include/bits/waitflags.h \
   /usr/include/bits/waitstatus.h \
   /usr/include/bits/wchar.h \
-  /usr/include/bits/wctype-wchar.h \
   /usr/include/bits/wordsize.h \
   /usr/include/c++/14.2.1/atomic \
   /usr/include/c++/14.2.1/backward/auto_ptr.h \
@@ -2447,8 +2399,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/dsm_cpu_impl.cpp.o: /home/arthur/Documen
   /usr/include/c++/14.2.1/bits/allocator.h \
   /usr/include/c++/14.2.1/bits/atomic_base.h \
   /usr/include/c++/14.2.1/bits/atomic_lockfree_defines.h \
-  /usr/include/c++/14.2.1/bits/basic_ios.h \
-  /usr/include/c++/14.2.1/bits/basic_ios.tcc \
   /usr/include/c++/14.2.1/bits/basic_string.h \
   /usr/include/c++/14.2.1/bits/basic_string.tcc \
   /usr/include/c++/14.2.1/bits/char_traits.h \
@@ -2469,18 +2419,11 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/dsm_cpu_impl.cpp.o: /home/arthur/Documen
   /usr/include/c++/14.2.1/bits/hashtable.h \
   /usr/include/c++/14.2.1/bits/hashtable_policy.h \
   /usr/include/c++/14.2.1/bits/invoke.h \
-  /usr/include/c++/14.2.1/bits/ios_base.h \
-  /usr/include/c++/14.2.1/bits/istream.tcc \
-  /usr/include/c++/14.2.1/bits/locale_classes.h \
-  /usr/include/c++/14.2.1/bits/locale_classes.tcc \
-  /usr/include/c++/14.2.1/bits/locale_facets.h \
-  /usr/include/c++/14.2.1/bits/locale_facets.tcc \
   /usr/include/c++/14.2.1/bits/localefwd.h \
   /usr/include/c++/14.2.1/bits/memoryfwd.h \
   /usr/include/c++/14.2.1/bits/move.h \
   /usr/include/c++/14.2.1/bits/nested_exception.h \
   /usr/include/c++/14.2.1/bits/new_allocator.h \
-  /usr/include/c++/14.2.1/bits/ostream.tcc \
   /usr/include/c++/14.2.1/bits/ostream_insert.h \
   /usr/include/c++/14.2.1/bits/postypes.h \
   /usr/include/c++/14.2.1/bits/predefined_ops.h \
@@ -2507,8 +2450,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/dsm_cpu_impl.cpp.o: /home/arthur/Documen
   /usr/include/c++/14.2.1/bits/stl_tempbuf.h \
   /usr/include/c++/14.2.1/bits/stl_uninitialized.h \
   /usr/include/c++/14.2.1/bits/stl_vector.h \
-  /usr/include/c++/14.2.1/bits/streambuf.tcc \
-  /usr/include/c++/14.2.1/bits/streambuf_iterator.h \
   /usr/include/c++/14.2.1/bits/stringfwd.h \
   /usr/include/c++/14.2.1/bits/unique_ptr.h \
   /usr/include/c++/14.2.1/bits/unordered_map.h \
@@ -2524,7 +2465,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/dsm_cpu_impl.cpp.o: /home/arthur/Documen
   /usr/include/c++/14.2.1/cstdio \
   /usr/include/c++/14.2.1/cstdlib \
   /usr/include/c++/14.2.1/cwchar \
-  /usr/include/c++/14.2.1/cwctype \
   /usr/include/c++/14.2.1/debug/assertions.h \
   /usr/include/c++/14.2.1/debug/debug.h \
   /usr/include/c++/14.2.1/deque \
@@ -2537,18 +2477,12 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/dsm_cpu_impl.cpp.o: /home/arthur/Documen
   /usr/include/c++/14.2.1/ext/string_conversions.h \
   /usr/include/c++/14.2.1/ext/type_traits.h \
   /usr/include/c++/14.2.1/initializer_list \
-  /usr/include/c++/14.2.1/ios \
   /usr/include/c++/14.2.1/iosfwd \
-  /usr/include/c++/14.2.1/iostream \
-  /usr/include/c++/14.2.1/istream \
   /usr/include/c++/14.2.1/memory \
   /usr/include/c++/14.2.1/new \
-  /usr/include/c++/14.2.1/ostream \
   /usr/include/c++/14.2.1/queue \
   /usr/include/c++/14.2.1/stdexcept \
-  /usr/include/c++/14.2.1/streambuf \
   /usr/include/c++/14.2.1/string \
-  /usr/include/c++/14.2.1/system_error \
   /usr/include/c++/14.2.1/tuple \
   /usr/include/c++/14.2.1/type_traits \
   /usr/include/c++/14.2.1/typeinfo \
@@ -2559,9 +2493,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/dsm_cpu_impl.cpp.o: /home/arthur/Documen
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++locale.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/cpu_defines.h \
-  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/ctype_base.h \
-  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/ctype_inline.h \
-  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/error_constants.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/gthr-default.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/gthr.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/os_defines.h \
@@ -2592,7 +2523,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/dsm_cpu_impl.cpp.o: /home/arthur/Documen
   /usr/include/time.h \
   /usr/include/ucontext.h \
   /usr/include/wchar.h \
-  /usr/include/wctype.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdarg.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stddef.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdint.h
@@ -2609,6 +2539,7 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/mutex.cpp.o: /home/arthur/Documents/repo
   /home/arthur/Documents/repos/dsm_system/src/include/threadlib/schedulerState.h \
   /home/arthur/Documents/repos/dsm_system/src/include/threadlib/thread.h \
   /home/arthur/Documents/repos/dsm_system/src/include/threadlib/waitable.h \
+  /home/arthur/Documents/repos/dsm_system/src/include/util/lin_allocator.hpp \
   /usr/include/alloca.h \
   /usr/include/asm-generic/bitsperlong.h \
   /usr/include/asm-generic/errno-base.h \
@@ -2682,7 +2613,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/mutex.cpp.o: /home/arthur/Documents/repo
   /usr/include/bits/waitflags.h \
   /usr/include/bits/waitstatus.h \
   /usr/include/bits/wchar.h \
-  /usr/include/bits/wctype-wchar.h \
   /usr/include/bits/wordsize.h \
   /usr/include/c++/14.2.1/atomic \
   /usr/include/c++/14.2.1/backward/auto_ptr.h \
@@ -2694,8 +2624,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/mutex.cpp.o: /home/arthur/Documents/repo
   /usr/include/c++/14.2.1/bits/allocator.h \
   /usr/include/c++/14.2.1/bits/atomic_base.h \
   /usr/include/c++/14.2.1/bits/atomic_lockfree_defines.h \
-  /usr/include/c++/14.2.1/bits/basic_ios.h \
-  /usr/include/c++/14.2.1/bits/basic_ios.tcc \
   /usr/include/c++/14.2.1/bits/basic_string.h \
   /usr/include/c++/14.2.1/bits/basic_string.tcc \
   /usr/include/c++/14.2.1/bits/char_traits.h \
@@ -2716,18 +2644,11 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/mutex.cpp.o: /home/arthur/Documents/repo
   /usr/include/c++/14.2.1/bits/hashtable.h \
   /usr/include/c++/14.2.1/bits/hashtable_policy.h \
   /usr/include/c++/14.2.1/bits/invoke.h \
-  /usr/include/c++/14.2.1/bits/ios_base.h \
-  /usr/include/c++/14.2.1/bits/istream.tcc \
-  /usr/include/c++/14.2.1/bits/locale_classes.h \
-  /usr/include/c++/14.2.1/bits/locale_classes.tcc \
-  /usr/include/c++/14.2.1/bits/locale_facets.h \
-  /usr/include/c++/14.2.1/bits/locale_facets.tcc \
   /usr/include/c++/14.2.1/bits/localefwd.h \
   /usr/include/c++/14.2.1/bits/memoryfwd.h \
   /usr/include/c++/14.2.1/bits/move.h \
   /usr/include/c++/14.2.1/bits/nested_exception.h \
   /usr/include/c++/14.2.1/bits/new_allocator.h \
-  /usr/include/c++/14.2.1/bits/ostream.tcc \
   /usr/include/c++/14.2.1/bits/ostream_insert.h \
   /usr/include/c++/14.2.1/bits/postypes.h \
   /usr/include/c++/14.2.1/bits/predefined_ops.h \
@@ -2754,8 +2675,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/mutex.cpp.o: /home/arthur/Documents/repo
   /usr/include/c++/14.2.1/bits/stl_tempbuf.h \
   /usr/include/c++/14.2.1/bits/stl_uninitialized.h \
   /usr/include/c++/14.2.1/bits/stl_vector.h \
-  /usr/include/c++/14.2.1/bits/streambuf.tcc \
-  /usr/include/c++/14.2.1/bits/streambuf_iterator.h \
   /usr/include/c++/14.2.1/bits/stringfwd.h \
   /usr/include/c++/14.2.1/bits/unique_ptr.h \
   /usr/include/c++/14.2.1/bits/unordered_map.h \
@@ -2771,7 +2690,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/mutex.cpp.o: /home/arthur/Documents/repo
   /usr/include/c++/14.2.1/cstdio \
   /usr/include/c++/14.2.1/cstdlib \
   /usr/include/c++/14.2.1/cwchar \
-  /usr/include/c++/14.2.1/cwctype \
   /usr/include/c++/14.2.1/debug/assertions.h \
   /usr/include/c++/14.2.1/debug/debug.h \
   /usr/include/c++/14.2.1/deque \
@@ -2784,18 +2702,12 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/mutex.cpp.o: /home/arthur/Documents/repo
   /usr/include/c++/14.2.1/ext/string_conversions.h \
   /usr/include/c++/14.2.1/ext/type_traits.h \
   /usr/include/c++/14.2.1/initializer_list \
-  /usr/include/c++/14.2.1/ios \
   /usr/include/c++/14.2.1/iosfwd \
-  /usr/include/c++/14.2.1/iostream \
-  /usr/include/c++/14.2.1/istream \
   /usr/include/c++/14.2.1/memory \
   /usr/include/c++/14.2.1/new \
-  /usr/include/c++/14.2.1/ostream \
   /usr/include/c++/14.2.1/queue \
   /usr/include/c++/14.2.1/stdexcept \
-  /usr/include/c++/14.2.1/streambuf \
   /usr/include/c++/14.2.1/string \
-  /usr/include/c++/14.2.1/system_error \
   /usr/include/c++/14.2.1/tuple \
   /usr/include/c++/14.2.1/type_traits \
   /usr/include/c++/14.2.1/typeinfo \
@@ -2806,9 +2718,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/mutex.cpp.o: /home/arthur/Documents/repo
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++locale.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/cpu_defines.h \
-  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/ctype_base.h \
-  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/ctype_inline.h \
-  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/error_constants.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/gthr-default.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/gthr.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/os_defines.h \
@@ -2839,7 +2748,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/mutex.cpp.o: /home/arthur/Documents/repo
   /usr/include/time.h \
   /usr/include/ucontext.h \
   /usr/include/wchar.h \
-  /usr/include/wctype.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdarg.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stddef.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdint.h
@@ -2855,6 +2763,7 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/schedulerState.cpp.o: /home/arthur/Docum
   /home/arthur/Documents/repos/dsm_system/src/include/threadlib/schedulerState.h \
   /home/arthur/Documents/repos/dsm_system/src/include/threadlib/thread.h \
   /home/arthur/Documents/repos/dsm_system/src/include/threadlib/waitable.h \
+  /home/arthur/Documents/repos/dsm_system/src/include/util/lin_allocator.hpp \
   /usr/include/alloca.h \
   /usr/include/asm-generic/bitsperlong.h \
   /usr/include/asm-generic/errno-base.h \
@@ -2928,7 +2837,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/schedulerState.cpp.o: /home/arthur/Docum
   /usr/include/bits/waitflags.h \
   /usr/include/bits/waitstatus.h \
   /usr/include/bits/wchar.h \
-  /usr/include/bits/wctype-wchar.h \
   /usr/include/bits/wordsize.h \
   /usr/include/c++/14.2.1/atomic \
   /usr/include/c++/14.2.1/backward/auto_ptr.h \
@@ -2940,8 +2848,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/schedulerState.cpp.o: /home/arthur/Docum
   /usr/include/c++/14.2.1/bits/allocator.h \
   /usr/include/c++/14.2.1/bits/atomic_base.h \
   /usr/include/c++/14.2.1/bits/atomic_lockfree_defines.h \
-  /usr/include/c++/14.2.1/bits/basic_ios.h \
-  /usr/include/c++/14.2.1/bits/basic_ios.tcc \
   /usr/include/c++/14.2.1/bits/basic_string.h \
   /usr/include/c++/14.2.1/bits/basic_string.tcc \
   /usr/include/c++/14.2.1/bits/char_traits.h \
@@ -2962,18 +2868,11 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/schedulerState.cpp.o: /home/arthur/Docum
   /usr/include/c++/14.2.1/bits/hashtable.h \
   /usr/include/c++/14.2.1/bits/hashtable_policy.h \
   /usr/include/c++/14.2.1/bits/invoke.h \
-  /usr/include/c++/14.2.1/bits/ios_base.h \
-  /usr/include/c++/14.2.1/bits/istream.tcc \
-  /usr/include/c++/14.2.1/bits/locale_classes.h \
-  /usr/include/c++/14.2.1/bits/locale_classes.tcc \
-  /usr/include/c++/14.2.1/bits/locale_facets.h \
-  /usr/include/c++/14.2.1/bits/locale_facets.tcc \
   /usr/include/c++/14.2.1/bits/localefwd.h \
   /usr/include/c++/14.2.1/bits/memoryfwd.h \
   /usr/include/c++/14.2.1/bits/move.h \
   /usr/include/c++/14.2.1/bits/nested_exception.h \
   /usr/include/c++/14.2.1/bits/new_allocator.h \
-  /usr/include/c++/14.2.1/bits/ostream.tcc \
   /usr/include/c++/14.2.1/bits/ostream_insert.h \
   /usr/include/c++/14.2.1/bits/postypes.h \
   /usr/include/c++/14.2.1/bits/predefined_ops.h \
@@ -3000,8 +2899,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/schedulerState.cpp.o: /home/arthur/Docum
   /usr/include/c++/14.2.1/bits/stl_tempbuf.h \
   /usr/include/c++/14.2.1/bits/stl_uninitialized.h \
   /usr/include/c++/14.2.1/bits/stl_vector.h \
-  /usr/include/c++/14.2.1/bits/streambuf.tcc \
-  /usr/include/c++/14.2.1/bits/streambuf_iterator.h \
   /usr/include/c++/14.2.1/bits/stringfwd.h \
   /usr/include/c++/14.2.1/bits/unique_ptr.h \
   /usr/include/c++/14.2.1/bits/unordered_map.h \
@@ -3017,7 +2914,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/schedulerState.cpp.o: /home/arthur/Docum
   /usr/include/c++/14.2.1/cstdio \
   /usr/include/c++/14.2.1/cstdlib \
   /usr/include/c++/14.2.1/cwchar \
-  /usr/include/c++/14.2.1/cwctype \
   /usr/include/c++/14.2.1/debug/assertions.h \
   /usr/include/c++/14.2.1/debug/debug.h \
   /usr/include/c++/14.2.1/deque \
@@ -3030,18 +2926,12 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/schedulerState.cpp.o: /home/arthur/Docum
   /usr/include/c++/14.2.1/ext/string_conversions.h \
   /usr/include/c++/14.2.1/ext/type_traits.h \
   /usr/include/c++/14.2.1/initializer_list \
-  /usr/include/c++/14.2.1/ios \
   /usr/include/c++/14.2.1/iosfwd \
-  /usr/include/c++/14.2.1/iostream \
-  /usr/include/c++/14.2.1/istream \
   /usr/include/c++/14.2.1/memory \
   /usr/include/c++/14.2.1/new \
-  /usr/include/c++/14.2.1/ostream \
   /usr/include/c++/14.2.1/queue \
   /usr/include/c++/14.2.1/stdexcept \
-  /usr/include/c++/14.2.1/streambuf \
   /usr/include/c++/14.2.1/string \
-  /usr/include/c++/14.2.1/system_error \
   /usr/include/c++/14.2.1/tuple \
   /usr/include/c++/14.2.1/type_traits \
   /usr/include/c++/14.2.1/typeinfo \
@@ -3052,9 +2942,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/schedulerState.cpp.o: /home/arthur/Docum
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++locale.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/cpu_defines.h \
-  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/ctype_base.h \
-  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/ctype_inline.h \
-  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/error_constants.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/gthr-default.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/gthr.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/os_defines.h \
@@ -3085,7 +2972,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/schedulerState.cpp.o: /home/arthur/Docum
   /usr/include/time.h \
   /usr/include/ucontext.h \
   /usr/include/wchar.h \
-  /usr/include/wctype.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdarg.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stddef.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdint.h
@@ -3101,6 +2987,7 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/thread.cpp.o: /home/arthur/Documents/rep
   /home/arthur/Documents/repos/dsm_system/src/include/threadlib/schedulerState.h \
   /home/arthur/Documents/repos/dsm_system/src/include/threadlib/thread.h \
   /home/arthur/Documents/repos/dsm_system/src/include/threadlib/waitable.h \
+  /home/arthur/Documents/repos/dsm_system/src/include/util/lin_allocator.hpp \
   /usr/include/alloca.h \
   /usr/include/asm-generic/bitsperlong.h \
   /usr/include/asm-generic/errno-base.h \
@@ -3174,7 +3061,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/thread.cpp.o: /home/arthur/Documents/rep
   /usr/include/bits/waitflags.h \
   /usr/include/bits/waitstatus.h \
   /usr/include/bits/wchar.h \
-  /usr/include/bits/wctype-wchar.h \
   /usr/include/bits/wordsize.h \
   /usr/include/c++/14.2.1/atomic \
   /usr/include/c++/14.2.1/backward/auto_ptr.h \
@@ -3186,8 +3072,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/thread.cpp.o: /home/arthur/Documents/rep
   /usr/include/c++/14.2.1/bits/allocator.h \
   /usr/include/c++/14.2.1/bits/atomic_base.h \
   /usr/include/c++/14.2.1/bits/atomic_lockfree_defines.h \
-  /usr/include/c++/14.2.1/bits/basic_ios.h \
-  /usr/include/c++/14.2.1/bits/basic_ios.tcc \
   /usr/include/c++/14.2.1/bits/basic_string.h \
   /usr/include/c++/14.2.1/bits/basic_string.tcc \
   /usr/include/c++/14.2.1/bits/char_traits.h \
@@ -3208,18 +3092,11 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/thread.cpp.o: /home/arthur/Documents/rep
   /usr/include/c++/14.2.1/bits/hashtable.h \
   /usr/include/c++/14.2.1/bits/hashtable_policy.h \
   /usr/include/c++/14.2.1/bits/invoke.h \
-  /usr/include/c++/14.2.1/bits/ios_base.h \
-  /usr/include/c++/14.2.1/bits/istream.tcc \
-  /usr/include/c++/14.2.1/bits/locale_classes.h \
-  /usr/include/c++/14.2.1/bits/locale_classes.tcc \
-  /usr/include/c++/14.2.1/bits/locale_facets.h \
-  /usr/include/c++/14.2.1/bits/locale_facets.tcc \
   /usr/include/c++/14.2.1/bits/localefwd.h \
   /usr/include/c++/14.2.1/bits/memoryfwd.h \
   /usr/include/c++/14.2.1/bits/move.h \
   /usr/include/c++/14.2.1/bits/nested_exception.h \
   /usr/include/c++/14.2.1/bits/new_allocator.h \
-  /usr/include/c++/14.2.1/bits/ostream.tcc \
   /usr/include/c++/14.2.1/bits/ostream_insert.h \
   /usr/include/c++/14.2.1/bits/postypes.h \
   /usr/include/c++/14.2.1/bits/predefined_ops.h \
@@ -3246,8 +3123,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/thread.cpp.o: /home/arthur/Documents/rep
   /usr/include/c++/14.2.1/bits/stl_tempbuf.h \
   /usr/include/c++/14.2.1/bits/stl_uninitialized.h \
   /usr/include/c++/14.2.1/bits/stl_vector.h \
-  /usr/include/c++/14.2.1/bits/streambuf.tcc \
-  /usr/include/c++/14.2.1/bits/streambuf_iterator.h \
   /usr/include/c++/14.2.1/bits/stringfwd.h \
   /usr/include/c++/14.2.1/bits/unique_ptr.h \
   /usr/include/c++/14.2.1/bits/unordered_map.h \
@@ -3263,7 +3138,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/thread.cpp.o: /home/arthur/Documents/rep
   /usr/include/c++/14.2.1/cstdio \
   /usr/include/c++/14.2.1/cstdlib \
   /usr/include/c++/14.2.1/cwchar \
-  /usr/include/c++/14.2.1/cwctype \
   /usr/include/c++/14.2.1/debug/assertions.h \
   /usr/include/c++/14.2.1/debug/debug.h \
   /usr/include/c++/14.2.1/deque \
@@ -3276,18 +3150,12 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/thread.cpp.o: /home/arthur/Documents/rep
   /usr/include/c++/14.2.1/ext/string_conversions.h \
   /usr/include/c++/14.2.1/ext/type_traits.h \
   /usr/include/c++/14.2.1/initializer_list \
-  /usr/include/c++/14.2.1/ios \
   /usr/include/c++/14.2.1/iosfwd \
-  /usr/include/c++/14.2.1/iostream \
-  /usr/include/c++/14.2.1/istream \
   /usr/include/c++/14.2.1/memory \
   /usr/include/c++/14.2.1/new \
-  /usr/include/c++/14.2.1/ostream \
   /usr/include/c++/14.2.1/queue \
   /usr/include/c++/14.2.1/stdexcept \
-  /usr/include/c++/14.2.1/streambuf \
   /usr/include/c++/14.2.1/string \
-  /usr/include/c++/14.2.1/system_error \
   /usr/include/c++/14.2.1/tuple \
   /usr/include/c++/14.2.1/type_traits \
   /usr/include/c++/14.2.1/typeinfo \
@@ -3298,9 +3166,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/thread.cpp.o: /home/arthur/Documents/rep
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++locale.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/cpu_defines.h \
-  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/ctype_base.h \
-  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/ctype_inline.h \
-  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/error_constants.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/gthr-default.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/gthr.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/os_defines.h \
@@ -3331,7 +3196,6 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/thread.cpp.o: /home/arthur/Documents/rep
   /usr/include/time.h \
   /usr/include/ucontext.h \
   /usr/include/wchar.h \
-  /usr/include/wctype.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdarg.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stddef.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdint.h
@@ -3486,6 +3350,43 @@ src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.o: /home/arthur/Documents/repos/
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stddef.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdint.h
 
+src/lib/CMakeFiles/DSMLib.dir/util/lin_allocator.cpp.o: /home/arthur/Documents/repos/dsm_system/src/lib/util/lin_allocator.cpp \
+  /home/arthur/Documents/repos/dsm_system/src/include/dsm_lock.hpp \
+  /home/arthur/Documents/repos/dsm_system/src/include/linker_symbol.hpp \
+  /home/arthur/Documents/repos/dsm_system/src/include/util/lin_allocator.hpp \
+  /usr/include/bits/confname.h \
+  /usr/include/bits/environments.h \
+  /usr/include/bits/getopt_core.h \
+  /usr/include/bits/getopt_posix.h \
+  /usr/include/bits/libc-header-start.h \
+  /usr/include/bits/long-double.h \
+  /usr/include/bits/posix_opt.h \
+  /usr/include/bits/time64.h \
+  /usr/include/bits/timesize.h \
+  /usr/include/bits/types.h \
+  /usr/include/bits/types/__locale_t.h \
+  /usr/include/bits/types/locale_t.h \
+  /usr/include/bits/typesizes.h \
+  /usr/include/bits/unistd_ext.h \
+  /usr/include/bits/wordsize.h \
+  /usr/include/c++/14.2.1/bits/version.h \
+  /usr/include/c++/14.2.1/cstddef \
+  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
+  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/cpu_defines.h \
+  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/os_defines.h \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/gnu/stubs-64.h \
+  /usr/include/gnu/stubs.h \
+  /usr/include/linux/close_range.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/string.h \
+  /usr/include/strings.h \
+  /usr/include/sys/cdefs.h \
+  /usr/include/unistd.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdbool.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stddef.h
+
 
 /home/arthur/Documents/repos/dsm_system/src/lib/threadlib/thread.cpp:
 
@@ -3572,6 +3473,8 @@ src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.o: /home/arthur/Documents/repos/
 /usr/include/rpc/msgpack/v1/object_fwd_decl.hpp:
 
 /usr/include/rpc/msgpack/v1/object_decl.hpp:
+
+/home/arthur/Documents/repos/dsm_system/src/lib/util/lin_allocator.cpp:
 
 /usr/include/rpc/msgpack/v1/iterator_decl.hpp:
 
@@ -3933,10 +3836,6 @@ src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.o: /home/arthur/Documents/repos/
 
 /usr/include/rpc/msgpack/predef/os/os400.h:
 
-/usr/include/rpc/msgpack/predef/os/linux.h:
-
-/usr/include/rpc/msgpack/predef/os/irix.h:
-
 /usr/include/c++/14.2.1/bits/stl_multiset.h:
 
 /usr/include/rpc/msgpack/predef/compiler/iar.h:
@@ -3966,6 +3865,8 @@ src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.o: /home/arthur/Documents/repos/
 /usr/include/c++/14.2.1/bits/shared_ptr.h:
 
 /usr/include/c++/14.2.1/bits/refwrap.h:
+
+/usr/include/c++/14.2.1/bits/ptr_traits.h:
 
 /usr/include/rpc/msgpack/preprocessor/arithmetic/inc.hpp:
 
@@ -4080,6 +3981,8 @@ src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.o: /home/arthur/Documents/repos/
 /usr/include/asm-generic/bitsperlong.h:
 
 /usr/include/asm-generic/types.h:
+
+/usr/include/rpc/msgpack/predef/os/irix.h:
 
 /usr/include/rpc/msgpack/preprocessor/list/fold_left.hpp:
 
@@ -4231,14 +4134,6 @@ src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.o: /home/arthur/Documents/repos/
 
 /usr/include/rpc/msgpack/adaptor/msgpack_tuple.hpp:
 
-/usr/include/c++/14.2.1/bits/istream.tcc:
-
-/usr/include/bits/mman.h:
-
-/usr/include/c++/14.2.1/bits/cxxabi_forced.h:
-
-/usr/include/rpc/msgpack/predef/library/std/vacpp.h:
-
 /usr/include/bits/sigthread.h:
 
 /usr/include/rpc/msgpack/adaptor/pair.hpp:
@@ -4287,6 +4182,14 @@ src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.o: /home/arthur/Documents/repos/
 
 /usr/include/bits/wordsize.h:
 
+/usr/include/rpc/msgpack/preprocessor/list/to_array.hpp:
+
+/usr/include/bits/struct_stat.h:
+
+/usr/include/rpc/msgpack/preprocessor/arithmetic/dec.hpp:
+
+/usr/include/bits/types/time_t.h:
+
 /usr/include/bits/types/struct_itimerspec.h:
 
 /usr/include/rpc/msgpack/predef/os/bsd/net.h:
@@ -4319,10 +4222,6 @@ src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.o: /home/arthur/Documents/repos/
 
 /usr/include/assert.h:
 
-/usr/include/c++/14.2.1/bits/ptr_traits.h:
-
-/usr/include/c++/14.2.1/istream:
-
 /usr/include/rpc/msgpack/sbuffer_decl.hpp:
 
 /usr/include/c++/14.2.1/array:
@@ -4330,8 +4229,6 @@ src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.o: /home/arthur/Documents/repos/
 /usr/include/rpc/msgpack/adaptor/check_container_size.hpp:
 
 /usr/include/rpc/msgpack/predef/library/std/modena.h:
-
-/usr/include/c++/14.2.1/iomanip:
 
 /usr/include/rpc/msgpack/v1/detail/cpp11_zone.hpp:
 
@@ -4368,8 +4265,6 @@ src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.o: /home/arthur/Documents/repos/
 /usr/include/asm/errno.h:
 
 /usr/include/bits/stdint-uintn.h:
-
-/usr/include/c++/14.2.1/iostream:
 
 /usr/include/rpc/msgpack/preprocessor/repetition/deduce_r.hpp:
 
@@ -4440,6 +4335,12 @@ src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.o: /home/arthur/Documents/repos/
 /usr/include/asm-generic/int-ll64.h:
 
 /usr/include/c++/14.2.1/bits/ostream_insert.h:
+
+/usr/include/bits/mman.h:
+
+/usr/include/c++/14.2.1/bits/cxxabi_forced.h:
+
+/usr/include/rpc/msgpack/predef/library/std/vacpp.h:
 
 /usr/include/asm-generic/socket.h:
 
@@ -4613,6 +4514,10 @@ src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.o: /home/arthur/Documents/repos/
 
 /usr/include/bits/pthreadtypes.h:
 
+/usr/include/c++/14.2.1/iomanip:
+
+/home/arthur/Documents/repos/dsm_system/src/include/util/lin_allocator.hpp:
+
 /usr/include/rpc/msgpack/preprocessor/repetition/enum_params_with_defaults.hpp:
 
 /usr/include/arpa/inet.h:
@@ -4752,14 +4657,6 @@ src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.o: /home/arthur/Documents/repos/
 /usr/include/bits/stdlib-float.h:
 
 /usr/include/rpc/detail/func_traits.h:
-
-/usr/include/rpc/msgpack/preprocessor/arithmetic/dec.hpp:
-
-/usr/include/bits/types/time_t.h:
-
-/usr/include/rpc/msgpack/preprocessor/list/to_array.hpp:
-
-/usr/include/bits/struct_stat.h:
 
 /usr/include/rpc/msgpack/predef/os/unix.h:
 
@@ -5338,3 +5235,5 @@ src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.o: /home/arthur/Documents/repos/
 /usr/include/rpc/msgpack/zone_decl.hpp:
 
 /usr/include/rpc/msgpack/predef/os/hpux.h:
+
+/usr/include/rpc/msgpack/predef/os/linux.h:

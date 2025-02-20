@@ -14,6 +14,7 @@ CMakeFiles/test1.dir/examples/test1.cpp.o
  /home/arthur/Documents/repos/dsm_system/src/include/threadlib/mutex.h
  /home/arthur/Documents/repos/dsm_system/src/include/threadlib/thread.h
  /home/arthur/Documents/repos/dsm_system/src/include/threadlib/waitable.h
+ /home/arthur/Documents/repos/dsm_system/src/include/util/lin_allocator.hpp
  /usr/include/alloca.h
  /usr/include/asm-generic/bitsperlong.h
  /usr/include/asm-generic/errno-base.h
@@ -268,6 +269,5 @@ test1
  /usr/lib/libm.so.6
  /usr/lib/libmvec.so.1
  /home/arthur/Documents/repos/dsm_system/build/CMakeFiles/test1.dir/examples/test1.cpp.o
- /home/arthur/Documents/repos/dsm_system/build/lib/libmalloc.so
  /home/arthur/Documents/repos/dsm_system/build/src/lib/libDSMLib.a
 

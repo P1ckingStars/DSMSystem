@@ -13,6 +13,7 @@ CMakeFiles/test1.dir/examples/test1.cpp.o: /home/arthur/Documents/repos/dsm_syst
   /home/arthur/Documents/repos/dsm_system/src/include/threadlib/mutex.h \
   /home/arthur/Documents/repos/dsm_system/src/include/threadlib/thread.h \
   /home/arthur/Documents/repos/dsm_system/src/include/threadlib/waitable.h \
+  /home/arthur/Documents/repos/dsm_system/src/include/util/lin_allocator.hpp \
   /usr/include/alloca.h \
   /usr/include/asm-generic/bitsperlong.h \
   /usr/include/asm-generic/errno-base.h \
@@ -266,7 +267,6 @@ test1: /home/arthur/Documents/repos/dsm_system/linker.ld \
   /usr/lib/libm.so.6 \
   /usr/lib/libmvec.so.1 \
   CMakeFiles/test1.dir/examples/test1.cpp.o \
-  lib/libmalloc.so \
   src/lib/libDSMLib.a
 
 
@@ -284,9 +284,7 @@ CMakeFiles/test1.dir/examples/test1.cpp.o:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/libgcc.a:
 
-/usr/include/c++/14.2.1/bits/memoryfwd.h:
-
-/usr/include/c++/14.2.1/bits/requires_hosted.h:
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtendS.o:
 
 /usr/include/c++/14.2.1/bits/locale_facets.tcc:
 
@@ -356,6 +354,10 @@ CMakeFiles/test1.dir/examples/test1.cpp.o:
 
 /usr/include/bits/struct_rwlock.h:
 
+/usr/include/c++/14.2.1/bits/memoryfwd.h:
+
+/usr/include/c++/14.2.1/bits/requires_hosted.h:
+
 /usr/include/bits/types/stack_t.h:
 
 /usr/include/bits/types/sigset_t.h:
@@ -373,6 +375,10 @@ CMakeFiles/test1.dir/examples/test1.cpp.o:
 /usr/include/bits/stdio_lim.h:
 
 /usr/include/c++/14.2.1/bits/predefined_ops.h:
+
+/usr/include/bits/types/__fpos_t.h:
+
+/usr/include/bits/types/clock_t.h:
 
 /usr/include/bits/byteswap.h:
 
@@ -418,10 +424,6 @@ CMakeFiles/test1.dir/examples/test1.cpp.o:
 
 /usr/include/asm-generic/errno.h:
 
-/usr/include/bits/types/__fpos_t.h:
-
-/usr/include/bits/types/clock_t.h:
-
 /usr/include/c++/14.2.1/backward/binders.h:
 
 /usr/include/asm-generic/errno-base.h:
@@ -429,6 +431,20 @@ CMakeFiles/test1.dir/examples/test1.cpp.o:
 /usr/include/asm-generic/bitsperlong.h:
 
 /usr/include/asm-generic/types.h:
+
+/usr/include/bits/types/struct_FILE.h:
+
+/usr/include/c++/14.2.1/initializer_list:
+
+/usr/include/asm/types.h:
+
+/home/arthur/Documents/repos/dsm_system/src/include/util/lin_allocator.hpp:
+
+/usr/include/c++/14.2.1/ext/type_traits.h:
+
+/usr/include/alloca.h:
+
+/home/arthur/Documents/repos/dsm_system/src/include/queue.hpp:
 
 /home/arthur/Documents/repos/dsm_system/examples/test1.cpp:
 
@@ -446,15 +462,15 @@ CMakeFiles/test1.dir/examples/test1.cpp.o:
 
 /usr/include/bits/types.h:
 
+/usr/include/bits/stdint-least.h:
+
+/usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/gthr.h:
+
 /home/arthur/Documents/repos/dsm_system/src/include/dsm_lock.hpp:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdarg.h:
 
 /home/arthur/Documents/repos/dsm_system/src/include/threadlib/mutex.h:
-
-/home/arthur/Documents/repos/dsm_system/src/include/queue.hpp:
-
-/usr/include/alloca.h:
 
 /home/arthur/Documents/repos/dsm_system/src/include/macros.hpp:
 
@@ -487,18 +503,6 @@ CMakeFiles/test1.dir/examples/test1.cpp.o:
 /usr/include/bits/long-double.h:
 
 /home/arthur/Documents/repos/dsm_system/src/include/threadlib/cv.h:
-
-/usr/include/bits/types/struct_FILE.h:
-
-/usr/include/c++/14.2.1/initializer_list:
-
-/usr/include/asm/types.h:
-
-/usr/include/c++/14.2.1/ext/type_traits.h:
-
-/usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/gthr.h:
-
-/usr/include/bits/stdint-least.h:
 
 /usr/include/c++/14.2.1/vector:
 
@@ -666,8 +670,6 @@ src/lib/libDSMLib.a:
 
 /usr/include/c++/14.2.1/cwchar:
 
-lib/libmalloc.so:
-
 /usr/include/c++/14.2.1/cwctype:
 
 /usr/include/bits/time.h:
@@ -799,5 +801,3 @@ lib/libmalloc.so:
 /usr/lib/crtn.o:
 
 /usr/lib/libm.so:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtendS.o:

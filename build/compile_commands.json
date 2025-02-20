@@ -72,9 +72,9 @@
   "output": "src/lib/CMakeFiles/DSMLib.dir/threadlib/thread.cpp.o"
 },
 {
-  "directory": "/home/arthur/Documents/repos/dsm_system/build/malloc",
-  "command": "/usr/bin/cc -Dmalloc_EXPORTS  -fPIC -o CMakeFiles/malloc.dir/malloc.c.o -c /home/arthur/Documents/repos/dsm_system/malloc/malloc.c",
-  "file": "/home/arthur/Documents/repos/dsm_system/malloc/malloc.c",
-  "output": "malloc/CMakeFiles/malloc.dir/malloc.c.o"
+  "directory": "/home/arthur/Documents/repos/dsm_system/build/src/lib",
+  "command": "/usr/bin/c++  -I/home/arthur/Documents/repos/dsm_system/src/include -std=gnu++11 -o CMakeFiles/DSMLib.dir/util/lin_allocator.cpp.o -c /home/arthur/Documents/repos/dsm_system/src/lib/util/lin_allocator.cpp",
+  "file": "/home/arthur/Documents/repos/dsm_system/src/lib/util/lin_allocator.cpp",
+  "output": "src/lib/CMakeFiles/DSMLib.dir/util/lin_allocator.cpp.o"
 }
 ]

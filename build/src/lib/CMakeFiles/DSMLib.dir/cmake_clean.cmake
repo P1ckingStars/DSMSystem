@@ -20,6 +20,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/DSMLib.dir/threadlib/thread.cpp.o.d"
   "CMakeFiles/DSMLib.dir/user_mprotect.cpp.o"
   "CMakeFiles/DSMLib.dir/user_mprotect.cpp.o.d"
+  "CMakeFiles/DSMLib.dir/util/lin_allocator.cpp.o"
+  "CMakeFiles/DSMLib.dir/util/lin_allocator.cpp.o.d"
   "libDSMLib.a"
   "libDSMLib.pdb"
 )

@@ -15,6 +15,7 @@ add_library(DSMLib
     threadlib/mutex.cpp
     threadlib/schedulerState.cpp
     threadlib/thread.cpp
+    util/lin_allocator.cpp
 )
 
 

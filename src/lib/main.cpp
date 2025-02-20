@@ -3,6 +3,7 @@
 #include "dsm_node.hpp"
 #include "threadlib/cpu.h"
 #include "threadlib/thread.h"
+#include "util/lin_allocator.hpp"
 #include <alloca.h>
 #include <cstddef>
 #include <cstdint>
@@ -25,7 +26,6 @@ using namespace dsm;
 int dsm_main(char *mem_region, size_t length, int argc, char *argv[]);
 void dsm_main1(void *args);
 
-vector<int> arr;
 
 extern char __bss_start;
 
@@ -57,20 +57,18 @@ int main(int argc, char *argv[]) {
     int local_cpuid = x;
     printf("cpu id %lx\n", (intptr_t)&cpuid);
     cpuid = &local_cpuid;
-    printf("start dsm main\n");
-    printf("arr.size() %zu\n", arr.size());
-    arr.push_back(9);
-    printf("arr[0] %d\n", arr[0]);
+    printf("start dsm main %lx\n", (intptr_t)cpu_list);
     if (is_master) {
-      cpu_list = new cpu *[NUM_NODE];
+      cpu_list = (cpu **)alloc(sizeof(cpu *) * NUM_NODE);
       printf("cpu list addr %lx\n", (intptr_t)cpu_list);
-      cpu_list[x] = new cpu;
+      cpu_list[x] = make<cpu>();
       cpu_list[x]->run(dsm_main1, nullptr);
     } else {
       printf("cpu list addr reference %lx\n", (intptr_t)&cpu_list);
       printf("cpu list addr %lx\n", (intptr_t)cpu_list);
       printf("x: %d\n", x);
-      cpu_list[x] = new cpu;
+      cpu_list[x] = make<cpu>();
+      printf("cpu: %lx\n", (intptr_t)cpu_list[x]);
       cpu_list[x]->run(nullptr, nullptr);
     }
   } else {

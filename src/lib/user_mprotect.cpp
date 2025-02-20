@@ -106,7 +106,14 @@ void user_mprotect(pid_t pid, void *addr, size_t size, int prot) {
   wait(NULL);
   siginfo_t sig;
   ptrace(PTRACE_GETSIGINFO, pid, NULL, &sig);
-  DEBUG_STMT(printf("user mprotect recv sig: %d\n", sig.si_signo));
+  DEBUG_STMT(printf("user mprotect recv sig: %d\n",
+                    sig.si_signo)); // TODO BUG showed in the output here, when
+                                    // it get SIGUSR instead
+  if (sig.si_signo != SIGSEGV) {
+    ptrace(PTRACE_CONT, pid, NULL, NULL);
+    wait(NULL);
+    kill(pid, sig.si_signo);
+  }
   // reg_err = ptrace(PTRACE_PEEKDATA, child, reg_err, &sig);
   ptrace(PTRACE_SETREGS, pid, 0, &saved_regs);
   ptrace(PTRACE_SETFPREGS, pid, 0, &saved_fp_regs);

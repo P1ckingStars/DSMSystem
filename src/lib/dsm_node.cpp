@@ -481,6 +481,8 @@ DSMNode::DSMNode(NodeAddr m_addr, void *_base, size_t _len, bool is_master,
   ASSERT_PERROR(this->base);
   if (!is_master) {
     user_mprotect_req(pid, _base, _len, PROT_NONE);
+    DEBUG_STMT(printf("disable from %lx to %lx\n", (intptr_t)this->base,
+                      (intptr_t)this->base + _len));
   }
 
   DEBUG_STMT(printf("setup mem\n"));

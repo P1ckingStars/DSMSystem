@@ -6,7 +6,6 @@ test1: \
   CMakeFiles/test1.dir/examples/test1.cpp.o \
   src/lib/libDSMLib.a \
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/librpc.so \
-  lib/libmalloc.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/libstdc++.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/libm.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/libm.so \
@@ -48,8 +47,6 @@ CMakeFiles/test1.dir/examples/test1.cpp.o:
 src/lib/libDSMLib.a:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/librpc.so:
-
-lib/libmalloc.so:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/libstdc++.so:
 
