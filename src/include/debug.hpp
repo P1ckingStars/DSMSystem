@@ -4,7 +4,7 @@
 
 #include "config.hpp"
 
-#define DEBUG
+//#define DEBUG
 #ifdef DEBUG 
 
 #define DEBUG_STMT(stmt) stmt

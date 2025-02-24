@@ -20,7 +20,6 @@ bool x = 1;
 void producer(void *arg) {
   while (x) {
     dsm::sync();
-    thread::yield();
   }
   for (int i = 0; i < 50; ++i) {
     bufferMutex.lock();

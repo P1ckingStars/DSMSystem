@@ -1,0 +1,873 @@
+stack begin at 7fffffffe2e8
+mem region begin at 434000
+mem size afc8000, b3fc000
+create node
+wait on x: 7fffffffe2ec, -1
+setup handler
+addr of mem_region: 0x434000
+create process
+make new node
+is master 0
+check mmap equal 434000
+try user mprotect
+rsps sent
+wait to complete
+signal received 12
+SIGUSR2
+user mprotect BEGIN at ADDR: 434000, PROT: 0
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 434000, PROT: 0, PROT read: 1
+complete
+disable from 434000 to b3fc000
+setup mem
+run server
+try connect
+JOIN REQ TO 127.0.0.1:8080
+connect 127.0.0.1:8080
+HANDSHAKE REQ TO 127.0.0.1:8080
+finish make new node
+signal received 10
+SIGUSR1
+!!!WRITE at 7fffffffe2ec, 1
+signal received 11
+SIGSEGV
+idx 10025, base: 434000, end: b3fc000, violate 1: 1
+Got SIGSEGV at address: 0x56a1510
+idx 10025, base: 434000, end: b3fc000, violate 1: 1
+requesting protection
+sending rpc... 1
+relative_page_id 526d
+READ REQ TO 127.0.0.1:8080
+received page with size 4096
+user mprotect BEGIN at ADDR: 56a1000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 56a1000, PROT: 3, PROT read: 1
+!!!WRITE at addr 56a1000
+write 0, 0, 4096, 56a1000
+got rpc response 1
+user mprotect BEGIN at ADDR: 56a1000, PROT: 1
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 56a1000, PROT: 1, PROT read: 1
+signal received 11
+SIGSEGV
+idx 10025, base: 434000, end: b3fc000, violate 1: 1
+Got SIGSEGV at address: 0x56a1510
+idx 10025, base: 434000, end: b3fc000, violate 1: 1
+requesting protection
+sending rpc... 1
+relative_page_id 526d
+WRITE REQ TO 127.0.0.1:8080
+received page with size 4096
+user mprotect BEGIN at ADDR: 56a1000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 56a1000, PROT: 3, PROT read: 1
+!!!WRITE at addr 56a1000
+write 0, 0, 4096, 56a1000
+got rpc response 1
+wait on x: 7fffffffe2ec, 1
+cpu id 568e378
+signal received 11
+SIGSEGV
+idx 10006, base: 434000, end: b3fc000, violate 1: 1
+Got SIGSEGV at address: 0x568e378
+idx 10006, base: 434000, end: b3fc000, violate 1: 1
+requesting protection
+sending rpc... 1
+relative_page_id 525a
+READ REQ TO 127.0.0.1:8080
+received page with size 4096
+user mprotect BEGIN at ADDR: 568e000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 568e000, PROT: 3, PROT read: 1
+!!!WRITE at addr 568e000
+write 0, 0, 4096, 568e000
+got rpc response 1
+user mprotect BEGIN at ADDR: 568e000, PROT: 1
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 568e000, PROT: 1, PROT read: 1
+signal received 11
+SIGSEGV
+idx 10006, base: 434000, end: b3fc000, violate 1: 1
+Got SIGSEGV at address: 0x568e378
+idx 10006, base: 434000, end: b3fc000, violate 1: 1
+requesting protection
+sending rpc... 1
+relative_page_id 525a
+WRITE REQ TO 127.0.0.1:8080
+received page with size 4096
+user mprotect BEGIN at ADDR: 568e000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 568e000, PROT: 3, PROT read: 1
+!!!WRITE at addr 568e000
+write 0, 0, 4096, 568e000
+got rpc response 1
+start dsm main 568e380
+start dsm main 434018
+cpu list addr reference 568e380
+cpu list addr 434018
+x: 1
+signal received 11
+SIGSEGV
+idx 10000, base: 434000, end: b3fc000, violate 1: 1
+Got SIGSEGV at address: 0x56881e8
+idx 10000, base: 434000, end: b3fc000, violate 1: 1
+requesting protection
+sending rpc... 1
+relative_page_id 5254
+READ REQ TO 127.0.0.1:8080
+received page with size 4096
+user mprotect BEGIN at ADDR: 5688000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 5688000, PROT: 3, PROT read: 1
+!!!WRITE at addr 5688000
+write 1, 0, 4096, 5688000
+got rpc response 1
+user mprotect BEGIN at ADDR: 5688000, PROT: 1
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 5688000, PROT: 1, PROT read: 1
+signal received 11
+SIGSEGV
+idx -11075, base: 434000, end: b3fc000, violate 1: 1
+Got SIGSEGV at address: 0x434010
+idx -11075, base: 434000, end: b3fc000, violate 1: 1
+requesting protection
+sending rpc... 1
+relative_page_id 0
+READ REQ TO 127.0.0.1:8080
+received page with size 4096
+user mprotect BEGIN at ADDR: 434000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 434000, PROT: 3, PROT read: 1
+!!!WRITE at addr 434000
+write 0, 0, 4096, 434000
+got rpc response 1
+user mprotect BEGIN at ADDR: 434000, PROT: 1
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 434000, PROT: 1, PROT read: 1
+signal received 11
+SIGSEGV
+idx -11074, base: 434000, end: b3fc000, violate 1: 1
+Got SIGSEGV at address: 0x435131
+idx -11074, base: 434000, end: b3fc000, violate 1: 1
+requesting protection
+sending rpc... 1
+relative_page_id 1
+READ REQ TO 127.0.0.1:8080
+received page with size 4096
+user mprotect BEGIN at ADDR: 435000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 435000, PROT: 3, PROT read: 1
+!!!WRITE at addr 435000
+write 0, 0, 4096, 435000
+got rpc response 1
+user mprotect BEGIN at ADDR: 435000, PROT: 1
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 435000, PROT: 1, PROT read: 1
+signal received 11
+SIGSEGV
+idx -11074, base: 434000, end: b3fc000, violate 1: 1
+Got SIGSEGV at address: 0x4351a8
+idx -11074, base: 434000, end: b3fc000, violate 1: 1
+requesting protection
+sending rpc... 1
+relative_page_id 1
+WRITE REQ TO 127.0.0.1:8080
+received page with size 4096
+user mprotect BEGIN at ADDR: 435000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 435000, PROT: 3, PROT read: 1
+!!!WRITE at addr 435000
+write 0, 0, 4096, 435000
+got rpc response 1
+signal received 11
+SIGSEGV
+idx 10006, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x568e50c
+user mprotect BEGIN at ADDR: 568e000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 568e000, PROT: 3, PROT read: 1
+signal received 11
+SIGSEGV
+idx -11075, base: 434000, end: b3fc000, violate 1: 1
+Got SIGSEGV at address: 0x434020
+idx -11075, base: 434000, end: b3fc000, violate 1: 1
+requesting protection
+sending rpc... 1
+relative_page_id 0
+WRITE REQ TO 127.0.0.1:8080
+received page with size 4096
+user mprotect BEGIN at ADDR: 434000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 434000, PROT: 3, PROT read: 1
+!!!WRITE at addr 434000
+write 0, 0, 4096, 434000
+got rpc response 1
+signal received 11
+SIGSEGV
+idx 10025, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x56a1510
+user mprotect BEGIN at ADDR: 56a1000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 56a1000, PROT: 3, PROT read: 1
+cpu: 435160
+start running thread lib
+signal received 11
+SIGSEGV
+idx 10000, base: 434000, end: b3fc000, violate 1: 1
+Got SIGSEGV at address: 0x56881e8
+idx 10000, base: 434000, end: b3fc000, violate 1: 1
+requesting protection
+sending rpc... 1
+relative_page_id 5254
+WRITE REQ TO 127.0.0.1:8080
+recieved write req 5254
+received page with size 4096
+user mprotect BEGIN at ADDR: 5688000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 5688000, PROT: 3, PROT read: 1
+!!!WRITE at addr 5688000
+write 1, 0, 4096, 5688000
+got rpc response 1
+signal received 11
+SIGSEGV
+idx 10006, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x568e370
+user mprotect BEGIN at ADDR: 568e000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 568e000, PROT: 3, PROT read: 1
+signal received 11
+SIGSEGV
+idx 10025, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x56a1510
+user mprotect BEGIN at ADDR: 56a1000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 56a1000, PROT: 3, PROT read: 1
+has next
+done has next
+ALLOCATE MAIN
+signal received 11
+SIGSEGV
+idx 10000, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x56881e8
+user mprotect BEGIN at ADDR: 5688000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 5688000, PROT: 3, PROT read: 1
+signal received 11
+SIGSEGV
+idx 10025, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x56a1510
+user mprotect BEGIN at ADDR: 56a1000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 56a1000, PROT: 3, PROT read: 1
+has next
+signal received 11
+SIGSEGV
+idx 10006, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x568e3a0
+user mprotect BEGIN at ADDR: 568e000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 568e000, PROT: 3, PROT read: 1
+done has next
+RUN AS LOCKED
+signal received 11
+SIGSEGV
+idx 10000, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x56881e8
+user mprotect BEGIN at ADDR: 5688000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 5688000, PROT: 3, PROT read: 1
+signal received 11
+SIGSEGV
+idx -11075, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x434010
+user mprotect BEGIN at ADDR: 434000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 434000, PROT: 3, PROT read: 1
+signal received 11
+SIGSEGV
+idx -11074, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x435131
+user mprotect BEGIN at ADDR: 435000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 435000, PROT: 3, PROT read: 1
+signal received 11
+SIGSEGV
+idx 10006, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x568e50c
+user mprotect BEGIN at ADDR: 568e000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 568e000, PROT: 3, PROT read: 1
+signal received 11
+SIGSEGV
+idx 10025, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x56a1510
+user mprotect BEGIN at ADDR: 56a1000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 56a1000, PROT: 3, PROT read: 1
+BEFORE RUN SCHEDULER
+signal received 11
+SIGSEGV
+idx 10000, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x56881e8
+user mprotect BEGIN at ADDR: 5688000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 5688000, PROT: 3, PROT read: 1
+signal received 11
+SIGSEGV
+idx 10025, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x56a1510
+user mprotect BEGIN at ADDR: 56a1000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 56a1000, PROT: 3, PROT read: 1
+has next
+signal received 11
+SIGSEGV
+idx 10006, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x568e3a0
+user mprotect BEGIN at ADDR: 568e000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 568e000, PROT: 3, PROT read: 1
+done has next
+RUN SCHEDULER
+signal received 11
+SIGSEGV
+idx -11074, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x435188
+user mprotect BEGIN at ADDR: 435000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 435000, PROT: 3, PROT read: 1
+RUN NEXT FORM KERNEL 568e390
+signal received 11
+SIGSEGV
+idx 10000, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x56881e8
+user mprotect BEGIN at ADDR: 5688000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 5688000, PROT: 3, PROT read: 1
+signal received 11
+SIGSEGV
+idx 10025, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x56a1510
+user mprotect BEGIN at ADDR: 56a1000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 56a1000, PROT: 3, PROT read: 1
+has next
+signal received 11
+SIGSEGV
+idx 10006, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x568e3a0
+user mprotect BEGIN at ADDR: 568e000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 568e000, PROT: 3, PROT read: 1
+done has next
+signal received 11
+SIGSEGV
+idx -11075, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x434020
+user mprotect BEGIN at ADDR: 434000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 434000, PROT: 3, PROT read: 1
+CPU SELF 434018, 7fffffffe2f0, 1, 435160
+CPU 435160
+signal received 11
+SIGSEGV
+idx -11074, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x435138
+user mprotect BEGIN at ADDR: 435000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 435000, PROT: 3, PROT read: 1
+signal received 11
+SIGSEGV
+idx 10000, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x56881e8
+user mprotect BEGIN at ADDR: 5688000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 5688000, PROT: 3, PROT read: 1
+signal received 11
+SIGSEGV
+idx -11074, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x435131
+user mprotect BEGIN at ADDR: 435000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 435000, PROT: 3, PROT read: 1
+signal received 11
+SIGSEGV
+idx -11075, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x434d51
+user mprotect BEGIN at ADDR: 434000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 434000, PROT: 3, PROT read: 1
+signal received 11
+SIGSEGV
+idx 10006, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x568e50c
+user mprotect BEGIN at ADDR: 568e000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 568e000, PROT: 3, PROT read: 1
+signal received 11
+SIGSEGV
+idx 10025, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x56a1510
+user mprotect BEGIN at ADDR: 56a1000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 56a1000, PROT: 3, PROT read: 1
+has next
+done has next
+CPU SELF 434018, 7fffffffe2f0, 1, 435160
+SWAP 4351b8, 434d58
+CPU SELF 434018, 7fffffffe2f0, 1, 435160
+CPU SELF 434018, 7fffffffe2f0, 1, 435160
+bug? 435160
+CPU SELF 434018, 7fffffffe2f0, 1, 435160
+CPU SELF 434018, 7fffffffe2f0, 1, 435160
+ctx_switch 435180, 435178
+CPU SELF 434018, 7fffffffe2f0, 1, 435160
+CPU SELF 434018, 7fffffffe2f0, 1, 435160
+4351b8, 434d58
+signal received 11
+SIGSEGV
+idx 9499, base: 434000, end: b3fc000, violate 1: 1
+Got SIGSEGV at address: 0x5493fe0
+idx 9499, base: 434000, end: b3fc000, violate 1: 1
+requesting protection
+sending rpc... 1
+relative_page_id 505f
+READ REQ TO 127.0.0.1:8080
+received page with size 4096
+user mprotect BEGIN at ADDR: 5493000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 5493000, PROT: 3, PROT read: 1
+!!!WRITE at addr 5493000
+write 0, 0, 4096, 5493000
+got rpc response 1
+user mprotect BEGIN at ADDR: 5493000, PROT: 1
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 5493000, PROT: 1, PROT read: 1
+signal received 11
+SIGSEGV
+idx 9499, base: 434000, end: b3fc000, violate 1: 1
+Got SIGSEGV at address: 0x5493fe0
+idx 9499, base: 434000, end: b3fc000, violate 1: 1
+requesting protection
+sending rpc... 1
+relative_page_id 505f
+WRITE REQ TO 127.0.0.1:8080
+try user mprotect
+rsps sent
+user mprotect BEGIN at ADDR: 5688000, PROT: 1
+wait to complete
+continue
+user mprotect recv sig: 12
+user mprotect FINISHED at ADDR: 5688000, PROT: 1, PROT read: 1
+complete
+res 1, 0, 5688000
+setup result page
+received page with size 4096
+user mprotect BEGIN at ADDR: 5493000, PROT: 3
+continue
+user mprotect recv sig: 12
+user mprotect FINISHED at ADDR: 5493000, PROT: 3, PROT read: 1
+!!!WRITE at addr 5493000
+write 0, 0, 4096, 5493000
+got rpc response 1
+signal received 12
+SIGUSR2
+CPU SELF 434018, 7fffffffe2f0, 1, 435160
+run wrapper
+start consumer
+signal received 11
+SIGSEGV
+idx 9499, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x5493f08
+user mprotect BEGIN at ADDR: 5493000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 5493000, PROT: 3, PROT read: 1
+signal received 11
+SIGSEGV
+idx 10000, base: 434000, end: b3fc000, violate 1: 1
+Got SIGSEGV at address: 0x5688180
+idx 10000, base: 434000, end: b3fc000, violate 1: 1
+requesting protection
+sending rpc... 1
+relative_page_id 5254
+WRITE REQ TO 127.0.0.1:8080
+recieved write req 5254
+received page with size 4096
+user mprotect BEGIN at ADDR: 5688000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 5688000, PROT: 3, PROT read: 1
+!!!WRITE at addr 5688000
+write 1, 0, 4096, 5688000
+got rpc response 1
+signal received 11
+SIGSEGV
+idx 10006, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x568e380
+user mprotect BEGIN at ADDR: 568e000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 568e000, PROT: 3, PROT read: 1
+signal received 11
+SIGSEGV
+idx -11075, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x434020
+user mprotect BEGIN at ADDR: 434000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 434000, PROT: 3, PROT read: 1
+signal received 11
+SIGSEGV
+idx 10025, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x56a1510
+user mprotect BEGIN at ADDR: 56a1000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 56a1000, PROT: 3, PROT read: 1
+CPU SELF 434018, 7fffffffe2f0, 1, 435160
+signal received 11
+SIGSEGV
+idx -11074, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x435180
+user mprotect BEGIN at ADDR: 435000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 435000, PROT: 3, PROT read: 1
+signal received 11
+SIGSEGV
+idx 10002, base: 434000, end: b3fc000, violate 1: 1
+Got SIGSEGV at address: 0x568a370
+idx 10002, base: 434000, end: b3fc000, violate 1: 1
+requesting protection
+sending rpc... 1
+relative_page_id 5256
+READ REQ TO 127.0.0.1:8080
+received page with size 4096
+user mprotect BEGIN at ADDR: 568a000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 568a000, PROT: 3, PROT read: 1
+!!!WRITE at addr 568a000
+write 0, 0, 4096, 568a000
+got rpc response 1
+user mprotect BEGIN at ADDR: 568a000, PROT: 1
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 568a000, PROT: 1, PROT read: 1
+signal received 11
+SIGSEGV
+idx 9499, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x5493ee8
+user mprotect BEGIN at ADDR: 5493000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 5493000, PROT: 3, PROT read: 1
+signal received 11
+SIGSEGV
+idx 10000, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x5688178
+user mprotect BEGIN at ADDR: 5688000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 5688000, PROT: 3, PROT read: 1
+signal received 11
+SIGSEGV
+idx 10006, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x568e380
+user mprotect BEGIN at ADDR: 568e000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 568e000, PROT: 3, PROT read: 1
+signal received 11
+SIGSEGV
+idx -11075, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x434020
+user mprotect BEGIN at ADDR: 434000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 434000, PROT: 3, PROT read: 1
+signal received 11
+SIGSEGV
+idx 10025, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x56a1510
+user mprotect BEGIN at ADDR: 56a1000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 56a1000, PROT: 3, PROT read: 1
+CPU SELF 434018, 7fffffffe2f0, 1, 435160
+signal received 11
+SIGSEGV
+idx -11074, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x435180
+user mprotect BEGIN at ADDR: 435000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 435000, PROT: 3, PROT read: 1
+signal received 11
+SIGSEGV
+idx 10002, base: 434000, end: b3fc000, violate 1: 1
+Got SIGSEGV at address: 0x568a370
+idx 10002, base: 434000, end: b3fc000, violate 1: 1
+requesting protection
+sending rpc... 1
+relative_page_id 5256
+WRITE REQ TO 127.0.0.1:8080
+try user mprotect
+rsps sent
+user mprotect BEGIN at ADDR: 5688000, PROT: 1
+wait to complete
+continue
+user mprotect recv sig: 12
+user mprotect FINISHED at ADDR: 5688000, PROT: 1, PROT read: 1
+complete
+res 1, 0, 5688000
+setup result page
+received page with size 4096
+user mprotect BEGIN at ADDR: 568a000, PROT: 3
+continue
+user mprotect recv sig: 12
+user mprotect FINISHED at ADDR: 568a000, PROT: 3, PROT read: 1
+!!!WRITE at addr 568a000
+write 0, 0, 4096, 568a000
+got rpc response 1
+signal received 12
+SIGUSR2
+signal received 11
+SIGSEGV
+idx 10000, base: 434000, end: b3fc000, violate 1: 1
+Got SIGSEGV at address: 0x5688178
+idx 10000, base: 434000, end: b3fc000, violate 1: 1
+requesting protection
+sending rpc... 1
+relative_page_id 5254
+WRITE REQ TO 127.0.0.1:8080
+recieved write req 5254
+received page with size 4096
+user mprotect BEGIN at ADDR: 5688000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 5688000, PROT: 3, PROT read: 1
+!!!WRITE at addr 5688000
+write 1, 0, 4096, 5688000
+got rpc response 1
+has next
+done has next
+CPU SELF 434018, 7fffffffe2f0, 1, 435160
+signal received 11
+SIGSEGV
+idx 9499, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x5493dc8
+user mprotect BEGIN at ADDR: 5493000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 5493000, PROT: 3, PROT read: 1
+signal received 11
+SIGSEGV
+idx -11075, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x434010
+user mprotect BEGIN at ADDR: 434000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 434000, PROT: 3, PROT read: 1
+signal received 11
+SIGSEGV
+idx -11074, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x435131
+user mprotect BEGIN at ADDR: 435000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 435000, PROT: 3, PROT read: 1
+signal received 11
+SIGSEGV
+idx 10006, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x568e50c
+user mprotect BEGIN at ADDR: 568e000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 568e000, PROT: 3, PROT read: 1
+signal received 11
+SIGSEGV
+idx 10000, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x56881a0
+user mprotect BEGIN at ADDR: 5688000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 5688000, PROT: 3, PROT read: 1
+signal received 11
+SIGSEGV
+idx 10025, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x56a1510
+user mprotect BEGIN at ADDR: 56a1000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 56a1000, PROT: 3, PROT read: 1
+CPU SELF 434018, 7fffffffe2f0, 1, 435160
+CPU SELF 434018, 7fffffffe2f0, 1, 435160
+CPU SELF 434018, 7fffffffe2f0, 1, 435160
+bug? 435160
+CPU SELF 434018, 7fffffffe2f0, 1, 435160
+CPU SELF 434018, 7fffffffe2f0, 1, 435160
+ctx_switch 435180, 435178
+CPU SELF 434018, 7fffffffe2f0, 1, 435160
+CPU SELF 434018, 7fffffffe2f0, 1, 435160
+434d58, 4351b8
+CPU SELF 434018, 7fffffffe2f0, 1, 435160
+RUN MAIN CTX
+RUN THREAD HANDLER
+has next
+done has next
+EXIT
+signal received 11
+SIGSEGV
+idx 10007, base: 434000, end: b3fc000, violate 1: 1
+Got SIGSEGV at address: 0x568f04e
+idx 10007, base: 434000, end: b3fc000, violate 1: 1
+requesting protection
+sending rpc... 1
+relative_page_id 525b
+READ REQ TO 127.0.0.1:8080
+received page with size 4096
+user mprotect BEGIN at ADDR: 568f000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 568f000, PROT: 3, PROT read: 1
+!!!WRITE at addr 568f000
+write 0, 0, 4096, 568f000
+got rpc response 1
+user mprotect BEGIN at ADDR: 568f000, PROT: 1
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 568f000, PROT: 1, PROT read: 1
+signal received 11
+SIGSEGV
+idx 10007, base: 434000, end: b3fc000, violate 1: 1
+Got SIGSEGV at address: 0x568f188
+idx 10007, base: 434000, end: b3fc000, violate 1: 1
+requesting protection
+sending rpc... 1
+relative_page_id 525b
+WRITE REQ TO 127.0.0.1:8080
+try user mprotect
+rsps sent
+user mprotect BEGIN at ADDR: 5688000, PROT: 1
+wait to complete
+continue
+user mprotect recv sig: 12
+user mprotect FINISHED at ADDR: 5688000, PROT: 1, PROT read: 1
+complete
+res 1, 0, 5688000
+setup result page
+received page with size 4096
+user mprotect BEGIN at ADDR: 568f000, PROT: 3
+continue
+user mprotect recv sig: 12
+user mprotect FINISHED at ADDR: 568f000, PROT: 3, PROT read: 1
+!!!WRITE at addr 568f000
+write 0, 0, 4096, 568f000
+got rpc response 1
+signal received 12
+SIGUSR2
+signal received 11
+SIGSEGV
+idx 10000, base: 434000, end: b3fc000, violate 1: 1
+Got SIGSEGV at address: 0x5688190
+idx 10000, base: 434000, end: b3fc000, violate 1: 1
+requesting protection
+sending rpc... 1
+relative_page_id 5254
+WRITE REQ TO 127.0.0.1:8080
+recieved write req 5254
+received page with size 4096
+user mprotect BEGIN at ADDR: 5688000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 5688000, PROT: 3, PROT read: 1
+!!!WRITE at addr 5688000
+write 1, 0, 4096, 5688000
+got rpc response 1
+signal received 11
+SIGSEGV
+idx -11074, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x435131
+user mprotect BEGIN at ADDR: 435000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 435000, PROT: 3, PROT read: 1
+signal received 11
+SIGSEGV
+idx -11075, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x434d51
+user mprotect BEGIN at ADDR: 434000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 434000, PROT: 3, PROT read: 1
+signal received 11
+SIGSEGV
+idx 10006, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x568e50c
+user mprotect BEGIN at ADDR: 568e000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 568e000, PROT: 3, PROT read: 1
+signal received 11
+SIGSEGV
+idx 10000, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x56881a0
+user mprotect BEGIN at ADDR: 5688000, PROT: 3
+continue
+user mprotect recv sig: 11
+user mprotect FINISHED at ADDR: 5688000, PROT: 3, PROT read: 1
+signal received 11
+SIGSEGV
+idx 10000, base: 434000, end: b3fc000, violate 1: 1
+owned: 0x56881a0
+user mprotect BEGIN at ADDR: 5688000, PROT: 3
+continue
+user mprotect recv sig: -8608
+user mprotect FINISHED at ADDR: 5688000, PROT: 3, PROT read: 1
+ptrace: No such process

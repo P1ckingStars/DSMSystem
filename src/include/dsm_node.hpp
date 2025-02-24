@@ -49,6 +49,7 @@ class DSMNode {
     char *base;
     pid_t pid;
     pthread_mutex_t mu;
+    pthread_mutex_t wr_mu;
     NodeAddr m_addr;
     pthread_t tid;
     vector<NodeAddr> conn;
