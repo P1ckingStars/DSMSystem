@@ -98,9 +98,9 @@ void user_mprotect(pid_t pid, void *addr, size_t size, int prot) {
   regs.rdx = prot;
   regs.rip = (intptr_t)injection;
   int err = ptrace(PTRACE_SETREGS, pid, NULL, &regs);
-  if (err != 0) {
-    perror("ptrace");
-  }
+ //if (err != 0) {
+ //  perror("ptrace");
+ //}
   ptrace(PTRACE_CONT, pid, NULL, NULL);
   DEBUG_STMT(printf("continue\n"));
   wait(NULL);

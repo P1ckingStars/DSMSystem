@@ -7,9 +7,9 @@
 	.type	_Z9injectionv, @function
 _Z9injectionv:
     syscall
-    leaq	.LC0(%rip), %rax
-	movq	%rax, %rdi
-	call	puts@PLT
+    #leaq	.LC0(%rip), %rax
+	#movq	%rax, %rdi
+	#call	puts@PLT
 	movq	$0, %rax
 	movl	(%rax), %eax
     

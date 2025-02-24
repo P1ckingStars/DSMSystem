@@ -1,5 +1,6 @@
 #include "threadlib/mutex.h"
 #include "threadlib/cpu.h"
+#include <cstdint>
 #include <sys/ucontext.h>
 #include <ucontext.h>
 #include <stdexcept>
@@ -31,7 +32,7 @@ void mutex::privileged_lock(){
     }
     isLocked = INUSE;
     // assign lock's owner thread id
-    owner_id = tid_map[cpu::self()->currContext];
+    owner_id = tid_map[(intptr_t)cpu::self()->currContext];
 }
 
 /**
@@ -39,7 +40,7 @@ void mutex::privileged_lock(){
  * otherwise assign the lock to next thread that waits on the lock.
 */
 void mutex::privileged_unlock(){
-    if (owner_id != tid_map[cpu::self()->currContext]){
+    if (owner_id != tid_map[(intptr_t)cpu::self()->currContext]){
         throw std::runtime_error("can't unlock other's lock");
     }
     owner_id = 0;

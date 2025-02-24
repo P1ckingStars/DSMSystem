@@ -57,7 +57,7 @@ ssize_t inline remote_mempage_write(pid_t pid, char *local, char *remote) {
   liov[0].iov_len = PAGE_SIZE;
   riov[0].iov_base = remote;
   riov[0].iov_len = PAGE_SIZE;
-  printf("!!!WRITE at addr %lx\n", riov[0].iov_base);
+  DEBUG_STMT(printf("!!!WRITE at addr %lx\n", riov[0].iov_base));
   return process_vm_writev(pid, liov, 1, riov, 1, 0);
 }
 ssize_t inline remote_mempage_read(pid_t pid, char *local, char *remote) {
@@ -195,10 +195,11 @@ char *dsm::dsm_init_node(pid_t child, NodeAddr self, NodeAddr dst, char *region,
 
 bool DSMNode::is_in_range(char *addr) {
   int idx = ((intptr_t)addr - (intptr_t)STACK_START) / PAGE_SIZE;
-  printf(
-      "idx %d, base: %lx, end: %lx, violate 1: %d\n", idx, (intptr_t)this->base,
-      ((intptr_t)this->base) + PAGE_SIZE * this->page_info.size(),
-      !(idx >= 0 && idx < TOTAL_POSSIBLE_STACKS && idx % PAGES_PER_STACK == 0));
+  DEBUG_STMT(printf("idx %d, base: %lx, end: %lx, violate 1: %d\n", idx,
+                    (intptr_t)this->base,
+                    ((intptr_t)this->base) + PAGE_SIZE * this->page_info.size(),
+                    !(idx >= 0 && idx < TOTAL_POSSIBLE_STACKS &&
+                      idx % PAGES_PER_STACK == 0)));
 
   return !(idx >= 0 && idx < TOTAL_POSSIBLE_STACKS &&
            idx % PAGES_PER_STACK == 0) &&
@@ -252,15 +253,16 @@ page DSMNode::response_write(uint64_t relative_page_id) {
       OWNERSHIP(this->page_info[relative_page_id])) {
     this->page_info[relative_page_id] = DSM_PROT_READ;
     UNLOCK(this->mu)
-    user_mprotect_req(this->pid, relative_page_id_to_addr(relative_page_id),
-                      PAGE_SIZE, PROT_READ);
-    this_thread::sleep_for(std::chrono::milliseconds(random() % 100));
+    auto addr = relative_page_id_to_addr(relative_page_id);
     res.resize(PAGE_SIZE);
-    remote_mempage_read(this->pid, &res[0],
-                        relative_page_id_to_addr(relative_page_id));
-
-    DEBUG_STMT(printf("res %d, %d, %lx\n", res[0], res[1],
-                      (intptr_t)relative_page_id_to_addr(relative_page_id)));
+    this_thread::sleep_for(std::chrono::milliseconds(random() % 100));
+    user_mprotect_req(this->pid, addr, PAGE_SIZE, PROT_READ);
+    remote_mempage_read(this->pid, &res[0], addr);
+    DEBUG_STMT(if ((intptr_t)addr == 0x568c000) {
+      printf("response write with cpu list %lx\n", *(intptr_t *)&res[0x3c0]);
+      sleep(10);
+    });
+    DEBUG_STMT(printf("res %d, %d, %lx\n", res[0], res[1], (intptr_t)addr));
     DEBUG_STMT(printf("setup result page\n"));
   } else {
     UNLOCK(this->mu)
@@ -287,8 +289,12 @@ page DSMNode::response_read(uint64_t relative_page_id) {
     this->page_info[relative_page_id] = DSM_PROT_OWNED;
 #endif
     res.resize(PAGE_SIZE);
-    remote_mempage_read(this->pid, &res[0],
-                        relative_page_id_to_addr(relative_page_id));
+    auto addr = relative_page_id_to_addr(relative_page_id);
+    this_thread::sleep_for(std::chrono::milliseconds(random() % 100));
+    user_mprotect_req(this->pid, addr, PAGE_SIZE, PROT_READ);
+    remote_mempage_read(this->pid, &res[0], addr);
+    // remote_mempage_read(this->pid, &res[0],
+    //                     relative_page_id_to_addr(relative_page_id));
     DEBUG_STMT(printf("master respond done\n"));
   }
   UNLOCK(this->mu)

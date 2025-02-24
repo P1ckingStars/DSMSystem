@@ -16,7 +16,7 @@
 
 // a hashmap that stores ucontext_t pointer and thread id,
 // which helps deallocate ucontext_t when it unnormally goes out of scope
-std::unordered_map<ucontext_t *, uint64_t> tid_map;
+FixedHashTable tid_map; //TODO: Replace std hash map
 
 /**
  * this time interrupt function only calls yield
@@ -32,7 +32,7 @@ void ipc_interrupt() {}
 */
 void cpu::thread_handler() {
     if (this->status == END_STATE){
-        tid_map.erase(this->garbageCtx);
+        tid_map.remove((intptr_t)this->garbageCtx);
         pool.push(stackptr);
         dealloc(this->garbageCtx);
         dealloc(this->wait);

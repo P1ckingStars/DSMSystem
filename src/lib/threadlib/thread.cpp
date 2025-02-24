@@ -87,7 +87,7 @@ thread::thread(thread_startfunc_t func, void* arg) {
 
     LOCK
     try {
-        tid_map[ucontext_ptr] = next_tid++;
+        tid_map[(intptr_t)ucontext_ptr] = next_tid++;
         DEBUG_STMT(printf("!!!ADD NEW THREAD WITH STACK %lx\n", (intptr_t)ucontext_ptr->uc_stack.ss_sp));
         SchedulerState::scheduler.putInReady(ucontext_ptr);
         DEBUG_STMT(printf("!!!ADD NEW THREAD WITH STACK %lx\n", (intptr_t)ucontext_ptr->uc_stack.ss_sp));

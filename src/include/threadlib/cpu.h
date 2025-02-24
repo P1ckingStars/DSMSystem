@@ -22,6 +22,7 @@
 #define CPU_HPP
 
 #include <atomic>
+#include "util/fixed_hashmap.hpp"
 #include "threadlib/thread.h"
 #include <queue>
 #include <unordered_map>
@@ -165,7 +166,7 @@ public:
 
 // a hashmap that stores ucontext_t pointer and thread id,
 // which helps deallocate ucontext_t when it unnormally goes out of scope
-extern std::unordered_map<ucontext_t *, uint64_t> tid_map;
+extern FixedHashTable tid_map;
 
 /*
  * assert_interrupts_disabled() and assert_interrupts_enabled() can be used

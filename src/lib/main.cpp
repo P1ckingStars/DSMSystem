@@ -26,7 +26,6 @@ using namespace dsm;
 int dsm_main(char *mem_region, size_t length, int argc, char *argv[]);
 void dsm_main1(void *args);
 
-
 extern char __bss_start;
 
 int main(int argc, char *argv[]) {
@@ -34,8 +33,7 @@ int main(int argc, char *argv[]) {
   printf("stack begin at %lx\n", (intptr_t)&a);
   printf("mem region begin at %lx\n", (intptr_t)&__bss_start);
   char *mem_region = (char *)&__bss_start;
-  char *mem_end =
-      (char *)((intptr_t)&__bss_start + 45000 * PAGE_SIZE);
+  char *mem_end = (char *)((intptr_t)&__bss_start + 45000 * PAGE_SIZE);
   brk(mem_end);
   pid_t child;
   size_t size = mem_end - mem_region;
@@ -57,6 +55,7 @@ int main(int argc, char *argv[]) {
     int local_cpuid = x;
     printf("cpu id %lx\n", (intptr_t)&cpuid);
     cpuid = &local_cpuid;
+    printf("start dsm main %lx\n", (intptr_t)&cpu_list);
     printf("start dsm main %lx\n", (intptr_t)cpu_list);
     if (is_master) {
       cpu_list = (cpu **)alloc(sizeof(cpu *) * NUM_NODE);

@@ -4,6 +4,7 @@
 #include "threadlib/cv.h"
 #include "threadlib/mutex.h"
 #include "threadlib/thread.h"
+#include <cstdio>
 #include <iostream>
 
 using std::cout;
@@ -19,6 +20,7 @@ bool x = 1;
 void producer(void *arg) {
   while (x) {
     dsm::sync();
+    thread::yield();
   }
   for (int i = 0; i < 50; ++i) {
     bufferMutex.lock();
@@ -33,6 +35,7 @@ void producer(void *arg) {
 }
 
 void consumer(void *arg) {
+  printf("start consumer\n");
   x = 0;
   while (true) {
     bufferMutex.lock();

@@ -144,6 +144,8 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/mutex.cpp.o: \
  /home/arthur/Documents/repos/dsm_system/src/include/threadlib/cpu.h \
  /home/arthur/Documents/repos/dsm_system/src/include/dsm_lock.hpp \
  /usr/include/c++/14.2.1/cstddef /usr/include/c++/14.2.1/atomic \
+ /home/arthur/Documents/repos/dsm_system/src/include/util/fixed_hashmap.hpp \
+ /usr/include/c++/14.2.1/cstdint \
  /home/arthur/Documents/repos/dsm_system/src/include/threadlib/thread.h \
  /home/arthur/Documents/repos/dsm_system/src/include/debug.hpp \
  /home/arthur/Documents/repos/dsm_system/src/include/config.hpp \
@@ -163,5 +165,4 @@ src/lib/CMakeFiles/DSMLib.dir/threadlib/mutex.cpp.o: \
  /usr/include/c++/14.2.1/bits/hashtable_policy.h \
  /usr/include/c++/14.2.1/bits/enable_special_members.h \
  /usr/include/c++/14.2.1/bits/erase_if.h \
- /home/arthur/Documents/repos/dsm_system/src/include/threadlib/schedulerState.h \
- /usr/include/c++/14.2.1/cstdint
+ /home/arthur/Documents/repos/dsm_system/src/include/threadlib/schedulerState.h
