@@ -44,9 +44,14 @@ public:
 
 extern ProcessState process_state_info;
 
+ssize_t remote_mempage_read(pid_t pid, char *local, char *remote);
+ssize_t remote_mempage_write(pid_t pid, char *local, char *remote);
 void user_mprotect_init();
-void user_mprotect_req(pid_t pid, void *addr, size_t size, int prot);
+void user_mprotect_req(pid_t pid, void *addr, size_t size, int prot, bool read_page_flag, char * page);
 void user_mprotect_respond();
-void user_mprotect(pid_t pid, void *addr, size_t size, int prot);
+void user_mprotect(pid_t pid, void *addr, size_t size, int prot, bool read_page_flag, char *page);
+inline void user_mprotect(pid_t pid, void *addr, size_t size, int prot) {
+    user_mprotect(pid, addr, size, prot, 0, 0);
+}
 
 #endif

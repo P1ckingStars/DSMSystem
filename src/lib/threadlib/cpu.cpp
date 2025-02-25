@@ -105,8 +105,6 @@ void cpu::run(thread_startfunc_t func, void* arg) {
                 DEBUG_STMT(printf("EXIT\n"));
                 exit(-1);
             }
-                DEBUG_STMT(printf("EXIT\n"));
-                exit(-1);
           // LOCK
           // // push self back on the cpu queue
           // cpu::cpus.push(this);

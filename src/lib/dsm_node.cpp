@@ -50,39 +50,10 @@ using namespace dsm;
 
 static DSMNode *dsm_singleton;
 
-ssize_t inline remote_mempage_write(pid_t pid, char *local, char *remote) {
-  struct iovec liov[1];
-  struct iovec riov[1];
-  liov[0].iov_base = local;
-  liov[0].iov_len = PAGE_SIZE;
-  riov[0].iov_base = remote;
-  riov[0].iov_len = PAGE_SIZE;
-  DEBUG_STMT(printf("!!!WRITE at addr %lx\n", riov[0].iov_base));
-  int res = process_vm_writev(pid, liov, 1, riov, 1, 0);
-  if (res == -1) {
-    printf("ERROR when vm write %lx\n", (intptr_t)remote);
-    exit(-1);
-  }
-  return res;
-}
-ssize_t inline remote_mempage_read(pid_t pid, char *local, char *remote) {
-  struct iovec liov[1];
-  struct iovec riov[1];
-  liov[0].iov_base = local;
-  liov[0].iov_len = PAGE_SIZE;
-  riov[0].iov_base = remote;
-  riov[0].iov_len = PAGE_SIZE;
-  int res = process_vm_readv(pid, liov, 1, riov, 1, 0);
-  if (res == -1) {
-    printf("ERROR when vm read %lx\n", (intptr_t)remote);
-    exit(-1);
-  }
-  return res;
-}
-
 static struct sigaction old_sa;
 
 static void handler(int sig, siginfo_t *si, void *unused) {
+  //printf("RUN handler at address %lx\n", (intptr_t)si->si_addr);
   if (!dsm_singleton->is_in_range((char *)si->si_addr)) {
     printf("Not in range: 0x%lx\n", (long)si->si_addr);
     exit(-1);
@@ -100,8 +71,10 @@ static void handler(int sig, siginfo_t *si, void *unused) {
     old_sa.sa_sigaction(sig, si, unused);
   }
   if (is_write) {
+    printf("GRANT write at address %lx\n", (intptr_t)si->si_addr);
     dsm_singleton->grant_write((char *)si->si_addr);
   } else {
+    printf("GRANT read at address %lx\n", (intptr_t)si->si_addr);
     dsm_singleton->grant_read((char *)si->si_addr);
   }
 }
@@ -267,14 +240,8 @@ page DSMNode::response_write(uint64_t relative_page_id) {
     auto addr = relative_page_id_to_addr(relative_page_id);
     res.resize(PAGE_SIZE);
     this_thread::sleep_for(std::chrono::milliseconds(random() % 100));
-    LOCK(this->wr_mu)
-    user_mprotect_req(this->pid, addr, PAGE_SIZE, PROT_READ);
-    remote_mempage_read(this->pid, &res[0], addr);
-    UNLOCK(this->wr_mu)
-    DEBUG_STMT(if ((intptr_t)addr == 0x568c000) {
-      printf("response write with cpu list %lx\n", *(intptr_t *)&res[0x3c0]);
-      sleep(10);
-    });
+    user_mprotect_req(this->pid, addr, PAGE_SIZE, PROT_READ, true, &res[0]);
+    // remote_mempage_read(this->pid, &res[0], addr); merged into previous call
     DEBUG_STMT(printf("res %d, %d, %lx\n", res[0], res[1], (intptr_t)addr));
     DEBUG_STMT(printf("setup result page\n"));
   } else {
@@ -304,15 +271,15 @@ page DSMNode::response_read(uint64_t relative_page_id) {
     res.resize(PAGE_SIZE);
     auto addr = relative_page_id_to_addr(relative_page_id);
     this_thread::sleep_for(std::chrono::milliseconds(random() % 100));
-    LOCK(this->wr_mu)
     user_mprotect_req(this->pid, addr, PAGE_SIZE,
                       OWNERSHIP(this->page_info[relative_page_id])
                           ? PROT_READ | PROT_WRITE
-                          : PROT_READ);
-    remote_mempage_read(this->pid, &res[0], addr);
-    UNLOCK(this->wr_mu)
-    // remote_mempage_read(this->pid, &res[0],
-    //                     relative_page_id_to_addr(relative_page_id));
+                          : PROT_READ,
+                      true, &res[0]);
+    // remote_mempage_read(this->pid, &res[0], addr); //merged into previous
+    // call
+    //  remote_mempage_read(this->pid, &res[0],
+    //                      relative_page_id_to_addr(relative_page_id));
     DEBUG_STMT(printf("master respond done\n"));
   }
   UNLOCK(this->mu)
@@ -506,7 +473,7 @@ DSMNode::DSMNode(NodeAddr m_addr, void *_base, size_t _len, bool is_master,
   DEBUG_STMT(printf("check mmap equal %lx\n", (intptr_t)this->base));
   ASSERT_PERROR(this->base);
   if (!is_master) {
-    user_mprotect_req(pid, _base, _len, PROT_NONE);
+    user_mprotect_req(pid, _base, _len, PROT_NONE, 0, 0);
     DEBUG_STMT(printf("disable from %lx to %lx\n", (intptr_t)this->base,
                       (intptr_t)this->base + _len));
   }

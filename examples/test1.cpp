@@ -4,8 +4,10 @@
 #include "threadlib/cv.h"
 #include "threadlib/mutex.h"
 #include "threadlib/thread.h"
+#include <cstdint>
 #include <cstdio>
 #include <iostream>
+#include <unistd.h>
 
 using std::cout;
 using std::endl;
@@ -20,9 +22,14 @@ bool x = 1;
 void producer(void *arg) {
   while (x) {
     dsm::sync();
+    printf("x %lx has been set to %d\n", (intptr_t)&x, x);
+    sleep(1);
   }
+  sleep(1);
   for (int i = 0; i < 50; ++i) {
+    cout << "lock status: " << bufferMutex.status() << endl;
     bufferMutex.lock();
+    cout << "Produced: " << i << endl;
     while (buffer.size() == bufferSize) {
       bufferNotFull.wait(bufferMutex);
     }
@@ -36,9 +43,11 @@ void producer(void *arg) {
 void consumer(void *arg) {
   printf("start consumer\n");
   x = 0;
+  printf("x %lx has been set to %d\n", (intptr_t)&x, x);
   while (true) {
     bufferMutex.lock();
     while (buffer.isEmpty()) {
+      printf("wait on mutex %lx\n", (intptr_t)&bufferMutex);
       bufferNotEmpty.wait(bufferMutex);
     }
     int item = buffer.front();

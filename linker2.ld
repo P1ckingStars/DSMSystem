@@ -156,6 +156,7 @@ SECTIONS
   .got            : { *(.got) *(.igot) }
   . = DATA_SEGMENT_RELRO_END (SIZEOF (.got.plt) >= 24 ? 24 : 0, .);
   .got.plt        : { *(.got.plt) *(.igot.plt) }
+  
   . = ALIGN(ALIGNOF(NEXT_SECTION));
   .bss            : ALIGN(4096)
   {
@@ -173,7 +174,7 @@ SECTIONS
       pad the .data section.  */
    . = ALIGN(. != 0 ? 64 / 8 : 1);
   }
-  .data           :
+    .data           :
   {
     *(.data .data.* .gnu.linkonce.d.*)
     SORT(CONSTRUCTORS)

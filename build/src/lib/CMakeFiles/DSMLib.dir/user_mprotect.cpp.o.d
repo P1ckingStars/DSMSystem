@@ -59,6 +59,7 @@ src/lib/CMakeFiles/DSMLib.dir/user_mprotect.cpp.o: \
  /usr/include/bits/pthread_stack_min-dynamic.h \
  /home/arthur/Documents/repos/dsm_system/src/include/debug.hpp \
  /home/arthur/Documents/repos/dsm_system/src/include/config.hpp \
+ /home/arthur/Documents/repos/dsm_system/src/include/macros.hpp \
  /usr/include/c++/14.2.1/csignal /usr/include/signal.h \
  /usr/include/bits/signum-generic.h /usr/include/bits/signum-arch.h \
  /usr/include/bits/types/sig_atomic_t.h \
