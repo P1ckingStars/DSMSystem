@@ -17,6 +17,11 @@ typedef uint64_t page_id_t;
 namespace dsm {
 // init seg tree
 // setup handler
+//
+
+struct private_region {
+    int x;
+};
 
 struct NodeAddr {
     string ip;

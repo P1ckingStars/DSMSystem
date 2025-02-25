@@ -27,6 +27,7 @@ int dsm_main(char *mem_region, size_t length, int argc, char *argv[]);
 void dsm_main1(void *args);
 
 extern char __bss_start;
+extern int __private_region_start;
 
 int main(int argc, char *argv[]) {
   int a;
