@@ -53,7 +53,7 @@ static DSMNode *dsm_singleton;
 static struct sigaction old_sa;
 
 static void handler(int sig, siginfo_t *si, void *unused) {
-  //printf("RUN handler at address %lx\n", (intptr_t)si->si_addr);
+  DEBUG_STMT(printf("This %lx RUN handler at address %lx\n", (intptr_t)dsm_singleton, (intptr_t)si->si_addr));
   if (!dsm_singleton->is_in_range((char *)si->si_addr)) {
     printf("Not in range: 0x%lx\n", (long)si->si_addr);
     exit(-1);
@@ -71,10 +71,10 @@ static void handler(int sig, siginfo_t *si, void *unused) {
     old_sa.sa_sigaction(sig, si, unused);
   }
   if (is_write) {
-    printf("GRANT write at address %lx\n", (intptr_t)si->si_addr);
+    DEBUG_STMT(printf("GRANT write at address %lx, %ld\n", (intptr_t)si->si_addr, std::time(0)));
     dsm_singleton->grant_write((char *)si->si_addr);
   } else {
-    printf("GRANT read at address %lx\n", (intptr_t)si->si_addr);
+    DEBUG_STMT(printf("GRANT read at address %lx, %ld\n", (intptr_t)si->si_addr, std::time(0)));
     dsm_singleton->grant_read((char *)si->si_addr);
   }
 }

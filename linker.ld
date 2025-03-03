@@ -157,11 +157,10 @@ SECTIONS
   . = DATA_SEGMENT_RELRO_END (SIZEOF (.got.plt) >= 24 ? 24 : 0, .);
   .got.plt        : { *(.got.plt) *(.igot.plt) }
   . = ALIGN(ALIGNOF(NEXT_SECTION));
-  __private_region_start = .;
-  . = __private_region_start + 4096;
-  __private_region_end = .;
   .bss            : ALIGN(4096)
   {
+    __private_region_start = .;
+    . = __private_region_start + 4096;
     __bss_start = .;
     . = __bss_start + 4096 * 10000;
     __stack_start = .;

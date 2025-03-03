@@ -1,6 +1,7 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <cstdio>
 #include <cwctype>
 #include <sched.h>
 #include <sys/mman.h>
@@ -15,6 +16,7 @@ extern char __bss_start;
 
 void dsm::sync() {
     mprotect(&__bss_start, total_page * PAGE_SIZE, PROT_NONE);
+    char a = __bss_start;
 }
 
 inline bool test_and_set(int * mu) {

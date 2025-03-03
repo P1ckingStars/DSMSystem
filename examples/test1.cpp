@@ -16,23 +16,28 @@ mutex bufferMutex;
 cv bufferNotEmpty;
 cv bufferNotFull;
 Queue<int> buffer;
-const size_t bufferSize = 10;
+const size_t bufferSize = 1;
 bool x = 1;
 
 void producer(void *arg) {
+  char stack_top = 0;
+  printf("PRODUCER STACK %lx\n", (intptr_t)&stack_top);
   while (x) {
     dsm::sync();
     printf("x %lx has been set to %d\n", (intptr_t)&x, x);
     sleep(1);
   }
   sleep(1);
-  for (int i = 0; i < 50; ++i) {
-    cout << "lock status: " << bufferMutex.status() << endl;
+  printf("run loop\n");
+  for (int i = 0; i < 3; ++i) {
+    printf("lock status: %d\n", bufferMutex.status());
     bufferMutex.lock();
-    cout << "Produced: " << i << endl;
+    cout << "lock status after aquire: " << bufferMutex.status() << endl;
     while (buffer.size() == bufferSize) {
+      printf("producer wait on mutex %lx\n", (intptr_t)&bufferMutex);
       bufferNotFull.wait(bufferMutex);
     }
+    cout << "enqueue: " << i << endl;
     buffer.enqueue(i);
     cout << "Produced: " << i << endl;
     bufferNotEmpty.signal();
@@ -41,16 +46,19 @@ void producer(void *arg) {
 }
 
 void consumer(void *arg) {
-  printf("start consumer\n");
+  char stack_top = 0;
+  printf("CONSUMER STACK %lx\n", (intptr_t)&stack_top);
   x = 0;
   printf("x %lx has been set to %d\n", (intptr_t)&x, x);
-  while (true) {
+  for (int i = 0; i < 3; ++i) {
     bufferMutex.lock();
     while (buffer.isEmpty()) {
-      printf("wait on mutex %lx\n", (intptr_t)&bufferMutex);
+      printf("consumer wait on mutex %lx\n", (intptr_t)&bufferMutex);
       bufferNotEmpty.wait(bufferMutex);
     }
+    printf("front\n");
     int item = buffer.front();
+    printf("deque\n");
     buffer.dequeue();
     cout << "Consumed: " << item << endl;
     bufferNotFull.signal();

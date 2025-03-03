@@ -94,8 +94,8 @@ void cpu::run(thread_startfunc_t func, void *arg) {
     // if the ready queue is empty and cpu is idle
     if (!SchedulerState::scheduler.hasNext()) {
       if (total_threads == 0) {
-        DEBUG_STMT(printf("EXIT\n"));
-        exit(-1);
+        printf("PROGRAM DONE\n");
+        while(1);
       }
       sleep(1);
       // LOCK

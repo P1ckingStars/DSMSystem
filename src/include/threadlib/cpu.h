@@ -155,12 +155,12 @@ public:
 // define macro for lock and unlock
 #define LOCK                                                                   \
   {                                                                            \
-    printf("sys lock at: %s, %d\n", __FILE__, __LINE__);                       \
+    DEBUG_STMT(printf("sys lock at: %s, %d\n", __FILE__, __LINE__));                       \
     cpu::guard.lock();                                                         \
   }
 #define UNLOCK                                                                 \
   {                                                                            \
-    printf("sys unlock at: %s, %d\n", __FILE__, __LINE__);                     \
+    DEBUG_STMT(printf("sys unlock at: %s, %d\n", __FILE__, __LINE__));                     \
     cpu::guard.unlock();                                                       \
   }
 

@@ -19,7 +19,7 @@ void ThreadQueue::push(ucontext_t *ctx) {
 void ThreadQueue::swap() {
   dsm_mutex_lock(&this->mu);
   if (this->threads.empty()) {
-    dsm_mutex_lock(&this->mu);
+    dsm_mutex_unlock(&this->mu);
     return;
   }
   auto next = this->threads.front();

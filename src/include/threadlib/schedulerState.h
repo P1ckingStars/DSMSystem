@@ -36,11 +36,10 @@ inline void ctx_set(ucontext_t *next) {
  * if the thread finishes executions
  */
 inline void ctx_switch(ucontext_t *current, ucontext_t *next) {
-  printf("bug? %lx\n", (intptr_t)cpu::self());
-  printf("ctx_switch %lx, %lx\n", (intptr_t)&cpu::self()->currContext,
-         (intptr_t)&cpu::self()->mainContext);
+  DEBUG_STMT(printf("ctx_switch %lx, %lx\n", (intptr_t)&cpu::self()->currContext,
+         (intptr_t)&cpu::self()->mainContext));
   cpu::self()->currContext = next == cpu::self()->mainContext ? nullptr : next;
-  printf("%lx, %lx\n", (intptr_t)current, (intptr_t)next);
+  DEBUG_STMT(printf("%lx, %lx\n", (intptr_t)current, (intptr_t)next));
   swapcontext(current, next);
   cpu::self()->thread_handler();
 }
@@ -58,6 +57,7 @@ class SchedulerState {
   ucontext_t *getNext() {
     auto currContext = readyQueue.front();
     readyQueue.dequeue();
+    printf("DEQUEUE %lx\n", (intptr_t)currContext);
     if (hasNext())
       ipi_send();
     return currContext;
@@ -104,6 +104,7 @@ public:
    */
   void putInReady(ucontext_t *ctx) {
     DEBUG_STMT(printf("TRY ADD NEW CTX TO QUEUE\n"));
+    printf("ENQUEUE %lx\n", (intptr_t)ctx);
     readyQueue.enqueue(ctx);
     DEBUG_STMT(printf("ADDED NEW CTX TO QUEUE %d\n", readyQueue.isEmpty()));
     DEBUG_STMT(printf("ADDED NEW CTX TO QUEUE %d\n", hasNext()));
@@ -134,9 +135,11 @@ public:
     if (this->hasNext()) {
       ucontext_t *nextContext = this->getNext();
       wait->enqueue(cpu::self()->currContext);
+      DEBUG_STMT(printf("swap with next\n"));
       ctx_switch(cpu::self()->currContext, nextContext);
     } else {
       wait->enqueue(cpu::self()->currContext);
+      DEBUG_STMT(printf("swap with kernel\n"));
       ctx_switch(cpu::self()->currContext, cpu::self()->mainContext);
     }
   }

@@ -1,6 +1,8 @@
 #include "threadlib/cpu.h"
 #include "threadlib/cv.h"
 #include "threadlib/schedulerState.h"
+#include <cstdint>
+#include <cstdio>
 
 cv::cv() {}
 cv::~cv() {}
@@ -9,6 +11,8 @@ cv::~cv() {}
  * @param mu mutex that this cv would wait on
 */
 void cv::wait(mutex &mu) {
+    int a;
+    printf("current stack address before: %lx\n", (intptr_t)&a);
     cpu::interrupt_disable();
     LOCK
     try {
@@ -25,6 +29,7 @@ void cv::wait(mutex &mu) {
     UNLOCK
     cpu::interrupt_enable();
     mu.lock();
+    printf("current stack address after: %lx\n", (intptr_t)&a);
 }
 
 /**

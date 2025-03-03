@@ -61,7 +61,8 @@ void mutex::privileged_unlock() {
  */
 void mutex::lock() {
   cpu::interrupt_disable();
-  LOCK printf("do previleged lock\n");
+  LOCK 
+  printf("do previleged lock\n");
   privileged_lock();
   UNLOCK
   cpu::interrupt_enable();

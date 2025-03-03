@@ -1,2 +1,2 @@
-cp ../build/test1 node1/dsmapp
-cp ../build/test1 node2/dsmapp
+cp ../build/a.out node1/dsmapp
+cp ../build/a.out node2/dsmapp

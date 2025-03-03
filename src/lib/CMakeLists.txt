@@ -18,6 +18,7 @@ add_library(DSMLib
     util/lin_allocator.cpp
 )
 
+add_compile_options(-fno-stack-protector)
 
 target_include_directories(DSMLib PUBLIC
     "${CMAKE_SOURCE_DIR}/src/include"

@@ -77,16 +77,16 @@ void dealloc(void *addr) {
   // Merge with previous chunk if free
   if (node->prev && !node->prev->in_use) {
     node->prev->next = node->next;
-    if (node->next) {
+    if (node->next != REGION_END_NODE) {
       node->next->prev = node->prev;
     }
     node = node->prev;
   }
 
   // Merge with next chunk if free
-  if (node->next && !node->next->in_use) {
+  if (node->next != REGION_END_NODE && !node->next->in_use) {
     node->next = node->next->next;
-    if (node->next) {
+    if (node->next != REGION_END_NODE) {
       node->next->prev = node;
     }
   }
