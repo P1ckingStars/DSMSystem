@@ -16,20 +16,20 @@ add_subdirectory(src/lib)
 
 add_compile_options(-fno-stack-protector)
 # add the executable
-add_executable(test1 examples/test1.cpp)
+add_executable(test2 examples/test2.cpp)
 
-target_compile_options(test1 PUBLIC -fno-stack-protector)
+target_compile_options(test2 PUBLIC -fno-stack-protector)
 
-target_link_options(test1 PRIVATE
+target_link_options(test2 PRIVATE
     "-T${CMAKE_SOURCE_DIR}/linker.ld"
 )
 
 
 link_directories(${PROJECT_SOURCE_DIR}/dependency)
 
-target_link_libraries(test1 DSMLib rpc)
+target_link_libraries(test2 DSMLib rpc)
 
-target_include_directories(test1 PUBLIC
+target_include_directories(test2 PUBLIC
                           "${PROJECT_BINARY_DIR}"
                           "${PROJECT_SOURCE_DIR}/src/include"
                           )

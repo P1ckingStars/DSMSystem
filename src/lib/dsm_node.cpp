@@ -86,6 +86,7 @@ int DSMNode::prot_check(void *addr) {
 void dsm::dsm_init(pid_t child, int *wait_x, int node_id) {
   DEBUG_STMT(printf("setup handler\n"));
   while (1) {
+    DEBUG_STMT(printf("WAIT FOR SIGNALS\n"));
     wait(NULL);
     siginfo_t sig;
     ptrace(PTRACE_GETSIGINFO, child, NULL, &sig);
@@ -231,7 +232,6 @@ page DSMNode::response_write(uint64_t relative_page_id) {
   DEBUG_STMT(printf("recieved write req %lx\n", relative_page_id));
   page res;
   res.clear();
-  sleep(1);
   LOCK(this->mu)
   if (this->page_info.size() > relative_page_id &&
       OWNERSHIP(this->page_info[relative_page_id])) {
@@ -239,7 +239,7 @@ page DSMNode::response_write(uint64_t relative_page_id) {
     UNLOCK(this->mu)
     auto addr = relative_page_id_to_addr(relative_page_id);
     res.resize(PAGE_SIZE);
-    this_thread::sleep_for(std::chrono::milliseconds(random() % 100));
+    this_thread::sleep_for(std::chrono::milliseconds(random() % 500));
     user_mprotect_req(this->pid, addr, PAGE_SIZE, PROT_READ, true, &res[0]);
     // remote_mempage_read(this->pid, &res[0], addr); merged into previous call
     DEBUG_STMT(printf("res %d, %d, %lx\n", res[0], res[1], (intptr_t)addr));
@@ -270,7 +270,7 @@ page DSMNode::response_read(uint64_t relative_page_id) {
 #endif
     res.resize(PAGE_SIZE);
     auto addr = relative_page_id_to_addr(relative_page_id);
-    this_thread::sleep_for(std::chrono::milliseconds(random() % 100));
+    this_thread::sleep_for(std::chrono::milliseconds(random() % 500));
     user_mprotect_req(this->pid, addr, PAGE_SIZE,
                       OWNERSHIP(this->page_info[relative_page_id])
                           ? PROT_READ | PROT_WRITE
@@ -428,21 +428,15 @@ bool DSMNode::update_prot(void *addr) {
 }
 
 bool DSMNode::grant_write(char *addr) {
-  LOCK(this->mu)
-  UNLOCK(this->mu)
   page_id_t relative_page_id = relative_page_id_from_addr(addr);
   bool res = this->grant_prot(relative_page_id, DSM_PROT_WRITE);
   if (res) {
-    LOCK(this->mu)
     this->page_info[relative_page_id] = DSM_PROT_WRITE;
-    UNLOCK(this->mu)
   }
   return res;
 }
 
 bool DSMNode::grant_read(char *addr) {
-  LOCK(this->mu)
-  UNLOCK(this->mu)
   page_id_t relative_page_id = relative_page_id_from_addr(addr);
   bool res = this->grant_prot(relative_page_id, DSM_PROT_READ);
   if (res) {

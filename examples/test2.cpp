@@ -1,38 +1,51 @@
 
-
+#include "dsm_lock.hpp"
+#include "queue.hpp"
+#include "threadlib/cpu.h"
+#include "threadlib/cv.h"
+#include "threadlib/mutex.h"
+#include "threadlib/thread.h"
+#include <chrono>
 #include <cstdint>
-#include <cstdlib>
-#include <stdio.h>
-#include <sys/mman.h>
+#include <cstdio>
+#include <iostream>
+#include <unistd.h>
 
-int var;
-int mu;
-int p;
+mutex bufferMutex;
+cv bufferNotEmpty;
+cv bufferNotFull;
+Queue<int> buffer;
+const size_t bufferSize = 10;
+bool x = 1;
 
-int dsm_main(char * mem_region, size_t length, int argc, char * argv[]) {
-    printf("---------------run user code now-------------\n");
-    bool is_master = atoi(argv[1]) == 0;
-    char *x_part = (char *)&var;
-    int k = x_part[2];
-    printf("write %lx!!!\n", (intptr_t)&x_part[1]);
-    if (is_master) {
-        x_part[0] = 1;
-        while (x_part[1] == 0) {
-            x_part[0] = 1;
-        }
-    } else {
-        x_part[1] = 1;
-        while (x_part[0] == 0) {
-            x_part[1] = 1;
-        }
-    }
-    printf("barrier complete!!!\n");
-    for (int i = 0; i < 300; i++) {
-        printf("mutex2: %d\n", mu);
-        p++;
-        printf("count = %d\n", p);
-        printf("mutex3: %d\n", mu);
-    }
-    printf("complete!!!\n");
-    return 0;
+void producer(void *arg) {
+  char stack_top = 0;
+  printf("PRODUCER STACK %lx\n", (intptr_t)&stack_top);
+  while (x) {
+    dsm::sync();
+    printf("x %lx has been set to %d\n", (intptr_t)&x, x);
+  }
+}
+
+void consumer(void *arg) {
+  char stack_top = 0;
+  printf("CONSUMER STACK %lx\n", (intptr_t)&stack_top);
+  x = 0;
+  for (int i = 0; i < 10000000; i++) {
+    char buffer[256];
+    int len = snprintf(buffer, sizeof(buffer),
+                       "working %lx, progress: %d/10000000\n", (intptr_t)&i, i);
+    write(STDOUT_FILENO, buffer, len);
+  }
+}
+
+void dsm_main1(void *arg) {
+  printf("---------------run user code now-------------\n");
+  thread prod(producer, nullptr);
+  thread cons1(consumer, nullptr);
+  thread cons2(consumer, nullptr);
+  prod.join();
+  cons1.join();
+  cons2.join();
+  printf("complete!!!\n");
 }

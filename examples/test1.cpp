@@ -16,7 +16,7 @@ mutex bufferMutex;
 cv bufferNotEmpty;
 cv bufferNotFull;
 Queue<int> buffer;
-const size_t bufferSize = 1;
+const size_t bufferSize = 2;
 bool x = 1;
 
 void producer(void *arg) {

@@ -83,9 +83,14 @@ public:
     *page = this->page_;
   }
   void compelete() { this->status_ = REQ_COMPLETE; }
-  void wait_to_compelete() {
-    while (this->status_ == REQ_INCOMPLETE)
-      ;
+  void wait_to_compelete(pid_t pid) {
+    int i = 0;
+    while (this->status_ == REQ_INCOMPLETE) {
+      if ((i++)==10000000) {
+        kill(pid, SIGUSR2);
+        i = 0;
+      }
+    }
     pthread_mutex_unlock(&mu_);
   }
 } mprotect_req;
@@ -99,13 +104,14 @@ void injection2() {
 
 void user_mprotect_init() { mprotect_req.init(); }
 
-void user_mprotect_req(pid_t pid, void *addr, size_t size, int prot, bool read_page_flag, char * page) {
+void user_mprotect_req(pid_t pid, void *addr, size_t size, int prot,
+                       bool read_page_flag, char *page) {
   DEBUG_STMT(printf("try user mprotect\n"));
   mprotect_req.produce(pid, addr, size, prot, read_page_flag, page);
   DEBUG_STMT(printf("rsps sent\n"));
   kill(pid, SIGUSR2);
   DEBUG_STMT(printf("wait to complete\n"));
-  mprotect_req.wait_to_compelete();
+  mprotect_req.wait_to_compelete(pid);
 }
 
 void user_mprotect_respond() {
